@@ -1,1 +1,68 @@
-{"sections":{"featured_collection_P9AGLc":{"type":"featured-collection","name":"t:sections.featured-collection.presets.name","settings":{"title":"Featured collection","heading_size":"h1","description":"","show_description":false,"description_style":"body","color_scheme":"background-1","collection":"frontpage","products_to_show":4,"columns_desktop":4,"product_cards_stretch":false,"full_width":false,"show_view_all":true,"view_all_style":"solid","enable_desktop_slider":false,"cards_color_scheme":"background-1","image_ratio":"adapt","show_secondary_image":false,"show_vendor":false,"show_rating":false,"enable_quick_add":false,"columns_mobile":"2","swipe_on_mobile":false,"padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff"}},"contact_form_Exj8J9":{"type":"contact-form","name":"t:sections.contact-form.presets.name","settings":{"heading":"Contact form","heading_size":"h1","button_full_width":true,"color_scheme":"background-1","padding_top":36,"padding_bottom":36,"custom_colors_background":"#ffffff","custom_gradient_background":"","custom_colors_text":"#2e2a39","custom_colors_solid_button_background":"#dd1d1d","custom_colors_solid_button_text":"#ffffff"}}},"order":["featured_collection_P9AGLc","contact_form_Exj8J9"]}
+{
+  "sections": {
+    "volenu_hero": {
+      "type": "volenu-hero",
+      "settings": {
+        "eyebrow": "Heat Therapy Reimagined",
+        "headline": "Feel the Relief. Instantly.",
+        "headline_highlight": "Relief.",
+        "bullets": "Heat in 3 seconds\nWireless freedom\n3 temp levels\n30-Day Guarantee",
+        "cta_text": "Shop Now — Free Shipping",
+        "cta_link": "/collections/all"
+      }
+    },
+    "featured_collection_P9AGLc": {
+      "type": "featured-collection",
+      "name": "t:sections.featured-collection.presets.name",
+      "settings": {
+        "title": "Featured collection",
+        "heading_size": "h1",
+        "description": "",
+        "show_description": false,
+        "description_style": "body",
+        "color_scheme": "background-1",
+        "collection": "frontpage",
+        "products_to_show": 4,
+        "columns_desktop": 4,
+        "product_cards_stretch": false,
+        "full_width": false,
+        "show_view_all": true,
+        "view_all_style": "solid",
+        "enable_desktop_slider": false,
+        "cards_color_scheme": "background-1",
+        "image_ratio": "adapt",
+        "show_secondary_image": false,
+        "show_vendor": false,
+        "show_rating": false,
+        "enable_quick_add": false,
+        "columns_mobile": "2",
+        "swipe_on_mobile": false,
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff"
+      }
+    },
+    "contact_form_Exj8J9": {
+      "type": "contact-form",
+      "name": "t:sections.contact-form.presets.name",
+      "settings": {
+        "heading": "Contact form",
+        "heading_size": "h1",
+        "button_full_width": true,
+        "color_scheme": "background-1",
+        "padding_top": 36,
+        "padding_bottom": 36,
+        "custom_colors_background": "#ffffff",
+        "custom_gradient_background": "",
+        "custom_colors_text": "#2e2a39",
+        "custom_colors_solid_button_background": "#dd1d1d",
+        "custom_colors_solid_button_text": "#ffffff"
+      }
+    }
+  },
+  "order": ["volenu_hero", "featured_collection_P9AGLc", "contact_form_Exj8J9"]
+}
