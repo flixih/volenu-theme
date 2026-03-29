@@ -20,48 +20,6 @@
     padding: 70px 20px;
     text-align: center;
   }
-  /* Hide big cards on mobile */
-  @media (max-width: 749px) {
-    .volu-results-cards {
-      display: none !important;
-    }
-    /* Simple mobile stats */
-    .volu-results-mobile {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      margin: 0 auto 30px;
-      max-width: 400px;
-    }
-    .volu-results-mobile-row {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      background: #fff;
-      border-radius: 16px;
-      padding: 16px 20px;
-      box-shadow: 0 2px 12px rgba(249,165,201,0.15);
-    }
-    .volu-results-mobile-pct {
-      font-size: 32px;
-      font-weight: 900;
-      color: #f9a5c9;
-      flex-shrink: 0;
-      width: 70px;
-    }
-    .volu-results-mobile-text {
-      font-size: 13px;
-      color: #444;
-      text-align: left;
-      line-height: 1.4;
-    }
-  }
-  /* Hide mobile rows on desktop */
-  @media (min-width: 750px) {
-    .volu-results-mobile {
-      display: none !important;
-    }
-  }
   .volu-results-section h2 {
     font-size: clamp(22px, 3.5vw, 38px);
     font-weight: 800;
@@ -153,15 +111,6 @@
 <div class="volu-results-section color-{{ section.settings.color_scheme }}">
   <h2>{{ section.settings.title | default: 'Real Women. Real Results.' }}</h2>
   <p class="volu-results-sub">{{ section.settings.text | default: 'Thousands of Volenu users tracked their pain levels before and after using the belt.' }}</p>
-
-  <div class="volu-results-mobile">
-    {%- for block in section.blocks -%}
-      <div class="volu-results-mobile-row">
-        <div class="volu-results-mobile-pct">{{ block.settings.percentage }}%</div>
-        <div class="volu-results-mobile-text">{{ block.settings.row_text }}</div>
-      </div>
-    {%- endfor -%}
-  </div>
 
   <div class="volu-results-cards">
     {%- for block in section.blocks -%}
