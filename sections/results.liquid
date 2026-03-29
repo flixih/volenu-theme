@@ -15,6 +15,162 @@
 {%- endstyle -%}
 
 <style>
+  .volu-results-section {
+    background: #fff5f8;
+    padding: 70px 20px;
+    text-align: center;
+  }
+  .volu-results-section h2 {
+    font-size: clamp(22px, 3.5vw, 38px);
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+  }
+  .volu-results-section .volu-results-sub {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 50px;
+  }
+  .volu-results-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto 40px;
+  }
+  .volu-results-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px 30px 36px;
+    flex: 1;
+    min-width: 260px;
+    max-width: 320px;
+    box-shadow: 0 4px 24px rgba(249,165,201,0.10);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+  .volu-big-ring {
+    position: relative;
+    width: 160px;
+    height: 160px;
+    flex-shrink: 0;
+  }
+  .volu-big-ring svg {
+    transform: rotate(-90deg);
+    width: 160px;
+    height: 160px;
+  }
+  .volu-big-ring-bg {
+    fill: none;
+    stroke: #f9e4ef;
+    stroke-width: 10;
+  }
+  .volu-big-ring-prog {
+    fill: none;
+    stroke: #f9a5c9;
+    stroke-width: 10;
+    stroke-linecap: round;
+    stroke-dasharray: 420;
+    stroke-dashoffset: 420;
+    transition: stroke-dashoffset 2s ease;
+  }
+  .volu-big-ring-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    font-weight: 800;
+    color: #f9a5c9;
+  }
+  .volu-card-text {
+    font-size: 15px;
+    color: #444;
+    line-height: 1.6;
+    text-align: center;
+  }
+  .volu-shop-btn {
+    display: inline-block;
+    background: #1a1a1a;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 700;
+    padding: 16px 60px;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .volu-shop-btn:hover { background: #c2185b; }
+</style>
+
+<div class="volu-results-section color-{{ section.settings.color_scheme }}">
+  <h2>{{ section.settings.title | default: 'Real Women. Real Results.' }}</h2>
+  <p class="volu-results-sub">{{ section.settings.text | default: 'Thousands of Volenu users tracked their pain levels before and after using the belt.' }}</p>
+
+  <div class="volu-results-cards">
+    {%- for block in section.blocks -%}
+      <div class="volu-results-card">
+        <div class="volu-big-ring">
+          <svg viewBox="0 0 160 160">
+            <circle class="volu-big-ring-bg" cx="80" cy="80" r="67"/>
+            <circle class="volu-big-ring-prog" cx="80" cy="80" r="67"
+              data-pct="{{ block.settings.percentage }}"
+              style="stroke-dasharray:420; stroke-dashoffset:420;"/>
+          </svg>
+          <div class="volu-big-ring-label">
+            <span class="volu-big-count" data-target="{{ block.settings.percentage }}">0</span>%
+          </div>
+        </div>
+        <div class="volu-card-text">{{ block.settings.row_text }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  <a href="{{ section.settings.link | default: '/products' }}" class="volu-shop-btn">
+    {{ section.settings.button_label | default: 'Shop Now' }}
+  </a>
+</div>
+
+<script>
+(function() {
+  function animateBigRings() {
+    var cards = document.querySelectorAll('.volu-results-card');
+    cards.forEach(function(card, i) {
+      setTimeout(function() {
+        var circle = card.querySelector('.volu-big-ring-prog');
+        var counter = card.querySelector('.volu-big-count');
+        var pct = parseInt(circle.getAttribute('data-pct'));
+        var circumference = 420;
+        circle.style.strokeDashoffset = circumference - (circumference * pct / 100);
+        var start = null;
+        var duration = 2000;
+        function step(ts) {
+          if (!start) start = ts;
+          var progress = Math.min((ts - start) / duration, 1);
+          counter.textContent = Math.floor(progress * pct);
+          if (progress < 1) requestAnimationFrame(step);
+          else counter.textContent = pct;
+        }
+        requestAnimationFrame(step);
+      }, i * 250);
+    });
+  }
+  var section = document.querySelector('.volu-results-section');
+  if (!section) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) { animateBigRings(); observer.disconnect(); }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(section);
+})();
+</script>
+
+<style>
   .volu-results-wrap {
     display: flex;
     flex-wrap: wrap;
