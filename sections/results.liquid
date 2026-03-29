@@ -6,97 +6,167 @@
     padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
     padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
   }
-
   @media screen and (min-width: 750px) {
     .section-{{ section.id }}-padding {
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
-
-  .color-scheme-{{ section.id }}.color-custom {
-    --color-background: {{ section.settings.custom_colors_background.red }}, {{ section.settings.custom_colors_background.green }}, {{ section.settings.custom_colors_background.blue }};
-    --gradient-background: {% if section.settings.custom_gradient_background != blank %}{{ section.settings.custom_gradient_background }}{% else %}{{ section.settings.custom_colors_background }}{% endif %};
-    --color-foreground: {{ section.settings.custom_colors_text.red }}, {{ section.settings.custom_colors_text.green }}, {{ section.settings.custom_colors_text.blue }};
-    --accent-color: {{ section.settings.custom_colors_accent.red }}, {{ section.settings.custom_colors_accent.green }}, {{ section.settings.custom_colors_accent.blue }};
-    --color-button: {{ section.settings.custom_colors_solid_button_background.red }}, {{ section.settings.custom_colors_solid_button_background.green }}, {{ section.settings.custom_colors_solid_button_background.blue }};
-    --color-button-text: {{ section.settings.custom_colors_solid_button_text.red }}, {{ section.settings.custom_colors_solid_button_text.green }}, {{ section.settings.custom_colors_solid_button_text.blue }};
-    --color-base-outline-button-labels: {{ section.settings.custom_colors_outline_button.red }}, {{ section.settings.custom_colors_outline_button.green }}, {{ section.settings.custom_colors_outline_button.blue }};
-  }
 {%- endstyle -%}
 
-<div class="color-scheme-{{ section.id }} color-{{ section.settings.color_scheme }} gradient">
+<style>
+  .volu-results-wrap {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 40px;
+    padding: 60px 0;
+  }
+  .volu-results-left {
+    flex: 1;
+    min-width: 260px;
+  }
+  .volu-results-left h2 {
+    font-size: clamp(24px, 3vw, 36px);
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 16px;
+  }
+  .volu-results-left p {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.6;
+  }
+  .volu-results-right {
+    flex: 1;
+    min-width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .volu-result-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .volu-result-row:last-child { border-bottom: none; padding-bottom: 0; }
+  .volu-ring-wrap {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    flex-shrink: 0;
+  }
+  .volu-ring-wrap svg {
+    transform: rotate(-90deg);
+    width: 72px;
+    height: 72px;
+  }
+  .volu-ring-bg {
+    fill: none;
+    stroke: #f9e4ef;
+    stroke-width: 5;
+  }
+  .volu-ring-progress {
+    fill: none;
+    stroke: #f9a5c9;
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-dasharray: 188;
+    stroke-dashoffset: 188;
+    transition: stroke-dashoffset 1.8s ease;
+  }
+  .volu-ring-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 15px;
+    font-weight: 800;
+    color: #f9a5c9;
+  }
+  .volu-result-text {
+    font-size: 14px;
+    color: #333;
+    line-height: 1.5;
+  }
+</style>
+
+<div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="page-width section-{{ section.id }}-padding">
-    <div class="content-and-results{% if section.settings.layout == 'results_first' %} content-and-results--results-first{% endif %}{% if section.settings.title == blank and section.settings.text == blank and section.settings.image == blank %} content-and-results--no-content{% endif %}">
-      {%- unless section.settings.title == blank
-        and section.settings.text == blank
-        and section.settings.image == blank
-      -%}
-        <div class="content-container center">
-          {%- unless section.settings.title == blank -%}
-            <h2 class="title {{ section.settings.heading_size }}">
-              {{ section.settings.title | escape }}
-            </h2>
-          {%- endunless -%}
-          {%- unless section.settings.text == blank -%}
-            {{ section.settings.text }}
-          {%- endunless -%}
-          {%- unless section.settings.image == blank -%}
-            {%- capture sizes -%}
-              (min-width: {{ settings.page_width }}px) {{ settings.page_width | minus: 50 | divided_by: 2 }}px,
-              (min-width: 900px) calc((100vw - 130px) / 2), (min-width: 700px) 600px, calc(100vw - 50px)
-            {%- endcapture -%}
-            <div class="content-and-results__image media media--transparent global-media-settings ratio" style="--ratio-percent: {{ 1 | divided_by: section.settings.image.aspect_ratio | times: 100 }}%">
-              {{
-                section.settings.image
-                | image_url: width: 1500
-                | image_tag: loading: 'lazy', sizes: sizes, widths: '165, 360, 535, 750, 1070, 1500'
-              }}
+    <div class="volu-results-wrap">
+      <div class="volu-results-left">
+        <h2>{{ section.settings.title | default: 'Real Women. Real Results.' }}</h2>
+        <p>{{ section.settings.text | default: 'Thousands of Volenu users tracked their pain levels before and after using the belt. The numbers speak for themselves:' }}</p>
+      </div>
+      <div class="volu-results-right">
+        {%- for block in section.blocks -%}
+          {%- assign pct = block.settings.percentage -%}
+          {%- assign circumference = 188 -%}
+          {%- assign offset = circumference | minus: circumference | times: pct | divided_by: 100 -%}
+          <div class="volu-result-row">
+            <div class="volu-ring-wrap">
+              <svg viewBox="0 0 72 72">
+                <circle class="volu-ring-bg" cx="36" cy="36" r="30"/>
+                <circle class="volu-ring-progress" cx="36" cy="36" r="30"
+                  data-pct="{{ pct }}"
+                  style="stroke-dasharray: {{ circumference }}; stroke-dashoffset: {{ circumference }};"/>
+              </svg>
+              <div class="volu-ring-label"><span class="volu-count" data-target="{{ pct }}">0</span>%</div>
             </div>
-          {%- endunless -%}
-        </div>
-      {%- endunless -%}
-      <div class="results-container">
-        <div class="results">
-          {%- unless section.settings.results_headline == blank -%}
-            <h3 class="title {{ section.settings.results_headline_size }} {% if section.settings.results_headline_alignment == 'center' %} center{% endif %}">
-              {{ section.settings.results_headline | escape }}
-            </h3>
-          {%- endunless -%}
-          <div class="results__rows-container">
-            {%- for row in section.blocks -%}
-              <div class="results__row">
-                <div class="results__percentage" style="--percentage: {{ row.settings.percentage }}%">
-                  <p>{{ row.settings.percentage }}%</p>
-                </div>
-                <div class="results__text">
-                  {{ row.settings.row_text }}
-                </div>
-              </div>
-            {%- endfor -%}
+            <div class="volu-result-text">{{ block.settings.row_text }}</div>
           </div>
-          {%- unless section.settings.caption == blank -%}
-            <div class="results__caption">
-              {{ section.settings.caption }}
-            </div>
-          {%- endunless -%}
-          {%- if section.settings.button_label != blank -%}
-            <a
-              {% if section.settings.link %}
-                href="{{ section.settings.link }}"
-              {% else %}
-                role="link" aria-disabled="true"
-              {% endif %}
-              class="button btn--mt-center {% if section.settings.button_style_secondary %}button--secondary{% else %}button--primary{% endif %}"
-            >
-              {{- section.settings.button_label | escape -}}
-            </a>
-          {%- endif -%}
-        </div>
+        {%- endfor -%}
       </div>
     </div>
   </div>
 </div>
+
+<script>
+(function() {
+  function animateRings() {
+    var rows = document.querySelectorAll('.volu-result-row');
+    rows.forEach(function(row, i) {
+      setTimeout(function() {
+        var circle = row.querySelector('.volu-ring-progress');
+        var counter = row.querySelector('.volu-count');
+        var pct = parseInt(circle.getAttribute('data-pct'));
+        var circumference = 188;
+        var offset = circumference - (circumference * pct / 100);
+        circle.style.strokeDashoffset = offset;
+
+        // Count up number
+        var start = 0;
+        var duration = 1800;
+        var startTime = null;
+        function step(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          counter.textContent = Math.floor(progress * pct);
+          if (progress < 1) requestAnimationFrame(step);
+          else counter.textContent = pct;
+        }
+        requestAnimationFrame(step);
+      }, i * 200);
+    });
+  }
+
+  // Trigger on scroll into view
+  var section = document.querySelector('.volu-results-wrap');
+  if (!section) return;
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        animateRings();
+        observer.disconnect();
+      }
+    });
+  }, { threshold: 0.3 });
+  observer.observe(section);
+})();
+</script>
 
 {% schema %}
 {
