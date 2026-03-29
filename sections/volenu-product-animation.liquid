@@ -1,123 +1,30 @@
-{% comment %} Volenu Product Page Animation — compact scroll scrub {% endcomment %}
+{% comment %} Volenu Product Page — Autoplay Animation {% endcomment %}
 
 <style>
-  .volu-prod-anim-section {
-    position: relative;
-    height: 60vw; max-height: 500px;
-    
+  .volu-prod-video-wrap {
+    width: 100%;
+    background: #0a0a0a;
+    display: block;
   }
   @media (min-width: 750px) {
-    .volu-prod-anim-section {
+    .volu-prod-video-wrap {
       display: none;
     }
   }
-  .volu-prod-anim-sticky {
-    position: sticky;
-    top: 0;
+  .volu-prod-video-wrap img {
     width: 100%;
-    height: 60vw; max-height: 500px;
-    overflow: hidden;
-  }
-  .volu-prod-anim-sticky img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    object-position: center center;
-    
+    height: auto;
     display: block;
-  }
-  .volu-prod-anim-label {
-    position: absolute;
-    bottom: 40px;
-    width: 100%;
-    text-align: center;
-    color: rgba(255,255,255,0.4);
-    font-size: 12px;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-  }
-  .volu-prod-progress {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    background: #f9a5c9;
-    width: 0%;
-    z-index: 20;
   }
 </style>
 
-<div class="volu-prod-anim-section" id="volu-prod-{{ section.id }}">
-  <div class="volu-prod-anim-sticky">
-    <img
-      id="volu-prod-img-{{ section.id }}"
-      src="{{ 'frame_000_delay-0.04s.webp' | asset_url }}"
-      alt="Volenu Relief Belt Animation"
-      draggable="false"
-    />
-    <div class="volu-prod-anim-label">Scroll to explore ↓</div>
-    <div class="volu-prod-progress" id="volu-prod-prog-{{ section.id }}"></div>
-  </div>
+<div class="volu-prod-video-wrap">
+  <img 
+    src="{{ 'volenu-animation.webp' | asset_url }}"
+    alt="Volenu Relief Belt Animation"
+    loading="lazy"
+  />
 </div>
-
-<script>
-(function() {
-  var TOTAL = 192;
-  var img = document.getElementById('volu-prod-img-{{ section.id }}');
-  var section = document.getElementById('volu-prod-{{ section.id }}');
-  var prog = document.getElementById('volu-prod-prog-{{ section.id }}');
-  if (!img || !section) return;
-
-  var urls = [
-    {% for i in (0..191) %}
-      {% assign padded = i | prepend: '000' | slice: -3, 3 %}
-      {% if i == 2 or i == 8 or i == 14 or i == 20 or i == 26 or i == 32 or i == 38 or i == 44 or i == 50 or i == 56 or i == 62 or i == 68 or i == 74 or i == 80 or i == 86 or i == 92 or i == 98 or i == 104 or i == 110 or i == 116 or i == 122 or i == 128 or i == 134 or i == 140 or i == 146 or i == 152 or i == 158 or i == 164 or i == 170 or i == 176 or i == 182 or i == 188 %}
-        {% assign fname = 'frame_' | append: padded | append: '_delay-0.05s.webp' %}
-      {% else %}
-        {% assign fname = 'frame_' | append: padded | append: '_delay-0.04s.webp' %}
-      {% endif %}
-      '{{ fname | asset_url }}'{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ];
-
-  var frames = new Array(TOTAL);
-  for (var i = 0; i < TOTAL; i++) {
-    (function(idx) {
-      var p = new Image();
-      p.src = urls[idx];
-      frames[idx] = p;
-    })(i);
-  }
-
-  var cur = 0, target = 0, lastIdx = -1;
-
-  function getTarget() {
-    var rect = section.getBoundingClientRect();
-    var scrolled = -rect.top;
-    var max = section.offsetHeight - window.innerHeight;
-    if (scrolled < 0) scrolled = 0;
-    if (scrolled > max) scrolled = max;
-    return max > 0 ? (scrolled / max) * (TOTAL - 1) : 0;
-  }
-
-  function loop() {
-    cur += (target - cur) * 0.15;
-    var idx = Math.round(cur);
-    idx = Math.max(0, Math.min(TOTAL - 1, idx));
-    if (idx !== lastIdx) {
-      lastIdx = idx;
-      if (frames[idx] && frames[idx].complete && frames[idx].naturalWidth > 0) {
-        img.src = frames[idx].src;
-      }
-    }
-    if (prog) prog.style.width = ((cur / (TOTAL - 1)) * 100) + '%';
-    requestAnimationFrame(loop);
-  }
-
-  window.addEventListener('scroll', function() { target = getTarget(); }, { passive: true });
-  loop();
-})();
-</script>
 
 {% schema %}
 {
