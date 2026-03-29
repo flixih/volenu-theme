@@ -54,27 +54,28 @@
   }
   .volu-big-ring {
     position: relative;
-    width: 160px;
-    height: 160px;
+    width: 180px !important;
+    height: 180px !important;
     flex-shrink: 0;
   }
   .volu-big-ring svg {
     transform: rotate(-90deg);
-    width: 160px;
-    height: 160px;
+    width: 180px !important;
+    height: 180px !important;
+    display: block;
   }
   .volu-big-ring-bg {
     fill: none;
     stroke: #f9e4ef;
-    stroke-width: 10;
+    stroke-width: 12;
   }
   .volu-big-ring-prog {
     fill: none;
     stroke: #f9a5c9;
-    stroke-width: 10;
+    stroke-width: 12;
     stroke-linecap: round;
-    stroke-dasharray: 420;
-    stroke-dashoffset: 420;
+    stroke-dasharray: 470;
+    stroke-dashoffset: 470;
     transition: stroke-dashoffset 2s ease;
   }
   .volu-big-ring-label {
@@ -83,7 +84,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 36px;
+    font-size: 42px !important;
     font-weight: 800;
     color: #f9a5c9;
   }
@@ -115,11 +116,11 @@
     {%- for block in section.blocks -%}
       <div class="volu-results-card">
         <div class="volu-big-ring">
-          <svg viewBox="0 0 160 160">
-            <circle class="volu-big-ring-bg" cx="80" cy="80" r="67"/>
-            <circle class="volu-big-ring-prog" cx="80" cy="80" r="67"
+          <svg viewBox="0 0 180 180" width="180" height="180">
+            <circle class="volu-big-ring-bg" cx="90" cy="90" r="75"/>
+            <circle class="volu-big-ring-prog" cx="90" cy="90" r="75"
               data-pct="{{ block.settings.percentage }}"
-              style="stroke-dasharray:420; stroke-dashoffset:420;"/>
+              style="stroke-dasharray:470; stroke-dashoffset:470;"/>
           </svg>
           <div class="volu-big-ring-label">
             <span class="volu-big-count" data-target="{{ block.settings.percentage }}">0</span>%
@@ -144,7 +145,7 @@
         var circle = card.querySelector('.volu-big-ring-prog');
         var counter = card.querySelector('.volu-big-count');
         var pct = parseInt(circle.getAttribute('data-pct'));
-        var circumference = 420;
+        var circumference = 470;
         circle.style.strokeDashoffset = circumference - (circumference * pct / 100);
         var start = null;
         var duration = 2000;
