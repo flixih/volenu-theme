@@ -27,19 +27,6 @@
     object-position: center center;
     display: block;
   }
-  /* Gradient overlay so text is always readable */
-  .volu-canvas-wrap::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      to right,
-      rgba(0,0,0,0.75) 0%,
-      rgba(0,0,0,0.3) 60%,
-      rgba(0,0,0,0.05) 100%
-    );
-    pointer-events: none;
-  }
   .volu-overlay-text {
     position: absolute;
     inset: 0;
@@ -51,30 +38,10 @@
     pointer-events: none;
     z-index: 10;
   }
-
-  /* ── MOBILE FIXES ── */
   @media (max-width: 749px) {
     .volu-canvas-wrap img {
-      object-position: 70% center;
-    }
-    .volu-canvas-wrap::after {
-      background: linear-gradient(
-        to bottom,
-        rgba(0,0,0,0.2) 0%,
-        rgba(0,0,0,0.6) 35%,
-        rgba(0,0,0,0.9) 65%,
-        rgba(0,0,0,0.95) 100%
-      );
-    }
-    .volu-overlay-text {
-      justify-content: flex-end;
-      padding: 0 6vw 60px;
-    }
-    .volu-headline {
-      font-size: clamp(32px, 9vw, 52px) !important;
-    }
-    .volu-bullet {
-      font-size: 14px !important;
+      object-fit: contain;
+      background: #0a0a0a;
     }
   }
   .volu-eyebrow {
