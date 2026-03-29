@@ -407,6 +407,24 @@ cart-drawer {
 .cart-drawer .cart__checkout-button {
   max-width: none;
   font-size: 1.7rem;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  z-index: 100 !important;
+  width: 100% !important;
+}
+
+.drawer__footer {
+  display: block !important;
+  visibility: visible !important;
+  overflow: visible !important;
+}
+
+.cart__ctas {
+  display: block !important;
+  visibility: visible !important;
+  padding: 1rem 0 !important;
 }
 
 .drawer__footer .cart__dynamic-checkout-buttons {
