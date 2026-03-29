@@ -301,7 +301,7 @@
       "type": "custom-liquid",
       "name": "t:sections.custom-liquid.presets.name",
       "settings": {
-        "custom_liquid": "<div style=\"width:113%; margin-left: -20px;\">\n  <img src=\"{{ 'volenu-product.webp' | asset_url }}\" \n       style=\"width:100%;height:auto;display:block;\" \n       alt=\"Volenu Relief Belt\" />\n</div>",
+        "custom_liquid": "<style>\n  .volu-mob { display: block; }\n  @media (min-width: 750px) { .volu-mob { display: none !important; } }\n</style>\n\n<div class=\"volu-mob\" style=\"margin-left: -20px;\">\n  <img src=\"{{ 'volenu-product.webp' | asset_url }}\" \n       style=\"width:100%;height:auto;display:block;\" \n       alt=\"Volenu Relief Belt\" />\n</div>",
         "color_scheme": "",
         "padding_top": 0,
         "padding_bottom": 0
