@@ -276,7 +276,31 @@
     {%- endunless -%}
   {%- endif -%}
 
-  <div class="footer__content-bottom">
+  <!-- Big brand watermark like mellow -->
+  <div class="footer__brand-watermark">
+    <span class="footer__brand-watermark-text">volenu</span>
+  </div>
+
+  <style>
+    .footer__brand-watermark {
+      overflow: hidden;
+      background: linear-gradient(135deg, #2d1b4e 0%, #1a0a35 100%);
+      padding: 40px 0 0;
+      text-align: center;
+    }
+    .footer__brand-watermark-text {
+      font-size: clamp(80px, 18vw, 220px);
+      font-weight: 900;
+      letter-spacing: -0.03em;
+      color: rgba(255,255,255,0.08);
+      display: block;
+      line-height: 0.85;
+      user-select: none;
+      text-transform: lowercase;
+    }
+  </style>
+
+  <div class="footer__content-bottom" style="background: linear-gradient(135deg, #2d1b4e 0%, #1a0a35 100%); color: #fff;">
     <div class="footer__content-bottom-wrapper page-width">
       <div class="footer__column footer__localization isolate">
         {%- if section.settings.enable_country_selector and localization.available_countries.size > 1 -%}
