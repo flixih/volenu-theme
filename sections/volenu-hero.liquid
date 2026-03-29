@@ -1,535 +1,312 @@
-{% comment %} Volenu Hero — Frame sequence animation with scroll scrub {% endcomment %}
+{% comment %} Volenu Hero — Full screen scroll scrub animation {% endcomment %}
 
-<section class="volenu-hero" id="volenu-hero-{{ section.id }}">
+<style>
+  .volu-scroll-section {
+    position: relative;
+    height: 800vh;
+    background: #0a0a0a;
+  }
+  .volu-sticky-wrap {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .volu-canvas-wrap {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  #volu-frame-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .volu-overlay-text {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 0 8vw;
+    pointer-events: none;
+    z-index: 10;
+  }
+  .volu-eyebrow {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: #f9a5c9;
+    border: 1px solid #f9a5c9;
+    border-radius: 50px;
+    padding: 6px 16px;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: voluFadeUp 0.8s ease forwards 0.3s;
+  }
+  .volu-headline {
+    font-size: clamp(40px, 7vw, 90px);
+    font-weight: 900;
+    line-height: 1.05;
+    color: #fff;
+    margin-bottom: 32px;
+    max-width: 600px;
+  }
+  .volu-headline .pink { color: #f9a5c9; }
+  .volu-headline .word {
+    display: inline-block;
+    opacity: 0;
+    transform: translateY(30px);
+    animation: voluFadeUp 0.7s ease forwards;
+  }
+  .volu-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .volu-bullet {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: rgba(255,255,255,0.85);
+    font-size: clamp(14px, 1.5vw, 18px);
+    font-weight: 500;
+    opacity: 0;
+    transform: translateX(-20px);
+    animation: voluSlideRight 0.6s ease forwards;
+  }
+  .volu-bullet-check {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #f9a5c9;
+    color: #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 900;
+    flex-shrink: 0;
+  }
+  .volu-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #f9a5c9;
+    color: #000;
+    font-size: 16px;
+    font-weight: 800;
+    padding: 18px 40px;
+    border-radius: 50px;
+    text-decoration: none;
+    pointer-events: all;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: voluFadeUp 0.8s ease forwards 1.8s;
+    transition: transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 0 0 rgba(249,165,201,0);
+  }
+  .volu-cta:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 40px rgba(249,165,201,0.5);
+  }
+  .volu-scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    opacity: 0;
+    animation: voluFadeUp 1s ease forwards 2.5s;
+  }
+  .volu-scroll-arrow {
+    animation: voloBounce 1.5s ease infinite;
+  }
+  @keyframes voluFadeUp {
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes voluSlideRight {
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @keyframes voloBounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(6px); }
+  }
+  .volu-progress-bar {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 2px;
+    background: #f9a5c9;
+    width: 0%;
+    z-index: 20;
+    transition: width 0.05s linear;
+  }
+</style>
 
-  {%- comment -%} Background glow {%- endcomment -%}
-  <div class="volenu-hero__glow"></div>
+<div class="volu-scroll-section" id="volu-scroll-{{ section.id }}">
+  <div class="volu-sticky-wrap">
 
-  <div class="volenu-hero__inner">
+    <div class="volu-canvas-wrap">
+      <img
+        id="volu-frame-{{ section.id }}"
+        src="{{ 'frame_000_delay-0.04s.webp' | asset_url }}"
+        alt="Volenu Relief Belt"
+        style="width:100%;height:100%;object-fit:cover;display:block;"
+        draggable="false"
+      />
+    </div>
 
-    {%- comment -%}───────── LEFT: Text ─────────{%- endcomment -%}
-    <div class="volenu-hero__text">
+    <!-- Overlay text left side -->
+    <div class="volu-overlay-text">
+      <div class="volu-eyebrow">Heat Therapy Reimagined</div>
 
-      <div class="volenu-hero__eyebrow volenu-anim volenu-anim--fade-up" style="animation-delay:0.1s">
-        <span class="volenu-hero__eyebrow-pill">{{ section.settings.eyebrow }}</span>
-      </div>
-
-      <h1 class="volenu-hero__headline">
-        {%- assign words = section.settings.headline | split: ' ' -%}
-        {%- assign highlight = section.settings.headline_highlight -%}
-        {%- for word in words -%}
-          {%- assign delay = forloop.index0 | times: 120 | plus: 300 -%}
-          <span
-            class="volenu-hero__word volenu-anim volenu-anim--word"
-            style="animation-delay:{{ delay }}ms{% if word contains highlight %};color:#f9a5c9{% endif %}"
-          >{{ word }}</span>
-        {%- endfor -%}
+      <h1 class="volu-headline">
+        <span class="word" style="animation-delay:0.5s">Feel&nbsp;</span>
+        <span class="word" style="animation-delay:0.65s">the&nbsp;</span>
+        <span class="word pink" style="animation-delay:0.8s">Relief.</span>
+        <br>
+        <span class="word" style="animation-delay:0.95s">Instantly.</span>
       </h1>
 
-      <ul class="volenu-hero__bullets">
-        {%- assign bullets = section.settings.bullets | newline_to_br | split: '<br />' -%}
-        {%- for bullet in bullets -%}
-          {%- assign bdelay = forloop.index0 | times: 150 | plus: 900 -%}
-          {%- if bullet != blank -%}
-            <li class="volenu-hero__bullet volenu-anim volenu-anim--slide-left" style="animation-delay:{{ bdelay }}ms">
-              <span class="volenu-hero__check">✓</span>
-              {{ bullet | strip }}
-            </li>
-          {%- endif -%}
-        {%- endfor -%}
+      <ul class="volu-bullets">
+        <li class="volu-bullet" style="animation-delay:1.1s">
+          <span class="volu-bullet-check">✓</span> Heat in 3 seconds
+        </li>
+        <li class="volu-bullet" style="animation-delay:1.25s">
+          <span class="volu-bullet-check">✓</span> Wireless freedom
+        </li>
+        <li class="volu-bullet" style="animation-delay:1.4s">
+          <span class="volu-bullet-check">✓</span> 3 temperature levels
+        </li>
+        <li class="volu-bullet" style="animation-delay:1.55s">
+          <span class="volu-bullet-check">✓</span> 30-Day Guarantee
+        </li>
       </ul>
 
-      <div class="volenu-hero__cta-wrap volenu-anim volenu-anim--fade-up" style="animation-delay:1.6s">
-        <a href="{{ section.settings.cta_link }}" class="volenu-hero__cta">
-          <span class="volenu-hero__cta-glow"></span>
-          {{ section.settings.cta_text }}
-        </a>
-      </div>
-
+      <a href="/products/women-menstrual-heating-pads-effective-hot-compress-period-relief-belt-rechargeable-heated-waist-massager-gifts-for-female" class="volu-cta">
+        Shop Now — Free Shipping →
+      </a>
     </div>
 
-    {%- comment -%}───────── RIGHT: Product animation ─────────{%- endcomment -%}
-    <div class="volenu-hero__product">
-      <div class="volenu-hero__product-glow"></div>
-
-      <div class="volenu-hero__loader" id="volenu-loader-{{ section.id }}"></div>
-
-      <img
-        id="volenu-frame-{{ section.id }}"
-        class="volenu-hero__frame"
-        src="{{ 'frame_000_delay-0.04s.webp' | asset_url }}"
-        alt="{{ section.settings.product_alt }}"
-        draggable="false"
-        width="520"
-        height="520"
-      />
-
-      <div class="volenu-hero__scroll-hint volenu-anim volenu-anim--fade-up" style="animation-delay:2.5s">
-        <span class="volenu-hero__scroll-label">Scroll to explore</span>
-        <span class="volenu-hero__scroll-arrow">↓</span>
-      </div>
+    <!-- Scroll hint -->
+    <div class="volu-scroll-hint">
+      <span>SCROLL TO EXPLORE</span>
+      <span class="volu-scroll-arrow">↓</span>
     </div>
+
+    <!-- Progress bar -->
+    <div class="volu-progress-bar" id="volu-progress-{{ section.id }}"></div>
 
   </div>
-</section>
-
-{%- comment -%} Spacer for scroll scrub room {%- endcomment -%}
-<div class="volenu-hero__spacer"></div>
-
-{% style %}
-/* ─── Reset / Base ─────────────────────────────────────────────── */
-.volenu-hero,
-.volenu-hero *,
-.volenu-hero *::before,
-.volenu-hero *::after {
-  box-sizing: border-box;
-}
-
-/* ─── Sticky wrapper ─────────────────────────────────────────────── */
-.volenu-hero {
-  position: sticky;
-  top: 0;
-  width: 100%;
-  height: 100vh;
-  background: #0a0a0a;
-  overflow: hidden;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1;
-}
-
-.volenu-hero__spacer {
-  height: 200vh;
-  background: #0a0a0a;
-}
-
-/* ─── Background glow ──────────────────────────────────────────── */
-.volenu-hero__glow {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(ellipse 70% 60% at 70% 50%, rgba(249,165,201,0.07) 0%, transparent 70%);
-}
-
-/* ─── Inner grid ────────────────────────────────────────────────── */
-.volenu-hero__inner {
-  position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 0 24px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 48px;
-}
-
-@media (min-width: 768px) {
-  .volenu-hero__inner {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 0;
-    padding: 0 48px;
-  }
-}
-
-/* ─── Text side ─────────────────────────────────────────────────── */
-.volenu-hero__text {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 28px;
-  max-width: 560px;
-}
-
-/* Eyebrow */
-.volenu-hero__eyebrow-pill {
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #f9a5c9;
-  border: 1px solid rgba(249,165,201,0.35);
-  background: rgba(249,165,201,0.06);
-  padding: 5px 14px;
-  border-radius: 999px;
-  display: inline-block;
-}
-
-/* Headline */
-.volenu-hero__headline {
-  font-size: clamp(40px, 6vw, 72px);
-  font-weight: 900;
-  line-height: 1.0;
-  letter-spacing: -0.02em;
-  color: #ffffff;
-  margin: 0;
-}
-
-.volenu-hero__word {
-  display: inline-block;
-  margin-right: 0.2em;
-}
-
-/* Bullets */
-.volenu-hero__bullets {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.volenu-hero__bullet {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  font-size: 16px;
-  font-weight: 500;
-  color: rgba(255,255,255,0.85);
-}
-
-@media (min-width: 768px) {
-  .volenu-hero__bullet {
-    font-size: 18px;
-  }
-}
-
-.volenu-hero__check {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 22px;
-  height: 22px;
-  min-width: 22px;
-  border-radius: 50%;
-  background: rgba(249,165,201,0.15);
-  color: #f9a5c9;
-  font-size: 11px;
-  font-weight: 700;
-}
-
-/* CTA Button */
-.volenu-hero__cta {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  padding: 16px 32px;
-  border-radius: 999px;
-  background: linear-gradient(135deg, #f9a5c9 0%, #f472b6 100%);
-  color: #0a0a0a;
-  font-size: 15px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
-  text-decoration: none;
-  box-shadow: 0 0 32px rgba(249,165,201,0.45), 0 4px 16px rgba(249,165,201,0.25);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  overflow: hidden;
-}
-
-.volenu-hero__cta:hover {
-  transform: scale(1.05);
-  box-shadow: 0 0 50px rgba(249,165,201,0.65), 0 6px 24px rgba(249,165,201,0.35);
-}
-
-.volenu-hero__cta:active {
-  transform: scale(0.97);
-}
-
-.volenu-hero__cta-glow {
-  position: absolute;
-  inset: 0;
-  border-radius: 999px;
-  animation: ctaPulse 2.5s ease-in-out infinite;
-  pointer-events: none;
-}
-
-@keyframes ctaPulse {
-  0%, 100% { box-shadow: 0 0 20px rgba(249,165,201,0.3); }
-  50%       { box-shadow: 0 0 45px rgba(249,165,201,0.65); }
-}
-
-/* ─── Product side ──────────────────────────────────────────────── */
-.volenu-hero__product {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-.volenu-hero__product-glow {
-  position: absolute;
-  width: 420px;
-  height: 420px;
-  border-radius: 50%;
-  filter: blur(80px);
-  background: radial-gradient(circle, rgba(249,165,201,0.18) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.volenu-hero__loader {
-  width: clamp(280px, 40vw, 520px);
-  height: clamp(280px, 40vw, 520px);
-  border-radius: 16px;
-  background: rgba(249,165,201,0.08);
-  animation: shimmer 1.5s ease-in-out infinite;
-  position: absolute;
-}
-
-@keyframes shimmer {
-  0%, 100% { opacity: 0.5; }
-  50%       { opacity: 1; }
-}
-
-.volenu-hero__frame {
-  position: relative;
-  z-index: 1;
-  user-select: none;
-  pointer-events: none;
-  width: clamp(280px, 40vw, 520px);
-  height: auto;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  filter: drop-shadow(0 20px 60px rgba(249,165,201,0.2));
-}
-
-/* ─── Scroll hint ───────────────────────────────────────────────── */
-.volenu-hero__scroll-hint {
-  position: absolute;
-  bottom: -36px;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-}
-
-.volenu-hero__scroll-label {
-  font-size: 10px;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-}
-
-.volenu-hero__scroll-arrow {
-  color: #f9a5c9;
-  font-size: 18px;
-  animation: bounce 1.5s ease-in-out infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(6px); }
-}
-
-/* ─── Entrance animations ──────────────────────────────────────── */
-.volenu-anim {
-  opacity: 0;
-  animation-fill-mode: forwards;
-  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
-  animation-duration: 0.65s;
-}
-
-.volenu-anim--fade-up {
-  transform: translateY(20px);
-  animation-name: fadeUp;
-}
-
-.volenu-anim--word {
-  transform: translateY(40px);
-  filter: blur(8px);
-  animation-name: wordReveal;
-  animation-duration: 0.6s;
-}
-
-.volenu-anim--slide-left {
-  transform: translateX(-30px);
-  animation-name: slideLeft;
-}
-
-@keyframes fadeUp {
-  to { opacity: 1; transform: translateY(0); }
-}
-
-@keyframes wordReveal {
-  to { opacity: 1; transform: translateY(0); filter: blur(0px); }
-}
-
-@keyframes slideLeft {
-  to { opacity: 1; transform: translateX(0); }
-}
-{% endstyle %}
+</div>
 
 <script>
 (function() {
-  var SECTION_ID = {{ section.id | json }};
   var TOTAL_FRAMES = 192;
-  var FPS = 25;
-  var FRAME_INTERVAL = 1000 / FPS;
+  var sectionId = '{{ section.id }}';
+  var img = document.getElementById('volu-frame-' + sectionId);
+  var section = document.getElementById('volu-scroll-' + sectionId);
+  var progress = document.getElementById('volu-progress-' + sectionId);
 
-  // ── Build frame URLs from Shopify asset pipeline ──
-  var FRAME_URLS = [
-    {%- for i in (0..191) -%}
-      {%- assign mod = i | minus: 2 | modulo: 6 -%}
-      {%- assign delay = '0.04s' -%}
-      {%- if mod == 0 and i >= 2 -%}{%- assign delay = '0.05s' -%}{%- endif -%}
-      {%- assign padded = i | prepend: '000' | slice: -3, 3 -%}
-      {%- assign fname = 'frame_' | append: padded | append: '_delay-' | append: delay | append: '.webp' -%}
-      {{ fname | asset_url | json }}{% unless forloop.last %},{% endunless %}
-    {%- endfor -%}
-  ];
+  if (!img || !section) return;
 
-  var imgEl     = document.getElementById('volenu-frame-' + SECTION_ID);
-  var loaderEl  = document.getElementById('volenu-loader-' + SECTION_ID);
-  var heroEl    = document.getElementById('volenu-hero-' + SECTION_ID);
+  // Preload all frames
+  var frames = [];
+  var loaded = 0;
+  var frameNames = [];
 
-  if (!imgEl || !heroEl) return;
+  {% assign frame_list = '' %}
+  {% for i in (0..191) %}
+    {% assign padded = i | prepend: '000' | slice: -3, 3 %}
+    {% assign delay = '0.04s' %}
+    {% if i == 2 or i == 8 or i == 14 or i == 20 or i == 26 or i == 32 or i == 38 or i == 44 or i == 50 or i == 56 or i == 62 or i == 68 or i == 74 or i == 80 or i == 86 or i == 92 or i == 98 or i == 104 or i == 110 or i == 116 or i == 122 or i == 128 or i == 134 or i == 140 or i == 146 or i == 152 or i == 158 or i == 164 or i == 170 or i == 176 or i == 182 or i == 188 %}{% assign delay = '0.05s' %}{% endif %}
+    frameNames.push('{{ 'frame_' | append: padded | append: '_delay-' | append: delay | append: '.webp' | asset_url }}');
+  {% endfor %}
 
-  var images        = new Array(TOTAL_FRAMES);
-  var loadedCount   = 0;
-  var rafId         = null;
-  var lastTime      = null;
-  var currentFrame  = 0;
-  var isScrolling   = false;
-  var scrollTimer   = null;
+  // Actually build the frame URLs from Shopify assets
+  var assetBase = img.src.replace('frame_000_delay-0.04s.webp', '');
 
-  // ── Preload all frames ──
-  function preload() {
-    for (var i = 0; i < TOTAL_FRAMES; i++) {
-      (function(idx) {
-        var img = new Image();
-        img.onload = img.onerror = function() {
-          loadedCount++;
-          if (loadedCount === TOTAL_FRAMES) onAllLoaded();
-        };
-        img.src = FRAME_URLS[idx];
-        images[idx] = img;
-      })(i);
-    }
+  function pad(n) {
+    return n < 10 ? '00' + n : n < 100 ? '0' + n : '' + n;
   }
 
-  function onAllLoaded() {
-    imgEl.style.opacity = '1';
-    if (loaderEl) loaderEl.style.display = 'none';
-    startLoop();
+  function getFrameName(i) {
+    var delays = [2,8,14,20,26,32,38,44,50,56,62,68,74,80,86,92,98,104,110,116,122,128,134,140,146,152,158,164,170,176,182,188];
+    var d = delays.indexOf(i) >= 0 ? '0.05s' : '0.04s';
+    return 'frame_' + pad(i) + '_delay-' + d + '.webp';
   }
 
-  // ── RAF loop ──
-  function startLoop() {
-    if (rafId) cancelAnimationFrame(rafId);
-    lastTime = null;
-    function tick(ts) {
-      if (!lastTime) lastTime = ts;
-      if (ts - lastTime >= FRAME_INTERVAL) {
-        lastTime = ts;
-        currentFrame = (currentFrame + 1) % TOTAL_FRAMES;
-        imgEl.src = images[currentFrame].src;
+  // Preload
+  for (var i = 0; i < TOTAL_FRAMES; i++) {
+    (function(idx) {
+      var preload = new Image();
+      preload.src = assetBase + getFrameName(idx);
+      frames[idx] = preload;
+    })(i);
+  }
+
+  var currentFrame = 0;
+  var ticking = false;
+
+  function updateFrame() {
+    var rect = section.getBoundingClientRect();
+    var sectionHeight = section.offsetHeight;
+    var scrolled = -rect.top;
+    var maxScroll = sectionHeight - window.innerHeight;
+
+    if (scrolled < 0) scrolled = 0;
+    if (scrolled > maxScroll) scrolled = maxScroll;
+
+    var pct = scrolled / maxScroll;
+    var frameIdx = Math.min(Math.floor(pct * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1);
+
+    if (frameIdx !== currentFrame) {
+      currentFrame = frameIdx;
+      if (frames[frameIdx] && frames[frameIdx].complete) {
+        img.src = frames[frameIdx].src;
+      } else {
+        img.src = assetBase + getFrameName(frameIdx);
       }
-      rafId = requestAnimationFrame(tick);
     }
-    rafId = requestAnimationFrame(tick);
-  }
 
-  function stopLoop() {
-    if (rafId) { cancelAnimationFrame(rafId); rafId = null; }
-    lastTime = null;
-  }
+    if (progress) {
+      progress.style.width = (pct * 100) + '%';
+    }
 
-  // ── Scroll scrub ──
-  function getScrollProgress() {
-    var heroTop    = heroEl.getBoundingClientRect().top + window.pageYOffset;
-    var spacerEl   = heroEl.nextElementSibling;
-    var totalH     = (spacerEl ? spacerEl.offsetHeight : window.innerHeight * 2);
-    var scrolled   = window.pageYOffset - heroTop;
-    return Math.max(0, Math.min(1, scrolled / totalH));
+    ticking = false;
   }
 
   window.addEventListener('scroll', function() {
-    var progress = getScrollProgress();
-
-    // Only scrub once user scrolls past the hero
-    if (progress <= 0.01) {
-      if (!rafId) startLoop();
-      return;
-    }
-
-    stopLoop();
-    isScrolling = true;
-    clearTimeout(scrollTimer);
-    scrollTimer = setTimeout(function() {
-      isScrolling = false;
-      if (getScrollProgress() <= 0.02) startLoop();
-    }, 250);
-
-    var idx = Math.min(Math.floor(progress * TOTAL_FRAMES), TOTAL_FRAMES - 1);
-    if (idx !== currentFrame) {
-      currentFrame = idx;
-      imgEl.src = images[idx].src;
+    if (!ticking) {
+      requestAnimationFrame(updateFrame);
+      ticking = true;
     }
   }, { passive: true });
 
-  // Start
-  preload();
+  updateFrame();
 })();
 </script>
 
 {% schema %}
 {
   "name": "Volenu Hero",
-  "tag": "div",
-  "settings": [
-    {
-      "type": "text",
-      "id": "eyebrow",
-      "label": "Eyebrow label",
-      "default": "Heat Therapy Reimagined"
-    },
-    {
-      "type": "text",
-      "id": "headline",
-      "label": "Headline",
-      "default": "Feel the Relief. Instantly."
-    },
-    {
-      "type": "text",
-      "id": "headline_highlight",
-      "label": "Word(s) to highlight pink",
-      "default": "Relief."
-    },
-    {
-      "type": "textarea",
-      "id": "bullets",
-      "label": "Bullet points (one per line)",
-      "default": "Heat in 3 seconds\nWireless freedom\n3 temp levels\n30-Day Guarantee"
-    },
-    {
-      "type": "text",
-      "id": "cta_text",
-      "label": "Button text",
-      "default": "Shop Now — Free Shipping"
-    },
-    {
-      "type": "url",
-      "id": "cta_link",
-      "label": "Button link"
-    },
-    {
-      "type": "text",
-      "id": "product_alt",
-      "label": "Product image alt text",
-      "default": "Volenu heat therapy device"
-    }
-  ],
-  "presets": [
-    {
-      "name": "Volenu Hero"
-    }
-  ]
+  "settings": []
 }
 {% endschema %}
