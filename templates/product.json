@@ -434,22 +434,6 @@
       "disabled": true,
       "settings": {}
     },
-    "video_KFBXDW": {
-      "type": "video",
-      "name": "t:sections.video.presets.name",
-      "settings": {
-        "heading": "",
-        "heading_size": "h1",
-        "enable_video_looping": false,
-        "video": "shopify://files/videos/Pink_massager_belt_202603290325.mp4",
-        "video_url": "https://www.youtube.com/watch?v=_9VUPq3SxOc",
-        "description": "",
-        "full_width": false,
-        "color_scheme": "",
-        "padding_top": 36,
-        "padding_bottom": 36
-      }
-    },
     "volenu_big_results": {
       "type": "volenu-results-big",
       "blocks": {
@@ -754,7 +738,6 @@
     "multicolumn_GqbapF",
     "image_with_text_8wqzxh",
     "volenu_prod_anim",
-    "video_KFBXDW",
     "volenu_big_results",
     "rich_text_d7MAiq",
     "ds_testimonials_i86BLn",

@@ -11,14 +11,7 @@
   "sections": {
     "volenu_hero": {
       "type": "volenu-hero",
-      "settings": {
-        "eyebrow": "Heat Therapy Reimagined",
-        "headline": "Feel the Relief. Instantly.",
-        "headline_highlight": "Relief.",
-        "bullets": "Heat in 3 seconds\nWireless freedom\n3 temp levels\n30-Day Guarantee",
-        "cta_text": "Shop Now — Free Shipping",
-        "cta_link": "/collections/all"
-      }
+      "settings": {}
     },
     "featured_collection_P9AGLc": {
       "type": "featured-collection",
@@ -73,5 +66,9 @@
       }
     }
   },
-  "order": ["volenu_hero", "featured_collection_P9AGLc", "contact_form_Exj8J9"]
+  "order": [
+    "volenu_hero",
+    "featured_collection_P9AGLc",
+    "contact_form_Exj8J9"
+  ]
 }
