@@ -164,10 +164,13 @@
   <div class="volu-sticky-wrap">
 
     <div class="volu-canvas-wrap">
-      <canvas
+      <img
         id="volu-frame-{{ section.id }}"
-        style="width:100%;height:100%;display:block;"
-      ></canvas>
+        src="{{ 'frame_000_delay-0.04s.webp' | asset_url }}"
+        alt="Volenu Relief Belt"
+        style="width:100%;height:100%;object-fit:cover;display:block;"
+        draggable="false"
+      />
     </div>
 
     <!-- Overlay text left side -->
@@ -218,25 +221,12 @@
 (function() {
   var TOTAL_FRAMES = 192;
   var sectionId = '{{ section.id }}';
-  var canvas = document.getElementById('volu-frame-' + sectionId);
+  var img = document.getElementById('volu-frame-' + sectionId);
   var section = document.getElementById('volu-scroll-' + sectionId);
   var progress = document.getElementById('volu-progress-' + sectionId);
 
-  if (!canvas || !section) return;
+  if (!img || !section) return;
 
-  var ctx = canvas.getContext('2d');
-
-  // Size canvas IMMEDIATELY before anything else
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-
-  function resizeCanvas() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
-  }
-  window.addEventListener('resize', resizeCanvas);
-
-  // Build ALL frame URLs via Liquid
   var frameUrls = [
     {% for i in (0..191) %}
       {% assign padded = i | prepend: '000' | slice: -3, 3 %}
@@ -251,31 +241,17 @@
 
   // Preload all frames
   var frames = new Array(TOTAL_FRAMES);
-  var loadedCount = 0;
-
-  function loadFrame(idx) {
-    var img = new Image();
-    img.onload = function() {
-      loadedCount++;
-      if (idx === 0) {
-        // Draw first frame immediately when loaded
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-      }
-    };
-    img.src = frameUrls[idx];
-    frames[idx] = img;
+  for (var i = 0; i < TOTAL_FRAMES; i++) {
+    (function(idx) {
+      var preImg = new Image();
+      preImg.src = frameUrls[idx];
+      frames[idx] = preImg;
+    })(i);
   }
 
-  // Load frame 0 first urgently, then rest
-  loadFrame(0);
-  for (var i = 1; i < TOTAL_FRAMES; i++) loadFrame(i);
-
-  // Smooth scroll state
-  var targetFrame = 0;
-  var currentFrame = 0;
-  var rafId = null;
+  var currentFrameFloat = 0;
+  var targetFrameFloat = 0;
+  var lastDrawnIdx = -1;
 
   function getTargetFrame() {
     var rect = section.getBoundingClientRect();
@@ -283,34 +259,36 @@
     var maxScroll = section.offsetHeight - window.innerHeight;
     if (scrolled < 0) scrolled = 0;
     if (scrolled > maxScroll) scrolled = maxScroll;
-    var pct = maxScroll > 0 ? scrolled / maxScroll : 0;
-    return pct * (TOTAL_FRAMES - 1);
+    return maxScroll > 0 ? (scrolled / maxScroll) * (TOTAL_FRAMES - 1) : 0;
   }
 
-  function renderLoop() {
-    // Smooth interpolation — eases toward target
-    currentFrame += (targetFrame - currentFrame) * 0.12;
+  function loop() {
+    // Smooth lerp — 0.1 = slow/smooth, 0.3 = faster
+    currentFrameFloat += (targetFrameFloat - currentFrameFloat) * 0.15;
 
-    var idx = Math.round(currentFrame);
+    var idx = Math.round(currentFrameFloat);
     idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, idx));
 
-    if (frames[idx] && frames[idx].complete && frames[idx].naturalWidth > 0) {
-      ctx.drawImage(frames[idx], 0, 0, canvas.width, canvas.height);
+    if (idx !== lastDrawnIdx) {
+      lastDrawnIdx = idx;
+      if (frames[idx] && frames[idx].complete && frames[idx].naturalWidth > 0) {
+        img.src = frames[idx].src;
+      }
     }
 
     if (progress) {
-      progress.style.width = ((currentFrame / (TOTAL_FRAMES - 1)) * 100) + '%';
+      progress.style.width = ((currentFrameFloat / (TOTAL_FRAMES - 1)) * 100) + '%';
     }
 
-    rafId = requestAnimationFrame(renderLoop);
+    requestAnimationFrame(loop);
   }
 
   window.addEventListener('scroll', function() {
-    targetFrame = getTargetFrame();
+    targetFrameFloat = getTargetFrame();
   }, { passive: true });
 
-  // Start render loop
-  renderLoop();
+  // Start loop
+  loop();
 })();
 </script>
 
