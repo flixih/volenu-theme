@@ -164,13 +164,10 @@
   <div class="volu-sticky-wrap">
 
     <div class="volu-canvas-wrap">
-      <img
+      <canvas
         id="volu-frame-{{ section.id }}"
-        src="{{ 'frame_000_delay-0.04s.webp' | asset_url }}"
-        alt="Volenu Relief Belt"
-        style="width:100%;height:100%;object-fit:cover;display:block;"
-        draggable="false"
-      />
+        style="width:100%;height:100%;display:block;"
+      ></canvas>
     </div>
 
     <!-- Overlay text left side -->
@@ -221,13 +218,26 @@
 (function() {
   var TOTAL_FRAMES = 192;
   var sectionId = '{{ section.id }}';
-  var img = document.getElementById('volu-frame-' + sectionId);
+  var canvas = document.getElementById('volu-frame-' + sectionId);
   var section = document.getElementById('volu-scroll-' + sectionId);
   var progress = document.getElementById('volu-progress-' + sectionId);
 
-  if (!img || !section) return;
+  if (!canvas || !section) return;
 
-  // Build frame URLs using Shopify Liquid asset_url — guaranteed correct CDN URLs
+  var ctx = canvas.getContext('2d');
+
+  // Size canvas to window
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    if (frames[currentFrame] && frames[currentFrame].complete) {
+      ctx.drawImage(frames[currentFrame], 0, 0, canvas.width, canvas.height);
+    }
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
+  // Build ALL frame URLs via Liquid
   var frameUrls = [
     {% for i in (0..191) %}
       {% assign padded = i | prepend: '000' | slice: -3, 3 %}
@@ -241,50 +251,65 @@
   ];
 
   // Preload all frames
-  var frames = [];
-  for (var i = 0; i < TOTAL_FRAMES; i++) {
-    (function(idx) {
-      var preload = new Image();
-      preload.src = frameUrls[idx];
-      frames[idx] = preload;
-    })(i);
+  var frames = new Array(TOTAL_FRAMES);
+  var loadedCount = 0;
+
+  function loadFrame(idx) {
+    var img = new Image();
+    img.onload = function() {
+      loadedCount++;
+      // Draw first frame as soon as it's ready
+      if (idx === 0) {
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+      }
+    };
+    img.src = frameUrls[idx];
+    frames[idx] = img;
   }
 
+  // Load frame 0 first, then rest
+  loadFrame(0);
+  for (var i = 1; i < TOTAL_FRAMES; i++) loadFrame(i);
+
+  // Smooth scroll state
+  var targetFrame = 0;
   var currentFrame = 0;
-  var ticking = false;
+  var rafId = null;
 
-  function updateFrame() {
+  function getTargetFrame() {
     var rect = section.getBoundingClientRect();
-    var sectionHeight = section.offsetHeight;
     var scrolled = -rect.top;
-    var maxScroll = sectionHeight - window.innerHeight;
-
+    var maxScroll = section.offsetHeight - window.innerHeight;
     if (scrolled < 0) scrolled = 0;
     if (scrolled > maxScroll) scrolled = maxScroll;
+    var pct = maxScroll > 0 ? scrolled / maxScroll : 0;
+    return pct * (TOTAL_FRAMES - 1);
+  }
 
-    var pct = scrolled / maxScroll;
-    var frameIdx = Math.min(Math.floor(pct * (TOTAL_FRAMES - 1)), TOTAL_FRAMES - 1);
+  function renderLoop() {
+    // Smooth interpolation — eases toward target
+    currentFrame += (targetFrame - currentFrame) * 0.12;
 
-    if (frameIdx !== currentFrame) {
-      currentFrame = frameIdx;
-      img.src = frameUrls[frameIdx];
+    var idx = Math.round(currentFrame);
+    idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, idx));
+
+    if (frames[idx] && frames[idx].complete && frames[idx].naturalWidth > 0) {
+      ctx.drawImage(frames[idx], 0, 0, canvas.width, canvas.height);
     }
 
     if (progress) {
-      progress.style.width = (pct * 100) + '%';
+      progress.style.width = ((currentFrame / (TOTAL_FRAMES - 1)) * 100) + '%';
     }
 
-    ticking = false;
+    rafId = requestAnimationFrame(renderLoop);
   }
 
   window.addEventListener('scroll', function() {
-    if (!ticking) {
-      requestAnimationFrame(updateFrame);
-      ticking = true;
-    }
+    targetFrame = getTargetFrame();
   }, { passive: true });
 
-  updateFrame();
+  // Start render loop
+  renderLoop();
 })();
 </script>
 
