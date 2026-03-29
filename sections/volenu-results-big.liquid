@@ -1,0 +1,149 @@
+<style>
+  .volu-results-section {
+    background: #fff5f8;
+    padding: 70px 20px;
+    text-align: center;
+  }
+  .volu-results-section h2 {
+    font-size: clamp(22px, 3.5vw, 38px);
+    font-weight: 800;
+    color: #1a1a1a;
+    margin-bottom: 10px;
+  }
+  .volu-results-sub {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 50px;
+  }
+  .volu-results-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto 40px;
+  }
+  .volu-results-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px 30px 36px;
+    flex: 1;
+    min-width: 260px;
+    max-width: 320px;
+    box-shadow: 0 4px 24px rgba(249,165,201,0.10);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 28px;
+  }
+  .volu-big-ring {
+    position: relative;
+    width: 180px !important;
+    height: 180px !important;
+    flex-shrink: 0;
+  }
+  .volu-big-ring svg {
+    transform: rotate(-90deg);
+    width: 180px !important;
+    height: 180px !important;
+    display: block;
+  }
+  .volu-big-ring-bg { fill: none; stroke: #f9e4ef; stroke-width: 12; }
+  .volu-big-ring-prog {
+    fill: none; stroke: #f9a5c9; stroke-width: 12;
+    stroke-linecap: round; stroke-dasharray: 470; stroke-dashoffset: 470;
+    transition: stroke-dashoffset 2s ease;
+  }
+  .volu-big-ring-label {
+    position: absolute; inset: 0; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 42px !important; font-weight: 800; color: #f9a5c9;
+  }
+  .volu-card-text { font-size: 15px; color: #444; line-height: 1.6; text-align: center; }
+  .volu-shop-btn {
+    display: inline-block; background: #1a1a1a; color: #fff;
+    font-size: 16px; font-weight: 700; padding: 16px 60px;
+    border-radius: 50px; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .volu-shop-btn:hover { background: #c2185b; }
+</style>
+
+<div class="volu-results-section">
+  <h2>{{ section.settings.title | default: 'Real Women. Real Results.' }}</h2>
+  <p class="volu-results-sub">{{ section.settings.text | default: 'Thousands of Volenu users tracked their pain levels before and after using the belt.' }}</p>
+  <div class="volu-results-cards">
+    {%- for block in section.blocks -%}
+      <div class="volu-results-card">
+        <div class="volu-big-ring">
+          <svg viewBox="0 0 180 180" width="180" height="180">
+            <circle class="volu-big-ring-bg" cx="90" cy="90" r="75"/>
+            <circle class="volu-big-ring-prog" cx="90" cy="90" r="75"
+              data-pct="{{ block.settings.percentage }}"
+              style="stroke-dasharray:470;stroke-dashoffset:470;"/>
+          </svg>
+          <div class="volu-big-ring-label">
+            <span class="volu-big-count" data-target="{{ block.settings.percentage }}">0</span>%
+          </div>
+        </div>
+        <div class="volu-card-text">{{ block.settings.row_text }}</div>
+      </div>
+    {%- endfor -%}
+  </div>
+  <a href="{{ section.settings.link | default: '/products' }}" class="volu-shop-btn">
+    {{ section.settings.button_label | default: 'Shop Now' }}
+  </a>
+</div>
+
+<script>
+(function() {
+  function animate() {
+    document.querySelectorAll('.volu-results-card').forEach(function(card, i) {
+      setTimeout(function() {
+        var circle = card.querySelector('.volu-big-ring-prog');
+        var counter = card.querySelector('.volu-big-count');
+        var pct = parseInt(circle.getAttribute('data-pct'));
+        circle.style.strokeDashoffset = 470 - (470 * pct / 100);
+        var start = null;
+        function step(ts) {
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / 2000, 1);
+          counter.textContent = Math.floor(p * pct);
+          if (p < 1) requestAnimationFrame(step);
+          else counter.textContent = pct;
+        }
+        requestAnimationFrame(step);
+      }, i * 250);
+    });
+  }
+  var el = document.querySelector('.volu-results-section');
+  if (!el) return;
+  new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) { animate(); }
+  }, { threshold: 0.3 }).observe(el);
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Results Big Cards",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Real Women. Real Results." },
+    { "type": "richtext", "id": "text", "label": "Subtext" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Result",
+      "settings": [
+        { "type": "range", "id": "percentage", "min": 0, "max": 100, "step": 1, "default": 90, "label": "Percentage" },
+        { "type": "richtext", "id": "row_text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Results Big Cards" }],
+  "disabled_on": { "groups": ["header", "footer"] }
+}
+{% endschema %}
