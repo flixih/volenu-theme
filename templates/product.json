@@ -297,6 +297,16 @@
         "desktop_padding_bottom": 32
       }
     },
+    "custom_liquid_gDkE4i": {
+      "type": "custom-liquid",
+      "name": "t:sections.custom-liquid.presets.name",
+      "settings": {
+        "custom_liquid": "<div style=\"width:113%; margin-left: -20px;\">\n  <img src=\"{{ 'volenu-product.webp' | asset_url }}\" \n       style=\"width:100%;height:auto;display:block;\" \n       alt=\"Volenu Relief Belt\" />\n</div>",
+        "color_scheme": "",
+        "padding_top": 0,
+        "padding_bottom": 0
+      }
+    },
     "image_with_text_6NJQ98": {
       "type": "image-with-text",
       "blocks": {
@@ -427,16 +437,6 @@
         "mobile_content_alignment": "left",
         "padding_top": 36,
         "padding_bottom": 36
-      }
-    },
-    "custom_liquid_gDkE4i": {
-      "type": "custom-liquid",
-      "name": "t:sections.custom-liquid.presets.name",
-      "settings": {
-        "custom_liquid": "<div style=\"width:113%; margin-left: -20px;\">\n  <img src=\"{{ 'volenu-product.webp' | asset_url }}\" \n       style=\"width:100%;height:auto;display:block;\" \n       alt=\"Volenu Relief Belt\" />\n</div>",
-        "color_scheme": "",
-        "padding_top": 0,
-        "padding_bottom": 0
       }
     },
     "volenu_prod_anim": {
@@ -744,10 +744,10 @@
   "order": [
     "related-products",
     "main",
+    "custom_liquid_gDkE4i",
     "image_with_text_6NJQ98",
     "multicolumn_GqbapF",
     "image_with_text_8wqzxh",
-    "custom_liquid_gDkE4i",
     "volenu_prod_anim",
     "volenu_big_results",
     "rich_text_d7MAiq",
