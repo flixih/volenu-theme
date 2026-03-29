@@ -1,29 +1,27 @@
-{% comment %} Volenu Product Animation — simple autoplay GIF {% endcomment %}
+{% comment %} Volenu Product Animation — autoplay GIF, mobile only {% endcomment %}
 
 <style>
-  .volu-prod-gif-wrap {
+  .volu-gif-section {
     width: 100%;
     background: #0a0a0a;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 0;
   }
-  .volu-prod-gif-wrap img {
+  .volu-gif-section img {
     width: 100%;
-    max-width: 500px;
     height: auto;
     display: block;
   }
   @media (min-width: 750px) {
-    .volu-prod-gif-wrap {
+    .volu-gif-section {
       display: none;
     }
   }
 </style>
 
-<div class="volu-prod-gif-wrap">
-  <img src="{{ 'volenu-product.gif' | asset_url }}" alt="Volenu Relief Belt" loading="lazy" />
+<div class="volu-gif-section">
+  <img src="{{ 'volenu-product.gif' | asset_url }}"
+       alt="Volenu Relief Belt Animation"
+       loading="eager"
+  />
 </div>
 
 {% schema %}
