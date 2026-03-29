@@ -71,6 +71,49 @@
     border-color: #c2185b !important;
   }
 
+  /* Pink header background like mellow's purple */
+  .header-wrapper, .header {
+    background-color: #fce4ec !important;
+    border-bottom: none !important;
+  }
+  .header-wrapper {
+    border-bottom: 1px solid #f8bbd0 !important;
+  }
+
+  /* BOGO countdown bar */
+  .volenu-bogo-bar {
+    background: #c2185b;
+    color: #fff;
+    text-align: center;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .volenu-bogo-timer {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .volenu-bogo-timer-block {
+    background: #fff;
+    color: #c2185b;
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-weight: 800;
+    font-size: 14px;
+    min-width: 32px;
+    text-align: center;
+  }
+  .volenu-bogo-sep {
+    font-weight: 800;
+    font-size: 16px;
+  }
+
   .header__heading-logo {
     max-width: {{ settings.logo_width }}px;
   }
@@ -782,6 +825,33 @@
     </div>
   </header>
 </{% if section.settings.sticky_header_type != 'none' %}sticky-header{% else %}div{% endif %}>
+
+<!-- VOLENU BOGO Countdown Bar -->
+<div class="volenu-bogo-bar">
+  <span>🔥 BOGO Deal Is Live! Buy 1 Get 1 Free — Use Code: <strong>BOGO50</strong></span>
+  <div class="volenu-bogo-timer">
+    <div class="volenu-bogo-timer-block" id="vb-hrs">00</div>
+    <span class="volenu-bogo-sep">:</span>
+    <div class="volenu-bogo-timer-block" id="vb-min">00</div>
+    <span class="volenu-bogo-sep">:</span>
+    <div class="volenu-bogo-timer-block" id="vb-sec">00</div>
+  </div>
+</div>
+<script>
+  (function() {
+    var now = new Date();
+    var midnight = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 1, 0, 0, 0);
+    function pad(n) { return n < 10 ? '0' + n : n; }
+    function tick() {
+      var diff = Math.max(0, midnight - new Date());
+      document.getElementById('vb-hrs').textContent = pad(Math.floor(diff / 3600000));
+      document.getElementById('vb-min').textContent = pad(Math.floor((diff % 3600000) / 60000));
+      document.getElementById('vb-sec').textContent = pad(Math.floor((diff % 60000) / 1000));
+    }
+    tick();
+    setInterval(tick, 1000);
+  })();
+</script>
 
 {%- if settings.cart_type == "notification" -%}
   {%- render 'cart-notification', color_scheme: section.settings.color_scheme -%}
