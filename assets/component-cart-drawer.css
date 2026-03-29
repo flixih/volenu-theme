@@ -427,6 +427,18 @@ cart-drawer {
   padding: 1rem 0 !important;
 }
 
+#CartDrawer-Checkout {
+  background-color: #c2185b !important;
+  color: #ffffff !important;
+  border: none !important;
+  width: 100% !important;
+  padding: 1.5rem !important;
+  font-size: 1.6rem !important;
+  font-weight: 600 !important;
+  cursor: pointer !important;
+  border-radius: 4px !important;
+}
+
 .drawer__footer .cart__dynamic-checkout-buttons {
   max-width: 100%;
 }
