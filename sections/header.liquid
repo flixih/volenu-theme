@@ -55,6 +55,22 @@
     justify-self: end;
   }
 
+  /* Volenu pink brand accent */
+  :root {
+    --color-accent: #f9a5c9;
+    --color-accent-dark: #c2185b;
+    --color-button: #f9a5c9;
+  }
+  .button--primary, .shopify-payment-button__button--unbranded {
+    background-color: #f9a5c9 !important;
+    border-color: #f9a5c9 !important;
+    color: #fff !important;
+  }
+  .button--primary:hover {
+    background-color: #c2185b !important;
+    border-color: #c2185b !important;
+  }
+
   .header__heading-logo {
     max-width: {{ settings.logo_width }}px;
   }
