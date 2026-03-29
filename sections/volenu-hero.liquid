@@ -226,15 +226,14 @@
 
   var ctx = canvas.getContext('2d');
 
-  // Size canvas to window
+  // Size canvas IMMEDIATELY before anything else
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
   function resizeCanvas() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
-    if (frames[currentFrame] && frames[currentFrame].complete) {
-      ctx.drawImage(frames[currentFrame], 0, 0, canvas.width, canvas.height);
-    }
   }
-  resizeCanvas();
   window.addEventListener('resize', resizeCanvas);
 
   // Build ALL frame URLs via Liquid
@@ -258,8 +257,10 @@
     var img = new Image();
     img.onload = function() {
       loadedCount++;
-      // Draw first frame as soon as it's ready
       if (idx === 0) {
+        // Draw first frame immediately when loaded
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
       }
     };
@@ -267,7 +268,7 @@
     frames[idx] = img;
   }
 
-  // Load frame 0 first, then rest
+  // Load frame 0 first urgently, then rest
   loadFrame(0);
   for (var i = 1; i < TOTAL_FRAMES; i++) loadFrame(i);
 
