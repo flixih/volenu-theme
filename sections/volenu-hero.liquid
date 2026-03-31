@@ -302,8 +302,12 @@
   }
 
   function loop() {
-    // Smoother lerp
-    currentFrameFloat += (targetFrameFloat - currentFrameFloat) * 0.08;
+    // Apply momentum — coasts after scroll stops
+    velocity *= 0.85;
+    targetFrameFloat += velocity;
+    targetFrameFloat = Math.max(0, Math.min(TOTAL_FRAMES - 1, targetFrameFloat));
+
+    currentFrameFloat += (targetFrameFloat - currentFrameFloat) * 0.12;
 
     var idx = Math.round(currentFrameFloat);
     idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, idx));
@@ -324,8 +328,14 @@
   frames[0].onload = function() { drawFrame(0); };
   if (frames[0].complete) drawFrame(0);
 
+  var velocity = 0;
+  var lastTarget = 0;
+
   window.addEventListener('scroll', function() {
-    targetFrameFloat = getTargetFrame();
+    var newTarget = getTargetFrame();
+    velocity = newTarget - lastTarget;
+    lastTarget = newTarget;
+    targetFrameFloat = newTarget;
   }, { passive: true });
 
   loop();
