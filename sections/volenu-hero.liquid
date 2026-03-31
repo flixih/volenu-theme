@@ -246,11 +246,28 @@
     {% endfor %}
   ];
 
+  // Replace img with canvas for smooth rendering
+  var canvas = document.createElement('canvas');
+  canvas.style.cssText = img.style.cssText || 'width:100%;height:100%;object-fit:cover;display:block;';
+  canvas.style.width = '100%';
+  canvas.style.height = '100%';
+  img.parentNode.replaceChild(canvas, img);
+  var ctx = canvas.getContext('2d');
+
+  function resizeCanvas() {
+    canvas.width = canvas.offsetWidth;
+    canvas.height = canvas.offsetHeight;
+  }
+  resizeCanvas();
+  window.addEventListener('resize', resizeCanvas);
+
   // Preload all frames
   var frames = new Array(TOTAL_FRAMES);
+  var loadedCount = 0;
   for (var i = 0; i < TOTAL_FRAMES; i++) {
     (function(idx) {
       var preImg = new Image();
+      preImg.onload = function() { loadedCount++; };
       preImg.src = frameUrls[idx];
       frames[idx] = preImg;
     })(i);
@@ -269,18 +286,31 @@
     return maxScroll > 0 ? (scrolled / maxScroll) * (TOTAL_FRAMES - 1) : 0;
   }
 
+  function drawFrame(idx) {
+    var f = frames[idx];
+    if (f && f.complete && f.naturalWidth > 0) {
+      if (canvas.width !== canvas.offsetWidth || canvas.height !== canvas.offsetHeight) resizeCanvas();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      // cover fit
+      var iw = f.naturalWidth, ih = f.naturalHeight;
+      var cw = canvas.width, ch = canvas.height;
+      var scale = Math.max(cw / iw, ch / ih);
+      var nw = iw * scale, nh = ih * scale;
+      var ox = (cw - nw) / 2, oy = (ch - nh) / 2;
+      ctx.drawImage(f, ox, oy, nw, nh);
+    }
+  }
+
   function loop() {
-    // Smooth lerp — 0.1 = slow/smooth, 0.3 = faster
-    currentFrameFloat += (targetFrameFloat - currentFrameFloat) * 0.15;
+    // Smoother lerp
+    currentFrameFloat += (targetFrameFloat - currentFrameFloat) * 0.08;
 
     var idx = Math.round(currentFrameFloat);
     idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, idx));
 
     if (idx !== lastDrawnIdx) {
       lastDrawnIdx = idx;
-      if (frames[idx] && frames[idx].complete && frames[idx].naturalWidth > 0) {
-        img.src = frames[idx].src;
-      }
+      drawFrame(idx);
     }
 
     if (progress) {
@@ -290,11 +320,14 @@
     requestAnimationFrame(loop);
   }
 
+  // Draw first frame immediately
+  frames[0].onload = function() { drawFrame(0); };
+  if (frames[0].complete) drawFrame(0);
+
   window.addEventListener('scroll', function() {
     targetFrameFloat = getTargetFrame();
   }, { passive: true });
 
-  // Start loop
   loop();
 })();
 </script>
