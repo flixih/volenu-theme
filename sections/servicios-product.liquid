@@ -31,6 +31,32 @@
         </button>
       {% endform %}
 
+      <script>
+        // After any add-to-cart on this page, skip drawer and go straight to checkout
+        document.addEventListener('DOMContentLoaded', function() {
+          // Close cart drawer if it opens and redirect instead
+          var observer = new MutationObserver(function(mutations) {
+            mutations.forEach(function(mutation) {
+              var drawer = document.querySelector('cart-drawer[open], #cart-drawer[open], .cart-drawer.is-open, .cart-drawer.active, [data-cart-drawer].is-open');
+              if (drawer) {
+                drawer.removeAttribute('open');
+                drawer.classList.remove('is-open', 'active');
+                window.location.href = '/checkout';
+              }
+            });
+          });
+          observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['open', 'class'] });
+
+          // Also intercept Kaching bundle button clicks
+          document.addEventListener('click', function(e) {
+            var btn = e.target.closest('.kaching-atc-btn, [data-kaching-atc], .kaching-bundle__atc');
+            if (btn) {
+              setTimeout(function() { window.location.href = '/checkout'; }, 1000);
+            }
+          });
+        });
+      </script>
+
       <!-- TRUST -->
       <div class="sp-trust">
         <span>✓ Pago seguro</span>
