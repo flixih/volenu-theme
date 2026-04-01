@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "servicios-product": {
+      "type": "servicios-product",
+      "settings": {}
+    }
+  },
+  "order": ["servicios-product"]
+}

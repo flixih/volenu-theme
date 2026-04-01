@@ -1,0 +1,197 @@
+<div class="servicios-product-page">
+
+  <div class="sp-container">
+
+    <!-- LEFT: Image -->
+    <div class="sp-image">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}" class="sp-img" />
+      {% endif %}
+    </div>
+
+    <!-- RIGHT: Info -->
+    <div class="sp-info">
+
+      <p class="sp-eyebrow">FlixIH Corp · Diseño Web Profesional</p>
+      <h1 class="sp-title">{{ product.title }}</h1>
+
+      <div class="sp-divider"></div>
+
+      {% if product.description != blank %}
+        <div class="sp-desc">{{ product.description }}</div>
+        <div class="sp-divider"></div>
+      {% endif %}
+
+      <!-- PRICE -->
+      <div class="sp-price-block">
+        <span class="sp-price">{{ product.price | money }}</span>
+        {% if product.handle == 'mantenimiento-mensual' %}
+          <span class="sp-period">/ mes</span>
+        {% else %}
+          <span class="sp-period">pago único</span>
+        {% endif %}
+      </div>
+
+      <!-- ADD TO CART FORM -->
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+        <button type="submit" class="sp-btn" {% unless product.available %}disabled{% endunless %}>
+          {% if product.available %}
+            Ordenar Ahora
+          {% else %}
+            No Disponible
+          {% endif %}
+        </button>
+      {% endform %}
+
+      <!-- TRUST -->
+      <div class="sp-trust">
+        <span>✓ Pago seguro</span>
+        <span>✓ Entrega rápida</span>
+        <span>✓ Soporte incluido</span>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="sp-contact">
+        <p>¿Preguntas? <a href="tel:+17872304472">📞 (787) 230-4472</a></p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<style>
+  .servicios-product-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    font-family: Arial, sans-serif;
+  }
+
+  .sp-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .sp-container { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  /* IMAGE */
+  .sp-img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+  }
+
+  /* INFO */
+  .sp-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c9922a;
+    margin: 0 0 10px;
+  }
+
+  .sp-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0 0 20px;
+    line-height: 1.1;
+  }
+
+  .sp-divider {
+    height: 1px;
+    background: #e5e5e5;
+    margin: 20px 0;
+  }
+
+  .sp-desc {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  /* PRICE */
+  .sp-price-block {
+    margin: 24px 0;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+  }
+
+  .sp-price {
+    font-size: 52px;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1;
+  }
+
+  .sp-period {
+    font-size: 16px;
+    color: #888;
+  }
+
+  /* BUTTON */
+  .sp-btn {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: #1a1a2e;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-bottom: 20px;
+  }
+
+  .sp-btn:hover { background: #c9922a; }
+  .sp-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+  /* TRUST */
+  .sp-trust {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  /* CONTACT */
+  .sp-contact {
+    font-size: 14px;
+    color: #888;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 16px;
+  }
+
+  .sp-contact a {
+    color: #1a1a2e;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .sp-contact a:hover { color: #c9922a; }
+</style>
+
+{% schema %}
+{
+  "name": "Servicios Product",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Servicios Product"
+    }
+  ]
+}
+{% endschema %}
