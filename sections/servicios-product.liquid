@@ -22,29 +22,13 @@
         <div class="sp-divider"></div>
       {% endif %}
 
-      <!-- PRICE -->
-      <div class="sp-price-block">
-        <span class="sp-price">{{ product.price | money }}</span>
-        {% if product.handle == 'mantenimiento-mensual' %}
-          <span class="sp-period">/ mes</span>
-        {% else %}
-          <span class="sp-period">pago único</span>
-        {% endif %}
-      </div>
-
-      <!-- ADD TO CART FORM -->
+      <!-- SINGLE CHECKOUT BUTTON -->
       {% form 'product', product %}
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
         <button type="submit" class="sp-btn sp-btn-primary" {% unless product.available %}disabled{% endunless %}>
-          💳 Pagar $400 — Website
+          🛒 Checkout
         </button>
       {% endform %}
-
-      <a href="/products/mantenimiento-mensual" class="sp-btn sp-btn-secondary">
-        🔧 Suscribirse $50/mes — Mantenimiento
-      </a>
-
-      <p class="sp-note">💡 Completa ambos pagos para activar tu website y mantenimiento.</p>
 
       <!-- TRUST -->
       <div class="sp-trust">
