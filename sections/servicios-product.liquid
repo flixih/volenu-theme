@@ -22,20 +22,14 @@
         <div class="sp-divider"></div>
       {% endif %}
 
-      <!-- BUNDLE WIDGET FROM KACHING - shows here -->
-      <div id="kaching-bundle-{{ product.id }}"></div>
-
-      <!-- CHECKOUT BUTTON -->
-      <a href="/checkout" id="sp-checkout-btn" class="sp-btn sp-btn-primary">
-        🛒 Checkout
-      </a>
-
-      <script>
-        document.getElementById('sp-checkout-btn').addEventListener('click', function(e) {
-          e.preventDefault();
-          window.location.href = '/checkout';
-        });
-      </script>
+      <!-- Kaching Bundle handles add to cart and checkout -->
+      {% form 'product', product %}
+        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
+        <input type="hidden" name="quantity" value="1" />
+        <button type="submit" name="checkout" class="sp-btn sp-btn-primary" {% unless product.available %}disabled{% endunless %}>
+          🛒 Checkout
+        </button>
+      {% endform %}
 
       <!-- TRUST -->
       <div class="sp-trust">
