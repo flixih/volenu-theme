@@ -35,14 +35,16 @@
       <!-- ADD TO CART FORM -->
       {% form 'product', product %}
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
-        <button type="submit" class="sp-btn" {% unless product.available %}disabled{% endunless %}>
-          {% if product.available %}
-            Ordenar Ahora
-          {% else %}
-            No Disponible
-          {% endif %}
+        <button type="submit" class="sp-btn sp-btn-primary" {% unless product.available %}disabled{% endunless %}>
+          💳 Pagar $400 — Website
         </button>
       {% endform %}
+
+      <a href="/products/mantenimiento-mensual" class="sp-btn sp-btn-secondary">
+        🔧 Suscribirse $50/mes — Mantenimiento
+      </a>
+
+      <p class="sp-note">💡 Completa ambos pagos para activar tu website y mantenimiento.</p>
 
       <!-- TRUST -->
       <div class="sp-trust">
@@ -151,11 +153,26 @@
     text-transform: uppercase;
     cursor: pointer;
     transition: background 0.2s;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
+    text-align: center;
+    text-decoration: none;
   }
 
-  .sp-btn:hover { background: #c9922a; }
+  .sp-btn-primary { background: #1a1a2e; }
+  .sp-btn-primary:hover { background: #2d2d4e; color: #fff; }
+
+  .sp-btn-secondary { background: #c9922a; }
+  .sp-btn-secondary:hover { background: #b07d20; color: #fff; }
+
   .sp-btn:disabled { background: #ccc; cursor: not-allowed; }
+
+  .sp-note {
+    font-size: 13px;
+    color: #888;
+    text-align: center;
+    margin: 8px 0 20px;
+    font-style: italic;
+  }
 
   /* TRUST */
   .sp-trust {
