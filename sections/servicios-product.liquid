@@ -22,7 +22,10 @@
         <div class="sp-divider"></div>
       {% endif %}
 
-      <!-- SINGLE CHECKOUT BUTTON -->
+      <!-- BUNDLE WIDGET FROM KACHING - shows here -->
+      <div id="kaching-bundle-{{ product.id }}"></div>
+
+      <!-- CHECKOUT BUTTON -->
       <a href="/checkout" id="sp-checkout-btn" class="sp-btn sp-btn-primary">
         🛒 Checkout
       </a>
@@ -30,18 +33,7 @@
       <script>
         document.getElementById('sp-checkout-btn').addEventListener('click', function(e) {
           e.preventDefault();
-          // Add both products to cart then redirect to checkout
-          fetch('/cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              items: [
-                { id: {{ product.selected_or_first_available_variant.id }}, quantity: 1 }
-              ]
-            })
-          }).then(function() {
-            window.location.href = '/checkout';
-          });
+          window.location.href = '/checkout';
         });
       </script>
 
