@@ -23,13 +23,27 @@
       {% endif %}
 
       <!-- SINGLE CHECKOUT BUTTON -->
-      {% form 'product', product %}
-        <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
-        <input type="hidden" name="quantity" value="1" />
-        <button type="submit" name="checkout" class="sp-btn sp-btn-primary" {% unless product.available %}disabled{% endunless %}>
-          🛒 Checkout
-        </button>
-      {% endform %}
+      <a href="/checkout" id="sp-checkout-btn" class="sp-btn sp-btn-primary">
+        🛒 Checkout
+      </a>
+
+      <script>
+        document.getElementById('sp-checkout-btn').addEventListener('click', function(e) {
+          e.preventDefault();
+          // Add both products to cart then redirect to checkout
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items: [
+                { id: {{ product.selected_or_first_available_variant.id }}, quantity: 1 }
+              ]
+            })
+          }).then(function() {
+            window.location.href = '/checkout';
+          });
+        });
+      </script>
 
       <!-- TRUST -->
       <div class="sp-trust">
