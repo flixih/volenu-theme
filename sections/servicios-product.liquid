@@ -12,7 +12,7 @@
     <!-- RIGHT: Info -->
     <div class="sp-info">
 
-      <p class="sp-eyebrow">FlixIH Corp · Diseño Web Profesional</p>
+      <p class="sp-eyebrow">Roy Lorenzo · Diseño Web Profesional</p>
       <h1 class="sp-title">{{ product.title }}</h1>
 
       <div class="sp-divider"></div>
@@ -25,7 +25,8 @@
       <!-- SINGLE CHECKOUT BUTTON -->
       {% form 'product', product %}
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" />
-        <button type="submit" class="sp-btn sp-btn-primary" {% unless product.available %}disabled{% endunless %}>
+        <input type="hidden" name="quantity" value="1" />
+        <button type="submit" name="checkout" class="sp-btn sp-btn-primary" {% unless product.available %}disabled{% endunless %}>
           🛒 Checkout
         </button>
       {% endform %}
