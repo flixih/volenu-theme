@@ -1,0 +1,281 @@
+{{ 'servicios-web.css' | asset_url | stylesheet_tag }}
+
+<div class="servicios-web-page">
+
+  <!-- HEADER -->
+  <div class="sw-hero">
+    <div class="sw-hero-inner">
+      <p class="sw-eyebrow">FlixIH Corp · Diseño Web Profesional</p>
+      <h1 class="sw-title">Servicios Web</h1>
+      <p class="sw-subtitle">Presencia digital profesional para tu negocio en Puerto Rico</p>
+    </div>
+  </div>
+
+  <!-- CARDS -->
+  <div class="sw-container">
+
+    <!-- CARD 1: Website -->
+    <div class="sw-card">
+      <div class="sw-card-badge">Pago Único</div>
+      <div class="sw-card-icon">🌐</div>
+      <h2 class="sw-card-title">Diseño & Desarrollo de Website</h2>
+      <p class="sw-card-desc">Website profesional completo, personalizado para tu negocio. Listo en días.</p>
+
+      <ul class="sw-features">
+        <li>✓ Diseño profesional personalizado</li>
+        <li>✓ Menú digital completo</li>
+        <li>✓ Galería de fotos y video</li>
+        <li>✓ Botón de llamada directa</li>
+        <li>✓ Mapa con tus localidades</li>
+        <li>✓ 100% optimizado para celular</li>
+        <li>✓ Código QR para las mesas</li>
+      </ul>
+
+      <div class="sw-price">
+        <span class="sw-price-amount">$400</span>
+        <span class="sw-price-period">pago único</span>
+      </div>
+
+      <a href="/products/website-design" class="sw-btn sw-btn-primary">
+        Ordenar Ahora
+      </a>
+    </div>
+
+    <!-- CARD 2: Mantenimiento -->
+    <div class="sw-card sw-card-featured">
+      <div class="sw-card-badge sw-badge-featured">Mensual</div>
+      <div class="sw-card-icon">🔧</div>
+      <h2 class="sw-card-title">Mantenimiento Mensual</h2>
+      <p class="sw-card-desc">Hosting, dominio y soporte técnico continuo. Tu website siempre en línea.</p>
+
+      <ul class="sw-features">
+        <li>✓ Hosting incluido</li>
+        <li>✓ Soporte técnico mensual</li>
+        <li>✓ Website siempre activo</li>
+        <li>✓ Respuesta rápida a problemas</li>
+        <li>✓ Cancela cuando quieras</li>
+      </ul>
+
+      <div class="sw-price">
+        <span class="sw-price-amount">$50</span>
+        <span class="sw-price-period">/ mes</span>
+      </div>
+
+      <a href="/products/mantenimiento-mensual" class="sw-btn sw-btn-secondary">
+        Suscribirse
+      </a>
+    </div>
+
+  </div>
+
+  <!-- BUNDLE NOTE -->
+  <div class="sw-bundle-note">
+    <p>💡 <strong>¿Quieres los dos?</strong> Añade ambos al carrito y paga todo en un solo checkout.</p>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="sw-contact">
+    <p class="sw-contact-text">¿Tienes preguntas? Llámanos directamente.</p>
+    <a href="tel:+17872304472" class="sw-contact-phone">📞 (787) 230-4472</a>
+    <p class="sw-contact-name">Roy Lorenzo · FlixIH Corp · Añasco, Puerto Rico</p>
+  </div>
+
+</div>
+
+<style>
+  .servicios-web-page {
+    font-family: Arial, sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 20px 60px;
+  }
+
+  /* HERO */
+  .sw-hero {
+    background: linear-gradient(135deg, #1a1a2e, #0d0d1a);
+    border-radius: 12px;
+    padding: 60px 40px;
+    text-align: center;
+    margin: 40px 0;
+  }
+  .sw-eyebrow {
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c9922a;
+    margin-bottom: 12px;
+  }
+  .sw-title {
+    font-size: 48px;
+    font-weight: 800;
+    color: #ffffff;
+    margin: 0 0 12px;
+    line-height: 1;
+  }
+  .sw-subtitle {
+    font-size: 16px;
+    color: rgba(255,255,255,0.6);
+    margin: 0;
+  }
+
+  /* CARDS */
+  .sw-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin: 40px 0;
+  }
+  @media (max-width: 640px) {
+    .sw-container { grid-template-columns: 1fr; }
+    .sw-title { font-size: 32px; }
+    .sw-hero { padding: 40px 20px; }
+  }
+
+  .sw-card {
+    border: 2px solid #e5e5e5;
+    border-radius: 12px;
+    padding: 32px 28px;
+    position: relative;
+    background: #ffffff;
+  }
+  .sw-card-featured {
+    border-color: #1a1a2e;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+  }
+
+  .sw-card-badge {
+    position: absolute;
+    top: -12px;
+    left: 24px;
+    background: #1a1a2e;
+    color: #c9922a;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 14px;
+    border-radius: 20px;
+  }
+  .sw-badge-featured {
+    background: #c9922a;
+    color: #ffffff;
+  }
+
+  .sw-card-icon {
+    font-size: 36px;
+    margin-bottom: 12px;
+  }
+  .sw-card-title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1a1a1a;
+    margin: 0 0 8px;
+  }
+  .sw-card-desc {
+    font-size: 14px;
+    color: #666;
+    margin: 0 0 20px;
+    line-height: 1.6;
+  }
+
+  .sw-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+  }
+  .sw-features li {
+    font-size: 14px;
+    color: #444;
+    padding: 6px 0;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .sw-features li:last-child { border-bottom: none; }
+
+  .sw-price {
+    margin: 24px 0 20px;
+  }
+  .sw-price-amount {
+    font-size: 48px;
+    font-weight: 800;
+    color: #1a1a2e;
+    line-height: 1;
+  }
+  .sw-price-period {
+    font-size: 14px;
+    color: #888;
+    margin-left: 6px;
+  }
+
+  .sw-btn {
+    display: block;
+    text-align: center;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 700;
+    text-decoration: none;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    transition: all 0.2s;
+  }
+  .sw-btn-primary {
+    background: #1a1a2e;
+    color: #ffffff;
+  }
+  .sw-btn-primary:hover { background: #2d2d4e; color: #ffffff; }
+  .sw-btn-secondary {
+    background: #c9922a;
+    color: #ffffff;
+  }
+  .sw-btn-secondary:hover { background: #b07d20; color: #ffffff; }
+
+  /* BUNDLE NOTE */
+  .sw-bundle-note {
+    background: #f8f8f0;
+    border: 1px solid #e0d5b0;
+    border-radius: 8px;
+    padding: 20px 24px;
+    text-align: center;
+    margin: 0 0 40px;
+    font-size: 15px;
+    color: #444;
+  }
+
+  /* CONTACT */
+  .sw-contact {
+    text-align: center;
+    padding: 40px 20px;
+    border-top: 1px solid #e5e5e5;
+  }
+  .sw-contact-text {
+    font-size: 16px;
+    color: #666;
+    margin: 0 0 12px;
+  }
+  .sw-contact-phone {
+    display: inline-block;
+    font-size: 28px;
+    font-weight: 800;
+    color: #1a1a2e;
+    text-decoration: none;
+    margin-bottom: 12px;
+  }
+  .sw-contact-phone:hover { color: #c9922a; }
+  .sw-contact-name {
+    font-size: 13px;
+    color: #999;
+    margin: 0;
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Servicios Web",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Servicios Web"
+    }
+  ]
+}
+{% endschema %}

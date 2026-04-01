@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "servicios-web-main": {
+      "type": "servicios-web",
+      "settings": {}
+    }
+  },
+  "order": ["servicios-web-main"]
+}
