@@ -1,0 +1,184 @@
+<div class="ws-page">
+
+  <div class="ws-container">
+
+    <!-- LEFT: Image -->
+    <div class="ws-image">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}" class="ws-img" />
+      {% endif %}
+    </div>
+
+    <!-- RIGHT: Info -->
+    <div class="ws-info">
+
+      <p class="ws-eyebrow">Roy Lorenzo · Diseño Web Profesional</p>
+      <h1 class="ws-title">{{ product.title }}</h1>
+
+      <div class="ws-divider"></div>
+
+      {% if product.description != blank %}
+        <div class="ws-desc">{{ product.description }}</div>
+        <div class="ws-divider"></div>
+      {% endif %}
+
+      <!-- BUNDLE WIDGET FROM KACHING -->
+      <div class="ws-bundle-wrap"></div>
+
+      <!-- CHECKOUT BUTTON -->
+      <a href="/checkout" id="ws-checkout-btn" class="ws-btn">
+        🛒 Checkout
+      </a>
+
+      <div class="ws-trust">
+        <span>✓ Pago seguro</span>
+        <span>✓ Entrega rápida</span>
+        <span>✓ Soporte incluido</span>
+      </div>
+
+      <div class="ws-contact">
+        <p>¿Preguntas? <a href="tel:+17872394472">📞 (787) 239-4472</a></p>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var btn = document.getElementById('ws-checkout-btn');
+    if (btn) {
+      btn.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.location.href = '/checkout';
+      });
+    }
+
+    // Intercept cart drawer and redirect to checkout
+    var observer = new MutationObserver(function() {
+      var drawer = document.querySelector('cart-drawer[open], #cart-drawer[open], .cart-drawer.is-open, .cart-drawer.active');
+      if (drawer) {
+        drawer.removeAttribute('open');
+        drawer.classList.remove('is-open', 'active');
+        window.location.href = '/checkout';
+      }
+    });
+    observer.observe(document.body, { attributes: true, subtree: true, attributeFilter: ['open', 'class'] });
+  });
+</script>
+
+<style>
+  .ws-page {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px 80px;
+    font-family: Arial, sans-serif;
+  }
+
+  .ws-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .ws-container { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  .ws-img {
+    width: 100%;
+    border-radius: 12px;
+    display: block;
+  }
+
+  .ws-eyebrow {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #c9922a;
+    margin: 0 0 10px;
+  }
+
+  .ws-title {
+    font-size: 36px;
+    font-weight: 800;
+    color: #1a1a1a;
+    margin: 0 0 20px;
+    line-height: 1.1;
+  }
+
+  .ws-divider {
+    height: 1px;
+    background: #e5e5e5;
+    margin: 16px 0;
+  }
+
+  .ws-desc {
+    font-size: 15px;
+    color: #555;
+    line-height: 1.7;
+  }
+
+  .ws-bundle-wrap {
+    margin: 8px 0;
+  }
+
+  .ws-btn {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    background: #1a1a2e;
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin: 16px 0;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .ws-btn:hover { background: #c9922a; color: #fff; }
+
+  .ws-trust {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 13px;
+    color: #555;
+    margin-bottom: 20px;
+  }
+
+  .ws-contact {
+    font-size: 14px;
+    color: #888;
+    border-top: 1px solid #e5e5e5;
+    padding-top: 16px;
+  }
+
+  .ws-contact a {
+    color: #1a1a2e;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .ws-contact a:hover { color: #c9922a; }
+</style>
+
+{% schema %}
+{
+  "name": "Web Services Product",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Web Services Product"
+    }
+  ]
+}
+{% endschema %}

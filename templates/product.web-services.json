@@ -1,0 +1,9 @@
+{
+  "sections": {
+    "web-services-main": {
+      "type": "web-services-product",
+      "settings": {}
+    }
+  },
+  "order": ["web-services-main"]
+}
