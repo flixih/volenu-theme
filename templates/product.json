@@ -154,7 +154,7 @@
             "color_scheme": "background-1",
             "button_label": "Add to cart",
             "enable_custom_btn_color": true,
-            "custom_btn_color": "#1a3a6b",
+            "custom_btn_color": "#FF5A1F",
             "show_price_badge": true,
             "show_variant_picker": true,
             "desktop_show_title": true,

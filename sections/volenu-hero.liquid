@@ -1,79 +1,75 @@
-{% comment %} Volenu Hero — Full screen scroll scrub animation {% endcomment %}
-
 <style>
-  .volu-scroll-section {
-    position: relative;
-    height: 300vh;
-    background: #0a0a0a;
-  }
-  .volu-sticky-wrap {
-    position: sticky;
-    top: 0;
-    width: 100%;
-    height: 100vh;
-    overflow: hidden;
-  }
-  .volu-canvas-wrap {
-    position: absolute;
-    inset: 0;
+  .volu-hero {
+    background: #FFFFFF;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 24px;
   }
-  .volu-canvas-wrap img {
+
+  .volu-hero__inner {
+    max-width: 1200px;
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
-    display: block;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
   }
-  .volu-overlay-text {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 0 8vw;
-    pointer-events: none;
-    z-index: 10;
+
+  .volu-hero__text {
+    z-index: 2;
   }
-  @media (max-width: 749px) {
-    .volu-canvas-wrap img {
-      object-fit: contain;
-      background: #0a0a0a;
-    }
-  }
-  .volu-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
+
+  .volu-hero__badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #F5F5F5;
+    border: 1px solid #E5E5E5;
+    color: #666666;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: #1a3a6b;
-    border: 1px solid #1a3a6b;
-    border-radius: 50px;
-    padding: 6px 16px;
+    padding: 6px 14px;
+    border-radius: 100px;
     margin-bottom: 24px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: voluFadeUp 0.8s ease forwards 0.3s;
   }
-  .volu-headline {
-    font-size: clamp(40px, 7vw, 90px);
-    font-weight: 900;
-    line-height: 1.05;
-    color: #fff;
-    margin-bottom: 32px;
-    max-width: 600px;
+
+  .volu-hero__badge-dot {
+    width: 6px;
+    height: 6px;
+    background: #FF5A1F;
+    border-radius: 50%;
   }
-  .volu-headline .blue { color: #1a3a6b; }
-  .volu-headline .word {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: voluFadeUp 0.7s ease forwards;
+
+  .volu-hero__headline {
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 700;
+    color: #111111;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
   }
-  .volu-bullets {
+
+  .volu-hero__headline .accent {
+    color: #FF5A1F;
+  }
+
+  .volu-hero__sub {
+    font-size: 18px;
+    color: #666666;
+    line-height: 1.6;
+    margin: 0 0 36px;
+    max-width: 440px;
+    font-weight: 400;
+  }
+
+  .volu-hero__bullets {
     list-style: none;
     padding: 0;
     margin: 0 0 40px;
@@ -81,270 +77,205 @@
     flex-direction: column;
     gap: 12px;
   }
-  .volu-bullet {
+
+  .volu-hero__bullets li {
     display: flex;
     align-items: center;
-    gap: 12px;
-    color: rgba(255,255,255,0.85);
-    font-size: clamp(14px, 1.5vw, 18px);
+    gap: 10px;
+    font-size: 15px;
+    color: #333333;
     font-weight: 500;
-    opacity: 0;
-    transform: translateX(-20px);
-    animation: voluSlideRight 0.6s ease forwards;
   }
-  .volu-bullet-check {
-    width: 22px;
-    height: 22px;
+
+  .volu-hero__bullets li::before {
+    content: '';
+    width: 18px;
+    height: 18px;
+    background: #FF5A1F;
     border-radius: 50%;
-    background: #1a3a6b;
-    color: #000;
+    flex-shrink: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 4L3.5 6.5L9 1' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+  }
+
+  .volu-hero__cta-row {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .volu-hero__btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: #FF5A1F;
+    color: #FFFFFF;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 16px 32px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: background 0.2s, transform 0.2s;
+    letter-spacing: 0.01em;
+  }
+
+  .volu-hero__btn:hover {
+    background: #e04a12;
+    transform: translateY(-1px);
+  }
+
+  .volu-hero__trust {
+    font-size: 13px;
+    color: #999999;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .volu-hero__stars {
+    color: #F5A623;
+    font-size: 14px;
+  }
+
+  .volu-hero__image {
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 12px;
-    font-weight: 900;
-    flex-shrink: 0;
   }
-  .volu-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    background: #1a3a6b;
-    color: #000;
-    font-size: 16px;
-    font-weight: 800;
-    padding: 18px 40px;
-    border-radius: 50px;
-    text-decoration: none;
-    pointer-events: all;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: voluFadeUp 0.8s ease forwards 1.8s;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 0 rgba(249,165,201,0);
-  }
-  .volu-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 40px rgba(249,165,201,0.5);
-  }
-  .volu-scroll-hint {
-    position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
+
+  .volu-hero__img-wrap {
+    width: 100%;
+    max-width: 560px;
+    aspect-ratio: 1;
+    background: #F5F5F5;
+    border-radius: 24px;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    color: rgba(255,255,255,0.4);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    opacity: 0;
-    animation: voluFadeUp 1s ease forwards 2.5s;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
   }
-  .volu-scroll-arrow {
-    animation: voloBounce 1.5s ease infinite;
+
+  .volu-hero__img-wrap img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    animation: volu-float 4s ease-in-out infinite;
   }
-  @keyframes voluFadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes voluSlideRight {
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes voloBounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
-  }
-  .volu-progress-bar {
+
+  .volu-hero__spec-tag {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    background: #1a3a6b;
-    width: 0%;
-    z-index: 20;
-    transition: width 0.05s linear;
+    background: #FFFFFF;
+    border: 1px solid #E5E5E5;
+    border-radius: 12px;
+    padding: 10px 16px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+    font-size: 13px;
+    font-weight: 600;
+    color: #111111;
+    white-space: nowrap;
+  }
+
+  .volu-hero__spec-tag span {
+    color: #FF5A1F;
+    display: block;
+    font-size: 11px;
+    font-weight: 400;
+    color: #999;
+    margin-top: 1px;
+  }
+
+  .volu-hero__spec-1 { top: 15%; left: -5%; }
+  .volu-hero__spec-2 { bottom: 20%; right: -5%; }
+  .volu-hero__spec-3 { top: 55%; left: -8%; }
+
+  @keyframes volu-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  @media (max-width: 768px) {
+    .volu-hero__inner {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      text-align: center;
+    }
+    .volu-hero__image { order: -1; }
+    .volu-hero__sub { max-width: 100%; margin-left: auto; margin-right: auto; }
+    .volu-hero__cta-row { justify-content: center; }
+    .volu-hero__spec-1, .volu-hero__spec-2, .volu-hero__spec-3 { display: none; }
+    .volu-hero__bullets { align-items: flex-start; text-align: left; }
   }
 </style>
 
-<div class="volu-scroll-section" id="volu-scroll-{{ section.id }}">
-  <div class="volu-sticky-wrap">
-
-    <div class="volu-canvas-wrap">
-      <img
-        id="volu-frame-{{ section.id }}"
-        src="{{ 'frame_000_delay-0.04s.webp' | asset_url }}"
-        alt="Volenu Relief Belt"
-        style="width:100%;height:100%;object-fit:cover;display:block;"
-        draggable="false"
-      />
-    </div>
-
-    <!-- Overlay text left side -->
-    <div class="volu-overlay-text">
-      <div class="volu-eyebrow">Heat Therapy Reimagined</div>
-
-      <h1 class="volu-headline">
-        <span class="word" style="animation-delay:0.5s">Feel&nbsp;</span>
-        <span class="word" style="animation-delay:0.65s">the&nbsp;</span>
-        <span class="word blue" style="animation-delay:0.8s">Future.</span>
-        <br>
-        <span class="word" style="animation-delay:0.95s">Now.</span>
+<section class="volu-hero" id="volu-hero-{{ section.id }}">
+  <div class="volu-hero__inner">
+    <div class="volu-hero__text">
+      <div class="volu-hero__badge">
+        <span class="volu-hero__badge-dot"></span>
+        New Drop — AI Wearable Tech
+      </div>
+      <h1 class="volu-hero__headline">
+        See the World<br>Through <span class="accent">AI.</span>
       </h1>
-
-      <ul class="volu-bullets">
-        <li class="volu-bullet" style="animation-delay:1.1s">
-          <span class="volu-bullet-check">✓</span> Real-time AI Translation
-        </li>
-        <li class="volu-bullet" style="animation-delay:1.25s">
-          <span class="volu-bullet-check">✓</span> 4K Photo & Video
-        </li>
-        <li class="volu-bullet" style="animation-delay:1.4s">
-          <span class="volu-bullet-check">✓</span> Voice Control
-        </li>
-        <li class="volu-bullet" style="animation-delay:1.55s">
-          <span class="volu-bullet-check">✓</span> 30-Day Guarantee
-        </li>
+      <p class="volu-hero__sub">
+        Real-time translation, 4K video, and voice control — all built into glasses you'd actually wear every day.
+      </p>
+      <ul class="volu-hero__bullets">
+        <li>Real-Time AI Translation in 40+ Languages</li>
+        <li>4K Photo & Video with Stabilization</li>
+        <li>Hands-Free Voice Control</li>
+        <li>30-Day Money Back Guarantee</li>
       </ul>
-
-      <a href="/products/ai-smart-glasses-with-real-time-translation-ai-assistant-4k-photo-taking-video-stabilization-camera-voice-control" class="volu-cta">
-        Shop Now — Free Shipping →
-      </a>
+      <div class="volu-hero__cta-row">
+        <a href="/products/ai-smart-glasses-with-real-time-translation-ai-assistant-4k-photo-taking-video-stabilization-camera-voice-control" class="volu-hero__btn">
+          Shop Now — Free Shipping →
+        </a>
+        <div class="volu-hero__trust">
+          <span class="volu-hero__stars">★★★★★</span>
+          4.8 · 10,000+ customers
+        </div>
+      </div>
     </div>
 
-    <!-- Scroll hint -->
-    <div class="volu-scroll-hint">
-      <span>SCROLL TO EXPLORE</span>
-      <span class="volu-scroll-arrow">↓</span>
+    <div class="volu-hero__image">
+      <div class="volu-hero__img-wrap">
+        {%- assign hero_img = section.settings.hero_image -%}
+        {%- if hero_img != blank -%}
+          <img src="{{ hero_img | image_url: width: 800 }}" alt="Volenu AI Smart Glasses" loading="eager">
+        {%- else -%}
+          {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg' }}
+        {%- endif -%}
+      </div>
+      <div class="volu-hero__spec-tag volu-hero__spec-1">
+        4K UHD
+        <span>Video Quality</span>
+      </div>
+      <div class="volu-hero__spec-tag volu-hero__spec-2">
+        40+ Languages
+        <span>AI Translation</span>
+      </div>
+      <div class="volu-hero__spec-tag volu-hero__spec-3">
+        35g
+        <span>Ultra Lightweight</span>
+      </div>
     </div>
-
-    <!-- Progress bar -->
-    <div class="volu-progress-bar" id="volu-progress-{{ section.id }}"></div>
-
   </div>
-</div>
-
-<script>
-(function() {
-  var TOTAL_FRAMES = 192;
-  var sectionId = '{{ section.id }}';
-  var img = document.getElementById('volu-frame-' + sectionId);
-  var section = document.getElementById('volu-scroll-' + sectionId);
-  var progress = document.getElementById('volu-progress-' + sectionId);
-
-  if (!img || !section) return;
-
-  var frameUrls = [
-    {% for i in (0..191) %}
-      {% assign padded = i | prepend: '000' | slice: -3, 3 %}
-      {% if i == 2 or i == 8 or i == 14 or i == 20 or i == 26 or i == 32 or i == 38 or i == 44 or i == 50 or i == 56 or i == 62 or i == 68 or i == 74 or i == 80 or i == 86 or i == 92 or i == 98 or i == 104 or i == 110 or i == 116 or i == 122 or i == 128 or i == 134 or i == 140 or i == 146 or i == 152 or i == 158 or i == 164 or i == 170 or i == 176 or i == 182 or i == 188 %}
-        {% assign fname = 'frame_' | append: padded | append: '_delay-0.05s.webp' %}
-      {% else %}
-        {% assign fname = 'frame_' | append: padded | append: '_delay-0.04s.webp' %}
-      {% endif %}
-      '{{ fname | asset_url }}'{% unless forloop.last %},{% endunless %}
-    {% endfor %}
-  ];
-
-  // Replace img with canvas for smooth rendering
-  var canvas = document.createElement('canvas');
-  canvas.style.cssText = img.style.cssText || 'width:100%;height:100%;object-fit:cover;display:block;';
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
-  img.parentNode.replaceChild(canvas, img);
-  var ctx = canvas.getContext('2d');
-
-  function resizeCanvas() {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  // Preload all frames
-  var frames = new Array(TOTAL_FRAMES);
-  var loadedCount = 0;
-  for (var i = 0; i < TOTAL_FRAMES; i++) {
-    (function(idx) {
-      var preImg = new Image();
-      preImg.onload = function() { loadedCount++; };
-      preImg.src = frameUrls[idx];
-      frames[idx] = preImg;
-    })(i);
-  }
-
-  var currentFrameFloat = 0;
-  var targetFrameFloat = 0;
-  var lastDrawnIdx = -1;
-
-  function getTargetFrame() {
-    var rect = section.getBoundingClientRect();
-    var scrolled = -rect.top;
-    var maxScroll = section.offsetHeight - window.innerHeight;
-    if (scrolled < 0) scrolled = 0;
-    if (scrolled > maxScroll) scrolled = maxScroll;
-    return maxScroll > 0 ? (scrolled / maxScroll) * (TOTAL_FRAMES - 1) : 0;
-  }
-
-  function drawFrame(idx) {
-    var f = frames[idx];
-    if (f && f.complete && f.naturalWidth > 0) {
-      if (canvas.width !== canvas.offsetWidth || canvas.height !== canvas.offsetHeight) resizeCanvas();
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // cover fit
-      var iw = f.naturalWidth, ih = f.naturalHeight;
-      var cw = canvas.width, ch = canvas.height;
-      var scale = Math.max(cw / iw, ch / ih);
-      var nw = iw * scale, nh = ih * scale;
-      var ox = (cw - nw) / 2, oy = (ch - nh) / 2;
-      ctx.drawImage(f, ox, oy, nw, nh);
-    }
-  }
-
-  function loop() {
-    // Apply momentum — coasts after scroll stops
-    velocity *= 0.85;
-    targetFrameFloat += velocity;
-    targetFrameFloat = Math.max(0, Math.min(TOTAL_FRAMES - 1, targetFrameFloat));
-
-    currentFrameFloat += (targetFrameFloat - currentFrameFloat) * 0.12;
-
-    var idx = Math.round(currentFrameFloat);
-    idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, idx));
-
-    if (idx !== lastDrawnIdx) {
-      lastDrawnIdx = idx;
-      drawFrame(idx);
-    }
-
-    if (progress) {
-      progress.style.width = ((currentFrameFloat / (TOTAL_FRAMES - 1)) * 100) + '%';
-    }
-
-    requestAnimationFrame(loop);
-  }
-
-  // Draw first frame immediately
-  frames[0].onload = function() { drawFrame(0); };
-  if (frames[0].complete) drawFrame(0);
-
-  var velocity = 0;
-  var lastTarget = 0;
-
-  window.addEventListener('scroll', function() {
-    var newTarget = getTargetFrame();
-    velocity = newTarget - lastTarget;
-    lastTarget = newTarget;
-    targetFrameFloat = newTarget;
-  }, { passive: true });
-
-  loop();
-})();
-</script>
+</section>
 
 {% schema %}
 {
   "name": "Volenu Hero",
-  "settings": []
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "hero_image",
+      "label": "Hero Product Image"
+    }
+  ],
+  "presets": [{ "name": "Volenu Hero" }]
 }
 {% endschema %}
