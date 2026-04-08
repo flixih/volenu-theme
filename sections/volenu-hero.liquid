@@ -1,5 +1,3 @@
-{% comment %} Volenu Hero — Full screen scroll scrub animation {% endcomment %}
-
 <style>
   .volu-scroll-section {
     position: relative;
@@ -9,231 +7,144 @@
   .volu-sticky-wrap {
     position: sticky;
     top: 0;
-    width: 100%;
     height: 100vh;
     overflow: hidden;
   }
   .volu-canvas-wrap {
     position: absolute;
     inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
-  .volu-canvas-wrap img {
+  #volu-hero-img-{{ section.id }} {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center center;
     display: block;
   }
-  .volu-overlay-text {
+  .volu-overlay {
     position: absolute;
     inset: 0;
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    padding: 0 8vw;
-    pointer-events: none;
-    z-index: 10;
-  }
-  @media (max-width: 749px) {
-    .volu-canvas-wrap img {
-      object-fit: contain;
-      background: #0a0a0a;
-    }
-  }
-  .volu-eyebrow {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: #f9a5c9;
-    border: 1px solid #f9a5c9;
-    border-radius: 50px;
-    padding: 6px 16px;
-    margin-bottom: 24px;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: voluFadeUp 0.8s ease forwards 0.3s;
+    justify-content: flex-end;
+    padding: 0 48px 60px;
+    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
   }
   .volu-headline {
-    font-size: clamp(40px, 7vw, 90px);
-    font-weight: 900;
-    line-height: 1.05;
+    font-size: clamp(36px, 6vw, 80px);
+    font-weight: 800;
     color: #fff;
-    margin-bottom: 32px;
-    max-width: 600px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin: 0 0 20px;
   }
-  .volu-headline .pink { color: #f9a5c9; }
-  .volu-headline .word {
-    display: inline-block;
-    opacity: 0;
-    transform: translateY(30px);
-    animation: voluFadeUp 0.7s ease forwards;
-  }
+  .volu-headline .accent { color: #22c55e; }
   .volu-bullets {
     list-style: none;
     padding: 0;
-    margin: 0 0 40px;
+    margin: 0 0 32px;
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
   }
-  .volu-bullet {
+  .volu-bullets li {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
+    font-size: 16px;
     color: rgba(255,255,255,0.85);
-    font-size: clamp(14px, 1.5vw, 18px);
     font-weight: 500;
-    opacity: 0;
-    transform: translateX(-20px);
-    animation: voluSlideRight 0.6s ease forwards;
   }
-  .volu-bullet-check {
-    width: 22px;
-    height: 22px;
-    border-radius: 50%;
-    background: #f9a5c9;
-    color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: 900;
-    flex-shrink: 0;
+  .volu-bullets li::before {
+    content: '✓';
+    color: #22c55e;
+    font-weight: 700;
+    font-size: 14px;
   }
   .volu-cta {
     display: inline-flex;
     align-items: center;
-    gap: 10px;
-    background: #f9a5c9;
-    color: #000;
+    gap: 8px;
+    background: #22c55e;
+    color: #fff;
     font-size: 16px;
-    font-weight: 800;
-    padding: 18px 40px;
-    border-radius: 50px;
+    font-weight: 700;
+    padding: 16px 32px;
+    border-radius: 100px;
     text-decoration: none;
-    pointer-events: all;
-    opacity: 0;
-    transform: translateY(20px);
-    animation: voluFadeUp 0.8s ease forwards 1.8s;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 0 rgba(249,165,201,0);
+    width: fit-content;
+    transition: background 0.2s;
   }
-  .volu-cta:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 8px 40px rgba(249,165,201,0.5);
+  .volu-cta:hover { background: #16a34a; }
+  .volu-progress-bar {
+    position: absolute;
+    bottom: 0; left: 0;
+    height: 3px;
+    background: #22c55e;
+    width: 0%;
+    transition: width 0.1s;
   }
   .volu-scroll-hint {
     position: absolute;
-    bottom: 40px;
-    left: 50%;
-    transform: translateX(-50%);
+    bottom: 80px;
+    right: 48px;
+    color: rgba(255,255,255,0.4);
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 8px;
-    color: rgba(255,255,255,0.4);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    opacity: 0;
-    animation: voluFadeUp 1s ease forwards 2.5s;
   }
-  .volu-scroll-arrow {
-    animation: voloBounce 1.5s ease infinite;
-  }
-  @keyframes voluFadeUp {
-    to { opacity: 1; transform: translateY(0); }
-  }
-  @keyframes voluSlideRight {
-    to { opacity: 1; transform: translateX(0); }
-  }
-  @keyframes voloBounce {
+  .volu-scroll-arrow { animation: bounce 1.5s ease-in-out infinite; }
+  @keyframes bounce {
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(6px); }
   }
-  .volu-progress-bar {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    height: 2px;
-    background: #f9a5c9;
-    width: 0%;
-    z-index: 20;
-    transition: width 0.05s linear;
+  @media (max-width: 768px) {
+    .volu-overlay { padding: 0 20px 40px; }
+    .volu-scroll-hint { display: none; }
   }
 </style>
 
 <div class="volu-scroll-section" id="volu-scroll-{{ section.id }}">
   <div class="volu-sticky-wrap">
-
     <div class="volu-canvas-wrap">
-      <img
-        id="volu-frame-{{ section.id }}"
+      <img id="volu-hero-img-{{ section.id }}"
         src="{{ 'frame_000_delay-0.04s.webp' | asset_url }}"
-        alt="Volenu Relief Belt"
-        style="width:100%;height:100%;object-fit:cover;display:block;"
-        draggable="false"
-      />
+        alt="Volenu AI Smart Glasses"/>
     </div>
-
-    <!-- Overlay text left side -->
-    <div class="volu-overlay-text">
-      <div class="volu-eyebrow">Heat Therapy Reimagined</div>
-
+    <div class="volu-overlay">
       <h1 class="volu-headline">
-        <span class="word" style="animation-delay:0.5s">Feel&nbsp;</span>
-        <span class="word" style="animation-delay:0.65s">the&nbsp;</span>
-        <span class="word pink" style="animation-delay:0.8s">Relief.</span>
-        <br>
-        <span class="word" style="animation-delay:0.95s">Instantly.</span>
+        See the World<br>Through <span class="accent">AI.</span>
       </h1>
-
       <ul class="volu-bullets">
-        <li class="volu-bullet" style="animation-delay:1.1s">
-          <span class="volu-bullet-check">✓</span> Heat in 3 seconds
-        </li>
-        <li class="volu-bullet" style="animation-delay:1.25s">
-          <span class="volu-bullet-check">✓</span> Wireless freedom
-        </li>
-        <li class="volu-bullet" style="animation-delay:1.4s">
-          <span class="volu-bullet-check">✓</span> 3 temperature levels
-        </li>
-        <li class="volu-bullet" style="animation-delay:1.55s">
-          <span class="volu-bullet-check">✓</span> 30-Day Guarantee
-        </li>
+        <li>Real-Time AI Translation in 40+ Languages</li>
+        <li>4K Photo & Video with Stabilization</li>
+        <li>Hands-Free Voice Control</li>
+        <li>30-Day Money Back Guarantee</li>
       </ul>
-
-      <a href="/products/heated-massage-warming-palace-belt-for-girls-during-menstrual-period-auntie-nuangongbao-intelligent-heating-waist-massage-device" class="volu-cta">
+      <a href="/products/ai-smart-glasses-with-real-time-translation-ai-assistant-4k-photo-taking-video-stabilization-camera-voice-control" class="volu-cta">
         Shop Now — Free Shipping →
       </a>
     </div>
-
-    <!-- Scroll hint -->
+    <div class="volu-progress-bar" id="volu-progress-{{ section.id }}"></div>
     <div class="volu-scroll-hint">
-      <span>SCROLL TO EXPLORE</span>
+      <span>Scroll</span>
       <span class="volu-scroll-arrow">↓</span>
     </div>
-
-    <!-- Progress bar -->
-    <div class="volu-progress-bar" id="volu-progress-{{ section.id }}"></div>
-
   </div>
 </div>
 
 <script>
 (function() {
-  var TOTAL_FRAMES = 192;
   var sectionId = '{{ section.id }}';
-  var img = document.getElementById('volu-frame-' + sectionId);
   var section = document.getElementById('volu-scroll-' + sectionId);
+  var img = document.getElementById('volu-hero-img-' + sectionId);
   var progress = document.getElementById('volu-progress-' + sectionId);
+  if (!section || !img) return;
 
-  if (!img || !section) return;
-
+  var TOTAL_FRAMES = 192;
   var frameUrls = [
     {% for i in (0..191) %}
       {% assign padded = i | prepend: '000' | slice: -3, 3 %}
@@ -246,28 +157,10 @@
     {% endfor %}
   ];
 
-  // Replace img with canvas for smooth rendering
-  var canvas = document.createElement('canvas');
-  canvas.style.cssText = img.style.cssText || 'width:100%;height:100%;object-fit:cover;display:block;';
-  canvas.style.width = '100%';
-  canvas.style.height = '100%';
-  img.parentNode.replaceChild(canvas, img);
-  var ctx = canvas.getContext('2d');
-
-  function resizeCanvas() {
-    canvas.width = canvas.offsetWidth;
-    canvas.height = canvas.offsetHeight;
-  }
-  resizeCanvas();
-  window.addEventListener('resize', resizeCanvas);
-
-  // Preload all frames
   var frames = new Array(TOTAL_FRAMES);
-  var loadedCount = 0;
   for (var i = 0; i < TOTAL_FRAMES; i++) {
     (function(idx) {
       var preImg = new Image();
-      preImg.onload = function() { loadedCount++; };
       preImg.src = frameUrls[idx];
       frames[idx] = preImg;
     })(i);
@@ -276,6 +169,8 @@
   var currentFrameFloat = 0;
   var targetFrameFloat = 0;
   var lastDrawnIdx = -1;
+  var velocity = 0;
+  var lastTarget = 0;
 
   function getTargetFrame() {
     var rect = section.getBoundingClientRect();
@@ -286,50 +181,22 @@
     return maxScroll > 0 ? (scrolled / maxScroll) * (TOTAL_FRAMES - 1) : 0;
   }
 
-  function drawFrame(idx) {
-    var f = frames[idx];
-    if (f && f.complete && f.naturalWidth > 0) {
-      if (canvas.width !== canvas.offsetWidth || canvas.height !== canvas.offsetHeight) resizeCanvas();
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-      // cover fit
-      var iw = f.naturalWidth, ih = f.naturalHeight;
-      var cw = canvas.width, ch = canvas.height;
-      var scale = Math.max(cw / iw, ch / ih);
-      var nw = iw * scale, nh = ih * scale;
-      var ox = (cw - nw) / 2, oy = (ch - nh) / 2;
-      ctx.drawImage(f, ox, oy, nw, nh);
-    }
-  }
-
   function loop() {
-    // Apply momentum — coasts after scroll stops
     velocity *= 0.85;
     targetFrameFloat += velocity;
     targetFrameFloat = Math.max(0, Math.min(TOTAL_FRAMES - 1, targetFrameFloat));
-
     currentFrameFloat += (targetFrameFloat - currentFrameFloat) * 0.12;
-
     var idx = Math.round(currentFrameFloat);
     idx = Math.max(0, Math.min(TOTAL_FRAMES - 1, idx));
-
     if (idx !== lastDrawnIdx) {
       lastDrawnIdx = idx;
-      drawFrame(idx);
+      if (frames[idx] && frames[idx].complete && frames[idx].naturalWidth > 0) {
+        img.src = frames[idx].src;
+      }
     }
-
-    if (progress) {
-      progress.style.width = ((currentFrameFloat / (TOTAL_FRAMES - 1)) * 100) + '%';
-    }
-
+    if (progress) progress.style.width = ((currentFrameFloat / (TOTAL_FRAMES - 1)) * 100) + '%';
     requestAnimationFrame(loop);
   }
-
-  // Draw first frame immediately
-  frames[0].onload = function() { drawFrame(0); };
-  if (frames[0].complete) drawFrame(0);
-
-  var velocity = 0;
-  var lastTarget = 0;
 
   window.addEventListener('scroll', function() {
     var newTarget = getTargetFrame();
@@ -345,6 +212,6 @@
 {% schema %}
 {
   "name": "Volenu Hero",
-  "settings": []
+  "presets": [{ "name": "Volenu Hero" }]
 }
 {% endschema %}

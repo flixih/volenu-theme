@@ -70,7 +70,7 @@
         "emoji_benefits_xFGiTn": {
           "type": "emoji_benefits",
           "settings": {
-            "benefits": "<p>🌡️ Cramps gone in seconds, not hours</p><p><br/>🎀 Live your day — pain-free & wireless</p><p><br/>🔋 Wraps on, heats up, works instantly<br/></p>",
+            "benefits": "<p>🌡️ Translate 40+ languages in real-time</p><p><br/>🎀 4K photo & video with stabilization</p><p><br/>🔋 Hands-free voice control<br/></p>",
             "margin_top": 0,
             "margin_bottom": 0
           }
@@ -154,7 +154,7 @@
             "color_scheme": "background-1",
             "button_label": "Add to cart",
             "enable_custom_btn_color": true,
-            "custom_btn_color": "#f9a5c9",
+            "custom_btn_color": "#22c55e",
             "show_price_badge": true,
             "show_variant_picker": true,
             "desktop_show_title": true,
@@ -313,7 +313,7 @@
         "heading_hJVTy3": {
           "type": "heading",
           "settings": {
-            "heading": "Stop Letting Your Period Stop You",
+            "heading": "See the World Through AI",
             "heading_size": "h1"
           }
         },
@@ -384,7 +384,7 @@
       ],
       "name": "t:sections.multicolumn.presets.name",
       "settings": {
-        "title": "Relief in 3 Steps. Done.",
+        "title": "Ready in 3 Steps. Done.",
         "heading_size": "h1",
         "image_width": "full",
         "image_ratio": "adapt",
@@ -451,21 +451,21 @@
           "type": "row",
           "settings": {
             "percentage": 94,
-            "row_text": "<p>felt relief faster than any painkiller I've tried</p>"
+            "row_text": "<p>said AI translation worked instantly I've tried</p>"
           }
         },
         "row2": {
           "type": "row",
           "settings": {
             "percentage": 96,
-            "row_text": "<p>said they were able to go about their day without stopping because of cramps</p>"
+            "row_text": "<p>said 4K camera quality exceeded expectations</p>"
           }
         },
         "row3": {
           "type": "row",
           "settings": {
             "percentage": 95,
-            "row_text": "<p>said they would recommend Volenu to every woman they know</p>"
+            "row_text": "<p>said they would recommend Volenu AI Glasses</p>"
           }
         }
       },
@@ -478,7 +478,7 @@
         "title": "Real Women. Real Results.",
         "text": "",
         "button_label": "Shop Now",
-        "link": "/products/heated-massage-warming-palace-belt-for-girls-during-menstrual-period-auntie-nuangongbao-intelligent-heating-waist-massage-device"
+        "link": "/products/ai-smart-glasses-with-real-time-translation-ai-assistant-4k-photo-taking-video-stabilization-camera-voice-control"
       }
     },
     "rich_text_d7MAiq": {
@@ -729,7 +729,7 @@
       "settings": {
         "divider_shape": "wavy",
         "divider_color_top": "#ffffff",
-        "divider_color_bottom": "#f9a5c9",
+        "divider_color_bottom": "#22c55e",
         "padding_top_desktop": 40,
         "padding_bottom_desktop": 40,
         "padding_top_mobile": 40,

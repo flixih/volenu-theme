@@ -13,7 +13,7 @@
     "logo_width": 140,
     "favicon": "shopify://shop_images/volenu-v-logo.png",
     "colors_solid_button_labels": "#ffffff",
-    "colors_accent_1": "#f9a5c9",
+    "colors_accent_1": "#22c55e",
     "colors_accent_2": "#000000",
     "colors_text": "#000000",
     "colors_outline_button_labels": "#000000",
@@ -240,7 +240,7 @@
       },
       "scheme-3": {
         "settings": {
-          "background": "#f9a5c9",
+          "background": "#111111",
           "background_gradient": "",
           "text": "#ffffff",
           "button": "#ffffff",
