@@ -1,6 +1,6 @@
 <style>
   .volu-results-section {
-    background: #fff5f8;
+    background: #ffffff;
     padding: 70px 20px;
     text-align: center;
   }
@@ -70,8 +70,8 @@
 </style>
 
 <div class="volu-results-section">
-  <h2>{{ section.settings.title | default: 'Real Women. Real Results.' }}</h2>
-  <p class="volu-results-sub">{{ section.settings.text | default: 'Thousands of Volenu users tracked their pain levels before and after using the belt.' }}</p>
+  <h2>{{ section.settings.title | default: 'Real Users. Real Results.' }}</h2>
+  <p class="volu-results-sub">{{ section.settings.text | default: 'Thousands of Volenu customers rated their experience after using the AI Smart Glasses.' }}</p>
   <div class="volu-results-cards">
     {%- for block in section.blocks -%}
       <div class="volu-results-card">
@@ -128,7 +128,7 @@
 {
   "name": "Results Big Cards",
   "settings": [
-    { "type": "text", "id": "title", "label": "Heading", "default": "Real Women. Real Results." },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Real Users. Real Results." },
     { "type": "richtext", "id": "text", "label": "Subtext" },
     { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
     { "type": "url", "id": "link", "label": "Button link" }

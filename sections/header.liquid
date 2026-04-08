@@ -43,6 +43,15 @@
     grid-column: 2;
     text-align: center;
     justify-self: center;
+    color: #ffffff !important;
+  }
+  /* Force logo text white */
+  .header__heading-link, .header__heading-link * {
+    color: #ffffff !important;
+  }
+  /* If logo is an image, add brightness filter to make it white */
+  .header__heading-logo {
+    filter: brightness(0) invert(1);
   }
   .header nav.header__inline-menu {
     grid-column: 1;
