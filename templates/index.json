@@ -9,6 +9,10 @@
  */
 {
   "sections": {
+    "nova_home": {
+      "type": "volenu-nova-home",
+      "settings": {}
+    },
     "volenu_hero": {
       "type": "volenu-hero",
       "settings": {}
@@ -67,6 +71,7 @@
     }
   },
   "order": [
+    "nova_home",
     "volenu_hero",
     "featured_collection_P9AGLc",
     "contact_form_Exj8J9"
