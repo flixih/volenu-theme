@@ -1,142 +1,149 @@
 <style>
-  .volu-results {
-    background: #F5F5F5;
-    padding: 80px 24px;
-  }
-  .volu-results__inner {
-    max-width: 1100px;
-    margin: 0 auto;
+  .volu-results-section {
+    background: #fff5f8;
+    padding: 70px 20px;
     text-align: center;
   }
-  .volu-results__label {
-    font-size: 12px;
-    font-weight: 700;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: #FF5A1F;
-    margin-bottom: 12px;
-  }
-  .volu-results__heading {
-    font-size: clamp(28px, 4vw, 42px);
-    font-weight: 700;
-    color: #111111;
-    margin: 0 0 60px;
-    letter-spacing: -0.02em;
-  }
-  .volu-results__grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-  }
-  .volu-results__card {
-    background: #FFFFFF;
-    border: 1px solid #E5E5E5;
-    border-radius: 16px;
-    padding: 40px 24px;
-    text-align: center;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.04);
-  }
-  .volu-results__ring {
-    position: relative;
-    width: 120px;
-    height: 120px;
-    margin: 0 auto 24px;
-  }
-  .volu-results__ring svg {
-    transform: rotate(-90deg);
-    width: 120px;
-    height: 120px;
-  }
-  .volu-results__ring circle {
-    fill: none;
-    stroke-width: 8;
-    stroke-linecap: round;
-  }
-  .volu-results__ring .track { stroke: #E5E5E5; }
-  .volu-results__ring .fill { stroke: #FF5A1F; transition: stroke-dashoffset 1.5s ease; }
-  .volu-results__number {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 26px;
+  .volu-results-section h2 {
+    font-size: clamp(22px, 3.5vw, 38px);
     font-weight: 800;
-    color: #111111;
-    letter-spacing: -0.02em;
+    color: #1a1a1a;
+    margin-bottom: 10px;
   }
-  .volu-results__text {
-    font-size: 14px;
-    color: #666666;
-    line-height: 1.5;
-    font-weight: 400;
+  .volu-results-sub {
+    font-size: 16px;
+    color: #777;
+    margin-bottom: 50px;
   }
-  .volu-results__btn-wrap {
-    margin-top: 48px;
+  .volu-results-cards {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 24px;
+    max-width: 1100px;
+    margin: 0 auto 40px;
   }
-  .volu-results__btn {
-    display: inline-flex;
+  .volu-results-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 40px 30px 36px;
+    flex: 1;
+    min-width: 260px;
+    max-width: 320px;
+    box-shadow: 0 4px 24px rgba(249,165,201,0.10);
+    display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 8px;
-    background: #111111;
-    color: #FFFFFF;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 14px 32px;
-    border-radius: 8px;
-    text-decoration: none;
+    gap: 28px;
+  }
+  .volu-big-ring {
+    position: relative;
+    width: 180px !important;
+    height: 180px !important;
+    flex-shrink: 0;
+  }
+  .volu-big-ring svg {
+    transform: rotate(-90deg);
+    width: 180px !important;
+    height: 180px !important;
+    display: block;
+  }
+  .volu-big-ring-bg { fill: none; stroke: #f9e4ef; stroke-width: 12; }
+  .volu-big-ring-prog {
+    fill: none; stroke: #f9a5c9; stroke-width: 12;
+    stroke-linecap: round; stroke-dasharray: 470; stroke-dashoffset: 470;
+    transition: stroke-dashoffset 2s ease;
+  }
+  .volu-big-ring-label {
+    position: absolute; inset: 0; display: flex;
+    align-items: center; justify-content: center;
+    font-size: 42px !important; font-weight: 800; color: #f9a5c9;
+  }
+  .volu-card-text { font-size: 15px; color: #444; line-height: 1.6; text-align: center; }
+  .volu-shop-btn {
+    display: inline-block; background: #1a1a1a; color: #fff;
+    font-size: 16px; font-weight: 700; padding: 16px 60px;
+    border-radius: 50px; text-decoration: none;
     transition: background 0.2s;
   }
-  .volu-results__btn:hover { background: #333333; }
-  @media (max-width: 768px) {
-    .volu-results__grid { grid-template-columns: 1fr; }
-  }
+  .volu-shop-btn:hover { background: #c2185b; }
 </style>
 
-<section class="volu-results">
-  <div class="volu-results__inner">
-    <div class="volu-results__label">Real Results</div>
-    <h2 class="volu-results__heading">What Our Customers Say</h2>
-    <div class="volu-results__grid">
-      <div class="volu-results__card">
-        <div class="volu-results__ring">
-          <svg viewBox="0 0 120 120">
-            <circle class="track" cx="60" cy="60" r="52"/>
-            <circle class="fill" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="19.6" data-target="94"/>
+<div class="volu-results-section">
+  <h2>{{ section.settings.title | default: 'Real Women. Real Results.' }}</h2>
+  <p class="volu-results-sub">{{ section.settings.text | default: 'Thousands of Volenu users tracked their pain levels before and after using the belt.' }}</p>
+  <div class="volu-results-cards">
+    {%- for block in section.blocks -%}
+      <div class="volu-results-card">
+        <div class="volu-big-ring">
+          <svg viewBox="0 0 180 180" width="180" height="180">
+            <circle class="volu-big-ring-bg" cx="90" cy="90" r="75"/>
+            <circle class="volu-big-ring-prog" cx="90" cy="90" r="75"
+              data-pct="{{ block.settings.percentage }}"
+              style="stroke-dasharray:470;stroke-dashoffset:470;"/>
           </svg>
-          <div class="volu-results__number">94%</div>
+          <div class="volu-big-ring-label">
+            <span class="volu-big-count" data-target="{{ block.settings.percentage }}">0</span>%
+          </div>
         </div>
-        <p class="volu-results__text">said AI translation worked instantly in real-world use</p>
+        <div class="volu-card-text">{{ block.settings.row_text }}</div>
       </div>
-      <div class="volu-results__card">
-        <div class="volu-results__ring">
-          <svg viewBox="0 0 120 120">
-            <circle class="track" cx="60" cy="60" r="52"/>
-            <circle class="fill" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="13.1" data-target="96"/>
-          </svg>
-          <div class="volu-results__number">96%</div>
-        </div>
-        <p class="volu-results__text">said the 4K camera quality exceeded their expectations</p>
-      </div>
-      <div class="volu-results__card">
-        <div class="volu-results__ring">
-          <svg viewBox="0 0 120 120">
-            <circle class="track" cx="60" cy="60" r="52"/>
-            <circle class="fill" cx="60" cy="60" r="52" stroke-dasharray="326.7" stroke-dashoffset="16.3" data-target="95"/>
-          </svg>
-          <div class="volu-results__number">95%</div>
-        </div>
-        <p class="volu-results__text">would recommend Volenu AI Glasses to friends and family</p>
-      </div>
-    </div>
-    <div class="volu-results__btn-wrap">
-      <a href="/products/ai-smart-glasses-with-real-time-translation-ai-assistant-4k-photo-taking-video-stabilization-camera-voice-control" class="volu-results__btn">Get Yours Now →</a>
-    </div>
+    {%- endfor -%}
   </div>
-</section>
+  <a href="{{ section.settings.link | default: '/products' }}" class="volu-shop-btn">
+    {{ section.settings.button_label | default: 'Shop Now' }}
+  </a>
+</div>
+
+<script>
+(function() {
+  function animate() {
+    document.querySelectorAll('.volu-results-card').forEach(function(card, i) {
+      setTimeout(function() {
+        var circle = card.querySelector('.volu-big-ring-prog');
+        var counter = card.querySelector('.volu-big-count');
+        var pct = parseInt(circle.getAttribute('data-pct'));
+        circle.style.strokeDashoffset = 470 - (470 * pct / 100);
+        var start = null;
+        function step(ts) {
+          if (!start) start = ts;
+          var p = Math.min((ts - start) / 2000, 1);
+          counter.textContent = Math.floor(p * pct);
+          if (p < 1) requestAnimationFrame(step);
+          else counter.textContent = pct;
+        }
+        requestAnimationFrame(step);
+      }, i * 250);
+    });
+  }
+  var el = document.querySelector('.volu-results-section');
+  if (!el) return;
+  new IntersectionObserver(function(entries) {
+    if (entries[0].isIntersecting) { animate(); }
+  }, { threshold: 0.3 }).observe(el);
+})();
+</script>
 
 {% schema %}
 {
-  "name": "Results Big",
-  "presets": [{ "name": "Results Big" }]
+  "name": "Results Big Cards",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Real Women. Real Results." },
+    { "type": "richtext", "id": "text", "label": "Subtext" },
+    { "type": "text", "id": "button_label", "label": "Button label", "default": "Shop Now" },
+    { "type": "url", "id": "link", "label": "Button link" }
+  ],
+  "blocks": [
+    {
+      "type": "row",
+      "name": "Result",
+      "settings": [
+        { "type": "range", "id": "percentage", "min": 0, "max": 100, "step": 1, "default": 90, "label": "Percentage" },
+        { "type": "richtext", "id": "row_text", "label": "Text" }
+      ]
+    }
+  ],
+  "presets": [{ "name": "Results Big Cards" }],
+  "disabled_on": { "groups": ["header", "footer"] }
 }
 {% endschema %}

@@ -9,10 +9,6 @@
  */
 {
   "sections": {
-    "nova_home": {
-      "type": "volenu-nova-home",
-      "settings": {}
-    },
     "volenu_hero": {
       "type": "volenu-hero",
       "settings": {}
