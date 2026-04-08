@@ -71,13 +71,27 @@
     border-color: #16a34a !important;
   }
 
-  /* Pink header background like mellow's purple */
+  /* Dark header */
   .header-wrapper, .header {
     background-color: #111111 !important;
-    border-bottom: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.08) !important;
   }
-  .header-wrapper {
-    border-bottom: 1px solid #f8bbd0 !important;
+
+  /* White text on dark header */
+  .header__heading-link, .header__heading-link .h2,
+  .header__menu-item, .header__menu-item span,
+  .header__inline-menu a, .header__inline-menu span,
+  .header a, .header__icon, .header svg,
+  .header .icon, .header__active-menu-item-v2 {
+    color: #ffffff !important;
+    fill: #ffffff !important;
+  }
+  .header__icon svg path, .header__icon svg {
+    fill: #ffffff !important;
+    stroke: #ffffff !important;
+  }
+  .header__heading-link:hover, .header__menu-item:hover span {
+    color: #22c55e !important;
   }
 
   /* BOGO countdown bar */

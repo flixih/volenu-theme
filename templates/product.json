@@ -506,7 +506,7 @@
       "settings": {
         "desktop_content_position": "center",
         "content_alignment": "center",
-        "color_scheme": "accent-1",
+        "color_scheme": "scheme-3",
         "full_width": true,
         "padding_top": 40,
         "padding_bottom": 52,
@@ -711,7 +711,7 @@
         "text": "",
         "icon_size": "small",
         "columns_desktop": 4,
-        "icon_color": "accent-1",
+        "icon_color": "background-1",
         "background_style": "none",
         "color_scheme": "background-1",
         "columns_mobile": "1",
@@ -729,7 +729,7 @@
       "settings": {
         "divider_shape": "wavy",
         "divider_color_top": "#ffffff",
-        "divider_color_bottom": "#22c55e",
+        "divider_color_bottom": "#111111",
         "padding_top_desktop": 40,
         "padding_bottom_desktop": 40,
         "padding_top_mobile": 40,
