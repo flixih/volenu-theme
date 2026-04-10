@@ -1,9 +1,15 @@
 {{ 'volenu-nova.css' | asset_url | stylesheet_tag }}
 
 <!-- LOADER -->
-<div class="vn-loader" id="vnLoader">
-  <div class="vn-loader-text">
-    <span class="vn-lb"><span class="vn-lc-inner" style="animation-delay:0.05s">V</span></span><span class="vn-lb"><span class="vn-lc-inner" style="animation-delay:0.11s">O</span></span><span class="vn-lb"><span class="vn-lc-inner" style="animation-delay:0.17s">L</span></span><span class="vn-lb"><span class="vn-lc-inner" style="animation-delay:0.23s">E</span></span><span class="vn-lb"><span class="vn-lc-inner" style="animation-delay:0.29s">N</span></span><span class="vn-lb"><span class="vn-lc-inner" style="animation-delay:0.35s">U</span></span><span class="vn-ls"><span class="vn-lc-inner" style="animation-delay:0.51s">|</span></span><span class="vn-ll"><span class="vn-lc-inner" style="animation-delay:0.63s">C</span></span><span class="vn-ll"><span class="vn-lc-inner" style="animation-delay:0.69s">a</span></span><span class="vn-ll"><span class="vn-lc-inner" style="animation-delay:0.75s">s</span></span><span class="vn-ll"><span class="vn-lc-inner" style="animation-delay:0.81s">e</span></span><span class="vn-ll"><span class="vn-lc-inner" style="animation-delay:0.87s">s</span></span>
+<style>
+@keyframes vnCF{0%{opacity:0;transform:translateY(6px)}100%{opacity:1;transform:translateY(0)}}
+@keyframes vnSU{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(0,-110%,0)}}
+#vnLoader{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#f0efe9;display:flex;align-items:center;justify-content:center;}
+#vnLoader.out{animation:vnSU .9s cubic-bezier(.87,0,.13,1) forwards;}
+</style>
+<div id="vnLoader">
+  <div style="font-family:'Barlow',sans-serif;font-size:22px;display:flex;align-items:center;white-space:nowrap;">
+    <span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.05s both;font-weight:800;color:#0d0d0d;">V</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.11s both;font-weight:800;color:#0d0d0d;">O</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.17s both;font-weight:800;color:#0d0d0d;">L</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.23s both;font-weight:800;color:#0d0d0d;">E</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.29s both;font-weight:800;color:#0d0d0d;">N</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.35s both;font-weight:800;color:#0d0d0d;">U</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.51s both;font-weight:300;color:#aaa;margin:0 10px;">|</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.63s both;font-weight:300;color:#888;">C</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.69s both;font-weight:300;color:#888;">a</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.75s both;font-weight:300;color:#888;">s</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.81s both;font-weight:300;color:#888;">e</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.87s both;font-weight:300;color:#888;">s</span>
   </div>
 </div>
 
@@ -171,12 +177,7 @@
 
 <script>
 (function(){
-  window.addEventListener('load',function(){
-    setTimeout(function(){
-      var l=document.getElementById('vnLoader');
-      if(l)l.classList.add('out');
-    },1555);
-  });
+  window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('vnLoader');if(l)l.classList.add('out');},1730);});
   var cx=0,cy=0,rx=0,ry=0,raf;
   var c=document.getElementById('vnC'),r=document.getElementById('vnR');
   document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY;if(c){c.style.left=cx+'px';c.style.top=cy+'px'}});
