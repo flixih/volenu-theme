@@ -2,14 +2,21 @@
 
 <!-- LOADER -->
 <style>
-@keyframes vnCF{0%{opacity:0;transform:translateY(5px)}100%{opacity:1;transform:translateY(0)}}
-@keyframes vnSU{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(0,-110%,0)}}
 #vnLoader{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#f0efe9;display:flex;align-items:center;justify-content:center;}
 #vnLoader.out{animation:vnSU .9s cubic-bezier(.87,0,.13,1) forwards;}
+#vnLText{
+  display:flex;align-items:center;white-space:nowrap;
+  clip-path:inset(0 100% 0 0);
+  animation:vnWipe 1s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
+}
+@keyframes vnWipe{to{clip-path:inset(0 0% 0 0)}}
+@keyframes vnSU{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(0,-110%,0)}}
 </style>
 <div id="vnLoader">
-  <div style="display:flex;align-items:center;white-space:nowrap;">
-    <span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.10s both;font-family:Barlow,sans-serif;font-weight:800;font-size:22px;color:#0d0d0d;">V</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.16s both;font-family:Barlow,sans-serif;font-weight:800;font-size:22px;color:#0d0d0d;">O</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.22s both;font-family:Barlow,sans-serif;font-weight:800;font-size:22px;color:#0d0d0d;">L</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.28s both;font-family:Barlow,sans-serif;font-weight:800;font-size:22px;color:#0d0d0d;">E</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.34s both;font-family:Barlow,sans-serif;font-weight:800;font-size:22px;color:#0d0d0d;">N</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.40s both;font-family:Barlow,sans-serif;font-weight:800;font-size:22px;color:#0d0d0d;">U</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.51s both;font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#bbb;margin:0 10px;">|</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.61s both;font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#888;">C</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.67s both;font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#888;">a</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.73s both;font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#888;">s</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.79s both;font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#888;">e</span><span style="display:inline-block;opacity:0;animation:vnCF .3s ease 0.85s both;font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#888;">s</span>
+  <div id="vnLText">
+    <span style="font-family:Barlow,sans-serif;font-weight:800;font-size:22px;color:#0d0d0d;letter-spacing:.02em;">VOLENU</span>
+    <span style="font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#bbb;margin:0 12px;">|</span>
+    <span style="font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#888;letter-spacing:.01em;">Cases</span>
   </div>
 </div>
 
@@ -177,7 +184,7 @@
 
 <script>
 (function(){
-  window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('vnLoader');if(l)l.classList.add('out');},2009);});
+  window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('vnLoader');if(l)l.classList.add('out');},2200);});
   var cx=0,cy=0,rx=0,ry=0,raf;
   var c=document.getElementById('vnC'),r=document.getElementById('vnR');
   document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY;if(c){c.style.left=cx+'px';c.style.top=cy+'px'}});
