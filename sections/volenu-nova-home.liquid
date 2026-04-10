@@ -2,190 +2,194 @@
 
 <!-- LOADER -->
 <div class="vn-loader" id="vnLoader">
-  <div class="vn-loader-inner">
-    <div class="vn-loader-logo">
-      <span>V</span><span>O</span><span>L</span><span>E</span><span>N</span><span>U</span>
-    </div>
+  <div>
+    <div class="vn-loader-logo"><span>V</span><span>O</span><span>L</span><span>E</span><span>N</span><span>U</span></div>
     <div class="vn-loader-bar"></div>
     <div class="vn-loader-sub">Watch Winders</div>
   </div>
 </div>
 
-<div class="vn-cursor" id="vnCursor"></div>
-<div class="vn-cursor-ring" id="vnRing"></div>
+<div class="vn-cursor" id="vnC"></div>
+<div class="vn-cursor-ring" id="vnR"></div>
 
+<!-- NAV -->
 <nav class="vn-nav">
   <a href="/" class="vn-logo">Volenu</a>
   <ul class="vn-nav-links">
     <li><a href="#vn-intro">Collection</a></li>
     <li><a href="#vn-design">Design</a></li>
     <li><a href="#vn-specs">Specs</a></li>
-    <li><a href="#vn-features">Features</a></li>
+    <li><a href="#vn-9">Features</a></li>
   </ul>
   <a href="{{ routes.cart_url }}" class="vn-nav-cta">Reserve now</a>
 </nav>
 
+<!-- HERO -->
 <section class="vn-hero">
-  <p class="vn-hero-headline">Experience precision watch care at home.</p>
+  <p class="vn-hero-eyebrow">Experience precision watch care at home.</p>
   <h1 class="vn-hero-title">VOLENU</h1>
-  <a href="#vn-intro" class="vn-hero-arrow">
-    <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+  <a href="#vn-intro" class="vn-hero-learn">
+    <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>
     Learn more
   </a>
   <div class="vn-hero-product">
-    <img src="{{ 'winder-front.png' | asset_url }}" alt="Volenu Quad Elite Watch Winder">
+    <img src="{{ 'winder-front.png' | asset_url }}" alt="Volenu Quad Elite">
   </div>
-  <span class="vn-hero-badge">Quad Elite — 4 Rotor</span>
   <span class="vn-hero-tagline">Excellence Evolved</span>
 </section>
 
+<!-- TICKER -->
 <div class="vn-ticker-wrap">
   <div class="vn-ticker">
-    <span>Quad Elite Watch Winder</span><span class="vn-ticker-dot">·</span><span>4 Independent Rotors</span><span class="vn-ticker-dot">·</span><span>Piano Black Lacquer</span><span class="vn-ticker-dot">·</span><span>Carbon Fibre Panels</span><span class="vn-ticker-dot">·</span><span>Silent Motor Technology</span><span class="vn-ticker-dot">·</span><span>Free Shipping</span><span class="vn-ticker-dot">·</span><span>30-Day Guarantee</span><span class="vn-ticker-dot">·</span><span>Quad Elite Watch Winder</span><span class="vn-ticker-dot">·</span><span>4 Independent Rotors</span><span class="vn-ticker-dot">·</span><span>Piano Black Lacquer</span><span class="vn-ticker-dot">·</span><span>Carbon Fibre Panels</span><span class="vn-ticker-dot">·</span><span>Silent Motor Technology</span><span class="vn-ticker-dot">·</span><span>Free Shipping</span><span class="vn-ticker-dot">·</span><span>30-Day Guarantee</span><span class="vn-ticker-dot">·</span>
+    <span>Quad Elite Watch Winder</span><span class="vn-tdot"> · </span><span>4 Independent Rotors</span><span class="vn-tdot"> · </span><span>Piano Black Lacquer</span><span class="vn-tdot"> · </span><span>Carbon Fibre Panels</span><span class="vn-tdot"> · </span><span>Silent Motor Technology</span><span class="vn-tdot"> · </span><span>Free Shipping</span><span class="vn-tdot"> · </span><span>30-Day Guarantee</span><span class="vn-tdot"> · </span><span>Quad Elite Watch Winder</span><span class="vn-tdot"> · </span><span>4 Independent Rotors</span><span class="vn-tdot"> · </span><span>Piano Black Lacquer</span><span class="vn-tdot"> · </span><span>Carbon Fibre Panels</span><span class="vn-tdot"> · </span><span>Silent Motor Technology</span><span class="vn-tdot"> · </span><span>Free Shipping</span><span class="vn-tdot"> · </span><span>30-Day Guarantee</span><span class="vn-tdot"> · </span>
   </div>
 </div>
 
-<section class="vn-section" id="vn-intro">
-  <div class="vn-inner">
-    <div class="vn-two-col">
-      <div class="vn-reveal">
+<!-- INTRO -->
+<section class="vn-sec" id="vn-intro">
+  <div class="vn-wrap">
+    <div class="vn-2col">
+      <div class="vn-r">
         <span class="vn-label">The Quad Elite</span>
         <h2 class="vn-h2">Excellence<br><em>Evolved.</em></h2>
-        <div class="vn-divider"></div>
+        <div class="vn-rule"></div>
         <p class="vn-p">At Volenu we deliver the True Precision experience by housing your most prized automatic timepieces in a vault engineered for performance. The Quad Elite keeps every movement wound to perfection — just pure, authentic care for your collection.</p>
-        <br><br>
-        <a href="{{ routes.cart_url }}" class="vn-btn" style="display:inline-flex"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Shop now</a>
+        <a href="{{ routes.cart_url }}" class="vn-btn"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>Shop now</a>
       </div>
-      <div class="vn-reveal vn-delay-1">
-        <div class="vn-intro-img">
+      <div class="vn-r vn-d1">
+        <div class="vn-img-wrap">
           <img src="{{ 'winder-front.png' | asset_url }}" alt="Volenu Quad Elite Front">
-          <div class="vn-intro-caption"><span>Quad Elite</span><span>4 Rotor Watch Winder</span></div>
+          <div class="vn-img-cap"><span>Quad Elite</span><span>4 Rotor Watch Winder</span></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="vn-section vn-section--alt" id="vn-collection">
-  <div class="vn-inner">
-    <div class="vn-feat-header vn-reveal">
+<!-- FEATURES -->
+<section class="vn-sec vn-sec-alt" id="vn-collection">
+  <div class="vn-wrap">
+    <div class="vn-feat-head vn-r">
       <div><span class="vn-label">Engineered for Precision</span><h2 class="vn-h2">Built for the serious<br>collector.</h2></div>
     </div>
     <div class="vn-feat-grid">
-      <div class="vn-feat-card vn-reveal"><span class="vn-feat-num">01</span><svg class="vn-feat-icon" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="13" stroke="#0f0f0f" stroke-width="1"/><circle cx="16" cy="16" r="7" stroke="#0f0f0f" stroke-width="1" stroke-dasharray="3 3"/><circle cx="16" cy="16" r="2.5" fill="#0f0f0f"/></svg><h3 class="vn-feat-title">4 Independent Rotors</h3><p class="vn-feat-desc">Each chrome-ringed rotor operates independently, delivering custom rotation settings tailored to every watch in your collection.</p></div>
-      <div class="vn-feat-card vn-reveal vn-delay-1"><span class="vn-feat-num">02</span><svg class="vn-feat-icon" viewBox="0 0 32 32" fill="none"><rect x="4" y="4" width="24" height="24" stroke="#0f0f0f" stroke-width="1"/><rect x="10" y="10" width="12" height="12" stroke="#0f0f0f" stroke-width="1"/></svg><h3 class="vn-feat-title">Dual LCD Display</h3><p class="vn-feat-desc">Two precision silver LCD panels give you full control over rotation direction, speed, and daily turns per rotor pair.</p></div>
-      <div class="vn-feat-card vn-reveal vn-delay-2"><span class="vn-feat-num">03</span><svg class="vn-feat-icon" viewBox="0 0 32 32" fill="none"><path d="M4 28 L16 4 L28 28 Z" stroke="#0f0f0f" stroke-width="1" fill="none"/></svg><h3 class="vn-feat-title">Piano Lacquer Finish</h3><p class="vn-feat-desc">High-gloss piano black lacquer over a rigid shell with carbon fibre side panels — a finish that rivals the watches themselves.</p></div>
-      <div class="vn-feat-card vn-reveal"><span class="vn-feat-num">04</span><svg class="vn-feat-icon" viewBox="0 0 32 32" fill="none"><rect x="4" y="14" width="24" height="14" rx="1" stroke="#0f0f0f" stroke-width="1"/><path d="M10 14V10a6 6 0 0112 0v4" stroke="#0f0f0f" stroke-width="1"/></svg><h3 class="vn-feat-title">Security Key Lock</h3><p class="vn-feat-desc">Chrome barrel key lock secures the full-glass door, protecting your collection with precision hardware you can trust.</p></div>
-      <div class="vn-feat-card vn-reveal vn-delay-1"><span class="vn-feat-num">05</span><svg class="vn-feat-icon" viewBox="0 0 32 32" fill="none"><path d="M16 3 L18 13 L28 13 L20 19 L23 29 L16 23 L9 29 L12 19 L4 13 L14 13 Z" stroke="#0f0f0f" stroke-width="1" fill="none"/></svg><h3 class="vn-feat-title">Silent Motor Technology</h3><p class="vn-feat-desc">Ultra-quiet Japanese motors ensure near-silent operation at all speeds. Your watches wind while you sleep — you won't hear a thing.</p></div>
-      <div class="vn-feat-card vn-reveal vn-delay-2"><span class="vn-feat-num">06</span><svg class="vn-feat-icon" viewBox="0 0 32 32" fill="none"><circle cx="16" cy="16" r="12" stroke="#0f0f0f" stroke-width="1"/><path d="M16 10V16L21 19" stroke="#0f0f0f" stroke-width="1.2" stroke-linecap="round"/></svg><h3 class="vn-feat-title">Adjustable Turn Settings</h3><p class="vn-feat-desc">Set 650, 1000, or 1800 turns per day. CW, CCW, or alternating — engineered to match any calibre's specification.</p></div>
+      <div class="vn-feat vn-r"><span class="vn-feat-n">01</span><svg class="vn-feat-icon" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="11" stroke="#0d0d0d" stroke-width=".9"/><circle cx="14" cy="14" r="6" stroke="#0d0d0d" stroke-width=".9" stroke-dasharray="2.5 2.5"/><circle cx="14" cy="14" r="2" fill="#0d0d0d"/></svg><h3 class="vn-feat-title">4 Independent Rotors</h3><p class="vn-feat-desc">Each chrome-ringed rotor operates independently, delivering custom rotation settings tailored to every watch.</p></div>
+      <div class="vn-feat vn-r vn-d1"><span class="vn-feat-n">02</span><svg class="vn-feat-icon" viewBox="0 0 28 28" fill="none"><rect x="3" y="3" width="22" height="22" stroke="#0d0d0d" stroke-width=".9"/><rect x="9" y="9" width="10" height="10" stroke="#0d0d0d" stroke-width=".9"/></svg><h3 class="vn-feat-title">Dual LCD Display</h3><p class="vn-feat-desc">Two precision silver LCD panels give full control over rotation direction, speed, and daily turns per rotor pair.</p></div>
+      <div class="vn-feat vn-r vn-d2"><span class="vn-feat-n">03</span><svg class="vn-feat-icon" viewBox="0 0 28 28" fill="none"><path d="M3 25 L14 3 L25 25 Z" stroke="#0d0d0d" stroke-width=".9" fill="none"/></svg><h3 class="vn-feat-title">Piano Lacquer Finish</h3><p class="vn-feat-desc">High-gloss piano black lacquer over a rigid shell with carbon fibre side panels — rivaling the watches themselves.</p></div>
+      <div class="vn-feat vn-r"><span class="vn-feat-n">04</span><svg class="vn-feat-icon" viewBox="0 0 28 28" fill="none"><rect x="3" y="13" width="22" height="12" rx="1" stroke="#0d0d0d" stroke-width=".9"/><path d="M9 13V9a5 5 0 0110 0v4" stroke="#0d0d0d" stroke-width=".9"/></svg><h3 class="vn-feat-title">Security Key Lock</h3><p class="vn-feat-desc">Chrome barrel key lock secures the full glass door. Precision hardware protecting your most important assets.</p></div>
+      <div class="vn-feat vn-r vn-d1"><span class="vn-feat-n">05</span><svg class="vn-feat-icon" viewBox="0 0 28 28" fill="none"><path d="M14 3l2 8 8 0-6 5 2 8-6-4-6 4 2-8-6-5 8 0z" stroke="#0d0d0d" stroke-width=".9" fill="none"/></svg><h3 class="vn-feat-title">Silent Motor Technology</h3><p class="vn-feat-desc">Ultra-quiet Japanese motors ensure near-silent operation at all speeds. Your watches wind while you sleep.</p></div>
+      <div class="vn-feat vn-r vn-d2"><span class="vn-feat-n">06</span><svg class="vn-feat-icon" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="10" stroke="#0d0d0d" stroke-width=".9"/><path d="M14 9v5l4 2.5" stroke="#0d0d0d" stroke-width="1" stroke-linecap="round"/></svg><h3 class="vn-feat-title">Adjustable Turn Settings</h3><p class="vn-feat-desc">Set 650, 1000, or 1800 TPD. CW, CCW, or alternating — engineered to match any calibre's specification.</p></div>
     </div>
   </div>
 </section>
 
-<section class="vn-section" style="text-align:center">
-  <div class="vn-inner">
-    <div class="vn-reveal" style="margin-bottom:64px"><span class="vn-label" style="text-align:center">The Interior</span><h2 class="vn-h2" style="text-align:center">Open the vault.<br><em>Meet perfection inside.</em></h2></div>
-    <img src="{{ 'winder-open.png' | asset_url }}" alt="Volenu Interior Open" class="vn-open-img vn-reveal">
-    <div class="vn-three-col vn-reveal">
-      <div class="vn-col-card"><div class="vn-col-num">4</div><h4 class="vn-col-title">Individual Winding Bays</h4><p class="vn-col-desc">Each rotor accepts watch diameters from 40mm to 57mm with plush black velvet cushioning.</p></div>
-      <div class="vn-col-card"><div class="vn-col-num">2</div><h4 class="vn-col-title">LCD Control Panels</h4><p class="vn-col-desc">Dual digital displays give you independent control of each rotor pair. No guesswork — just precision.</p></div>
-      <div class="vn-col-card"><div class="vn-col-num">1</div><h4 class="vn-col-title">Glass Security Door</h4><p class="vn-col-desc">Full-panel tempered glass with barrel key lock. Display your collection. Protect it completely.</p></div>
+<!-- OPEN REVEAL -->
+<section class="vn-sec" style="text-align:center">
+  <div class="vn-wrap">
+    <div class="vn-r" style="margin-bottom:60px"><span class="vn-label" style="text-align:center">The Interior</span><h2 class="vn-h2" style="text-align:center">Open the vault.<br><em>Meet perfection inside.</em></h2></div>
+    <img src="{{ 'winder-open.png' | asset_url }}" class="vn-open-img vn-r" alt="Volenu Interior">
+    <div class="vn-3col vn-r">
+      <div class="vn-3card"><div class="vn-3num">4</div><h4 class="vn-3title">Individual Winding Bays</h4><p class="vn-3desc">Each rotor accepts 40mm–57mm watches with plush black velvet cushioning.</p></div>
+      <div class="vn-3card"><div class="vn-3num">2</div><h4 class="vn-3title">LCD Control Panels</h4><p class="vn-3desc">Dual digital displays give independent control per rotor pair. No guesswork — just precision.</p></div>
+      <div class="vn-3card"><div class="vn-3num">1</div><h4 class="vn-3title">Glass Security Door</h4><p class="vn-3desc">Full-panel tempered glass with barrel key lock. Display your collection. Protect it completely.</p></div>
     </div>
   </div>
 </section>
 
-<section class="vn-section vn-section--alt" id="vn-design">
-  <div class="vn-inner">
-    <div class="vn-two-col">
-      <div class="vn-design-img vn-reveal"><img src="{{ 'winder-angle.png' | asset_url }}" alt="Volenu Design"></div>
-      <div class="vn-reveal vn-delay-1">
+<!-- DESIGN -->
+<section class="vn-sec vn-sec-alt" id="vn-design">
+  <div class="vn-wrap">
+    <div class="vn-2col">
+      <div class="vn-img-wrap vn-r"><img src="{{ 'winder-angle.png' | asset_url }}" alt="Volenu Design"></div>
+      <div class="vn-r vn-d1">
         <span class="vn-label">Design</span>
         <h2 class="vn-h2">Exceptional design meets<br>best-in-class <em>precision.</em></h2>
-        <div class="vn-divider"></div>
+        <div class="vn-rule"></div>
         <p class="vn-p">Crafted using premium materials — piano black lacquer, carbon fibre reinforced side panels, and brushed chrome hardware. Each element is chosen for its performance properties, aesthetics, and tactile quality. The Quad Elite is the perfect balance between elegance and engineering.</p>
-        <div class="vn-mini-specs">
-          <div class="vn-ms"><div class="vn-ms-label">Exterior</div><div class="vn-ms-val">Piano Black Lacquer</div></div>
-          <div class="vn-ms"><div class="vn-ms-label">Side Panels</div><div class="vn-ms-val">Carbon Fibre Texture</div></div>
-          <div class="vn-ms"><div class="vn-ms-label">Door</div><div class="vn-ms-val">Tempered Glass</div></div>
-          <div class="vn-ms"><div class="vn-ms-label">Hardware</div><div class="vn-ms-val">Brushed Chrome</div></div>
+        <div class="vn-mspecs">
+          <div class="vn-ms"><div class="vn-ms-k">Exterior</div><div class="vn-ms-v">Piano Black Lacquer</div></div>
+          <div class="vn-ms"><div class="vn-ms-k">Side Panels</div><div class="vn-ms-v">Carbon Fibre Texture</div></div>
+          <div class="vn-ms"><div class="vn-ms-k">Door</div><div class="vn-ms-v">Tempered Glass</div></div>
+          <div class="vn-ms"><div class="vn-ms-k">Hardware</div><div class="vn-ms-v">Brushed Chrome</div></div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<section class="vn-section" id="vn-specs">
-  <div class="vn-inner">
-    <div class="vn-specs-head vn-reveal">
+<!-- SPECS -->
+<section class="vn-sec" id="vn-specs">
+  <div class="vn-wrap">
+    <div class="vn-specs-head vn-r">
       <div><span class="vn-label">Technical Details</span><h2 class="vn-h2">Specifications</h2></div>
-      <div><p class="vn-p" style="max-width:340px">Every detail of the Quad Elite has been engineered to house and care for your most important timepieces.</p></div>
+      <p class="vn-p" style="max-width:320px">Every detail of the Quad Elite has been engineered to house and care for your most important timepieces.</p>
     </div>
     <div class="vn-specs-grid">
-      <div class="vn-sg vn-reveal"><div class="vn-sg-title">Winding</div><div class="vn-sr"><span>Rotors</span><span>4 Independent</span></div><div class="vn-sr"><span>Turns Per Day</span><span>650 / 1000 / 1800</span></div><div class="vn-sr"><span>Rotation</span><span>CW / CCW / Alternate</span></div><div class="vn-sr"><span>Motor</span><span>Silent Japanese Motor</span></div></div>
-      <div class="vn-sg vn-reveal vn-delay-1"><div class="vn-sg-title">Display & Control</div><div class="vn-sr"><span>Panels</span><span>2 × LCD</span></div><div class="vn-sr"><span>Control Type</span><span>Button Interface</span></div><div class="vn-sr"><span>Memory</span><span>Auto-Resume After Power</span></div><div class="vn-sr"><span>Power</span><span>AC Adapter Included</span></div></div>
-      <div class="vn-sg vn-reveal"><div class="vn-sg-title">Capacity & Fit</div><div class="vn-sr"><span>Watch Capacity</span><span>4 Timepieces</span></div><div class="vn-sr"><span>Watch Diameter</span><span>40mm – 57mm</span></div><div class="vn-sr"><span>Cushion Type</span><span>Black Velvet Pillow</span></div><div class="vn-sr"><span>Compatibility</span><span>All Automatic Watches</span></div></div>
-      <div class="vn-sg vn-reveal vn-delay-1"><div class="vn-sg-title">Design & Materials</div><div class="vn-sr"><span>Exterior Finish</span><span>Piano Black Lacquer</span></div><div class="vn-sr"><span>Side Material</span><span>Carbon Fibre Texture</span></div><div class="vn-sr"><span>Door</span><span>Tempered Glass + Key Lock</span></div><div class="vn-sr"><span>Hardware</span><span>Brushed Chrome</span></div></div>
+      <div class="vn-sg vn-r"><div class="vn-sg-title">Winding</div><div class="vn-sr"><span>Rotors</span><span>4 Independent</span></div><div class="vn-sr"><span>Turns Per Day</span><span>650 / 1000 / 1800</span></div><div class="vn-sr"><span>Rotation</span><span>CW / CCW / Alternate</span></div><div class="vn-sr"><span>Motor</span><span>Silent Japanese Motor</span></div></div>
+      <div class="vn-sg vn-r vn-d1"><div class="vn-sg-title">Display & Control</div><div class="vn-sr"><span>Panels</span><span>2 × LCD</span></div><div class="vn-sr"><span>Control</span><span>Button Interface</span></div><div class="vn-sr"><span>Memory</span><span>Auto-Resume</span></div><div class="vn-sr"><span>Power</span><span>AC Adapter Included</span></div></div>
+      <div class="vn-sg vn-r"><div class="vn-sg-title">Capacity & Fit</div><div class="vn-sr"><span>Watch Capacity</span><span>4 Timepieces</span></div><div class="vn-sr"><span>Watch Diameter</span><span>40mm – 57mm</span></div><div class="vn-sr"><span>Cushion</span><span>Black Velvet Pillow</span></div><div class="vn-sr"><span>Compatibility</span><span>All Automatic Watches</span></div></div>
+      <div class="vn-sg vn-r vn-d1"><div class="vn-sg-title">Design & Materials</div><div class="vn-sr"><span>Exterior</span><span>Piano Black Lacquer</span></div><div class="vn-sr"><span>Side Panels</span><span>Carbon Fibre Texture</span></div><div class="vn-sr"><span>Door</span><span>Tempered Glass + Key Lock</span></div><div class="vn-sr"><span>Hardware</span><span>Brushed Chrome</span></div></div>
     </div>
   </div>
 </section>
 
-<section class="vn-section vn-section--alt" id="vn-features">
-  <div class="vn-inner">
-    <div class="vn-nine-head vn-reveal"><div><span class="vn-label">Why Volenu</span><h2 class="vn-h2">Outstanding precision with<br>powerful features.</h2></div></div>
-    <div class="vn-nine-grid">
-      <div class="vn-ni vn-reveal"><span class="vn-ni-num">01</span><h4 class="vn-ni-title">Bi-Directional Rotation</h4><p class="vn-ni-desc">CW, CCW, or alternating — programmed to match any automatic calibre's exact winding requirements.</p></div>
-      <div class="vn-ni vn-reveal vn-delay-1"><span class="vn-ni-num">02</span><h4 class="vn-ni-title">Carbon Fibre Side Panels</h4><p class="vn-ni-desc">Precision-textured carbon fibre side panels give the Quad Elite its unmistakable premium appearance.</p></div>
-      <div class="vn-ni vn-reveal vn-delay-2"><span class="vn-ni-num">03</span><h4 class="vn-ni-title">Velvet Pillow System</h4><p class="vn-ni-desc">Every rotor fitted with a plush black velvet pillow that cradles your watch with zero vibration and zero scratching.</p></div>
-      <div class="vn-ni vn-reveal"><span class="vn-ni-num">04</span><h4 class="vn-ni-title">Programmable TPD</h4><p class="vn-ni-desc">Set turns-per-day from 650 to 1800. Each rotor pair independently programmable for any manufacturer's spec.</p></div>
-      <div class="vn-ni vn-reveal vn-delay-1"><span class="vn-ni-num">05</span><h4 class="vn-ni-title">Power Memory Function</h4><p class="vn-ni-desc">Settings stored permanently. After any power interruption the Quad Elite automatically resumes your last configuration.</p></div>
-      <div class="vn-ni vn-reveal vn-delay-2"><span class="vn-ni-num">06</span><h4 class="vn-ni-title">Overwind Protection</h4><p class="vn-ni-desc">Intelligent rest cycles prevent overwinding. The motor pauses automatically — your watch is never at risk.</p></div>
-      <div class="vn-ni vn-reveal"><span class="vn-ni-num">07</span><h4 class="vn-ni-title">Display-Ready Design</h4><p class="vn-ni-desc">The full glass front panel transforms your Quad Elite into a display case. Always visible, always secured.</p></div>
-      <div class="vn-ni vn-reveal vn-delay-1"><span class="vn-ni-num">08</span><h4 class="vn-ni-title">Key Lock Security</h4><p class="vn-ni-desc">Precision barrel key lock seals the full glass door. Access only on your terms — essential for serious collections.</p></div>
-      <div class="vn-ni vn-reveal vn-delay-2"><span class="vn-ni-num">09</span><h4 class="vn-ni-title">Universal AC Power</h4><p class="vn-ni-desc">Global AC adapter included. 100–240V compatible — works anywhere in the world.</p></div>
+<!-- 9 FEATURES -->
+<section class="vn-sec vn-sec-alt" id="vn-9">
+  <div class="vn-wrap">
+    <div class="vn-9head vn-r"><div><span class="vn-label">Why Volenu</span><h2 class="vn-h2">Outstanding precision with<br>powerful features.</h2></div></div>
+    <div class="vn-9grid">
+      <div class="vn-9i vn-r"><span class="vn-9n">01</span><h4 class="vn-9title">Bi-Directional Rotation</h4><p class="vn-9desc">CW, CCW, or alternating — programmed to match any automatic calibre's exact winding requirements.</p></div>
+      <div class="vn-9i vn-r vn-d1"><span class="vn-9n">02</span><h4 class="vn-9title">Carbon Fibre Side Panels</h4><p class="vn-9desc">Precision-textured carbon fibre side panels give the Quad Elite its unmistakable premium appearance.</p></div>
+      <div class="vn-9i vn-r vn-d2"><span class="vn-9n">03</span><h4 class="vn-9title">Velvet Pillow System</h4><p class="vn-9desc">Every rotor fitted with plush black velvet that cradles your watch with zero vibration and zero scratching.</p></div>
+      <div class="vn-9i vn-r"><span class="vn-9n">04</span><h4 class="vn-9title">Programmable TPD</h4><p class="vn-9desc">Set turns-per-day from 650 to 1800. Each rotor pair independently programmable for any manufacturer's spec.</p></div>
+      <div class="vn-9i vn-r vn-d1"><span class="vn-9n">05</span><h4 class="vn-9title">Power Memory Function</h4><p class="vn-9desc">Settings stored permanently. After any power interruption the Quad Elite resumes your last configuration.</p></div>
+      <div class="vn-9i vn-r vn-d2"><span class="vn-9n">06</span><h4 class="vn-9title">Overwind Protection</h4><p class="vn-9desc">Intelligent rest cycles prevent overwinding. The motor pauses automatically — your watch is never at risk.</p></div>
+      <div class="vn-9i vn-r"><span class="vn-9n">07</span><h4 class="vn-9title">Display-Ready Design</h4><p class="vn-9desc">Full glass front panel transforms the Quad Elite into a display case. Always visible, always secured.</p></div>
+      <div class="vn-9i vn-r vn-d1"><span class="vn-9n">08</span><h4 class="vn-9title">Key Lock Security</h4><p class="vn-9desc">Precision barrel key lock seals the full glass door. Access only on your terms.</p></div>
+      <div class="vn-9i vn-r vn-d2"><span class="vn-9n">09</span><h4 class="vn-9title">Universal AC Power</h4><p class="vn-9desc">Global AC adapter included. 100–240V compatible — works anywhere in the world.</p></div>
     </div>
   </div>
 </section>
 
-<section class="vn-cta">
+<!-- CTA -->
+<section class="vn-sec vn-sec-dark vn-cta">
   <div class="vn-cta-bg">VOLENU</div>
-  <span class="vn-cta-label vn-reveal">Limited Stock Available</span>
-  <h2 class="vn-cta-title vn-reveal">Your collection<br>deserves <em>this.</em></h2>
-  <div class="vn-reveal">
-    <a href="{{ routes.cart_url }}" class="vn-btn"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>Order Now</a>
-    <a href="#vn-specs" class="vn-btn vn-btn-outline">View Specs</a>
+  <span class="vn-cta-label vn-r">Limited Stock Available</span>
+  <h2 class="vn-cta-title vn-r">Your collection<br>deserves <em>this.</em></h2>
+  <div class="vn-cta-btns vn-r">
+    <a href="{{ routes.cart_url }}" class="vn-btn-light"><svg width="13" height="13" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round"/></svg>Order Now</a>
+    <a href="#vn-specs" class="vn-btn-outline">View Specs</a>
   </div>
-  <p class="vn-trust vn-reveal">Free Shipping · 30-Day Money Back Guarantee · Secure Checkout</p>
+  <p class="vn-trust vn-r">Free Shipping · 30-Day Money Back Guarantee · Secure Checkout</p>
 </section>
 
+<!-- FOOTER -->
 <footer class="vn-footer">
-  <div><div class="vn-footer-brand">Volenu</div><p class="vn-footer-tagline">Precision watch care for the serious collector. Engineered to honour great watchmaking.</p></div>
-  <div><div class="vn-footer-col-title">Navigation</div><ul class="vn-footer-links"><li><a href="#vn-intro">Collection</a></li><li><a href="#vn-design">Design</a></li><li><a href="#vn-specs">Specifications</a></li><li><a href="#vn-features">Features</a></li></ul></div>
+  <div><div class="vn-footer-brand">Volenu</div><p class="vn-footer-tag">Precision watch care for the serious collector. Engineered to honour great watchmaking.</p></div>
+  <div><div class="vn-footer-col-title">Navigation</div><ul class="vn-footer-links"><li><a href="#vn-intro">Collection</a></li><li><a href="#vn-design">Design</a></li><li><a href="#vn-specs">Specifications</a></li><li><a href="#vn-9">Features</a></li></ul></div>
   <div><div class="vn-footer-col-title">Support</div><ul class="vn-footer-links"><li><a href="#">30-Day Guarantee</a></li><li><a href="#">Free Shipping</a></li><li><a href="#">Contact Us</a></li><li><a href="https://volenu.com">volenu.com</a></li></ul></div>
 </footer>
-<div class="vn-footer-bottom"><span>© 2024 Volenu. All rights reserved.</span><span>The Quad Elite — 4 Rotor Watch Winder</span></div>
+<div class="vn-footer-btm"><span>© 2024 Volenu. All rights reserved.</span><span>The Quad Elite — 4 Rotor Watch Winder</span></div>
 
 <script>
 (function(){
   window.addEventListener('load',function(){
-    setTimeout(function(){document.getElementById('vnLoader').classList.add('vn-loaded')},1800);
+    setTimeout(function(){document.getElementById('vnLoader').classList.add('out')},1900);
   });
-  var cx=0,cy=0,rx=0,ry=0;
-  var c=document.getElementById('vnCursor'),r=document.getElementById('vnRing');
-  if(!c||!r)return;
-  document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY;c.style.left=cx+'px';c.style.top=cy+'px'});
-  (function animRing(){rx+=(cx-rx)*.12;ry+=(cy-ry)*.12;r.style.left=rx+'px';r.style.top=ry+'px';requestAnimationFrame(animRing)})();
+  var cx=0,cy=0,rx=0,ry=0,raf;
+  var c=document.getElementById('vnC'),r=document.getElementById('vnR');
+  document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY;if(c){c.style.left=cx+'px';c.style.top=cy+'px'}});
+  function loop(){if(r){rx+=(cx-rx)*.11;ry+=(cy-ry)*.11;r.style.left=rx+'px';r.style.top=ry+'px'}requestAnimationFrame(loop)}
+  loop();
   document.querySelectorAll('a,button').forEach(function(el){
-    el.addEventListener('mouseenter',function(){r.classList.add('vn-hover')});
-    el.addEventListener('mouseleave',function(){r.classList.remove('vn-hover')});
+    el.addEventListener('mouseenter',function(){if(r)r.classList.add('hov')});
+    el.addEventListener('mouseleave',function(){if(r)r.classList.remove('hov')});
   });
-  var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('vn-visible')})},{threshold:0.08});
-  document.querySelectorAll('.vn-reveal').forEach(function(el){obs.observe(el)});
+  var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting)e.target.classList.add('on')})},{threshold:0.07});
+  document.querySelectorAll('.vn-r').forEach(function(el){io.observe(el)});
 })();
 </script>
 
 {% schema %}
-{
-  "name": "Volenu Nova Home",
-  "settings": []
-}
+{"name":"Volenu Nova Home","settings":[]}
 {% endschema %}
