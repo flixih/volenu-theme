@@ -2,17 +2,13 @@
 
 <!-- LOADER -->
 <style>
-@keyframes vnDragIn{
-  0%{opacity:0;transform:translateX(60px)}
-  100%{opacity:1;transform:translateX(0)}
+@keyframes vnLeft{
+  0%{transform:translateX(100%)}
+  100%{transform:translateX(0)}
 }
-@keyframes vnDragInLight{
-  0%{opacity:0;transform:translateX(40px)}
-  100%{opacity:1;transform:translateX(0)}
-}
-@keyframes vnPopIn{
-  0%{opacity:0;transform:scale(.85)}
-  100%{opacity:1;transform:scale(1)}
+@keyframes vnRight{
+  0%{transform:translateX(-100%)}
+  100%{transform:translateX(0)}
 }
 @keyframes vnSU{
   0%{transform:translate3d(0,0,0)}
@@ -25,28 +21,45 @@
 }
 #vnLoader.out{animation:vnSU .85s cubic-bezier(.87,0,.13,1) forwards;}
 #vnLWrap{
-  font-size:21px;display:flex;align-items:center;
-  white-space:nowrap;font-family:Barlow,sans-serif;
+  display:flex;align-items:center;
+  font-size:21px;font-family:Barlow,sans-serif;white-space:nowrap;
 }
-#vnLBold{
-  font-weight:800;color:#1a1a1a;letter-spacing:.02em;
+#vnLLeftClip{
+  overflow:hidden;
   opacity:0;
-  animation:vnDragIn .65s cubic-bezier(.2,0,0,1) .05s forwards;
+  animation:none;
+  transition:opacity .01s;
+}
+#vnLLeftClip.go{opacity:1;}
+#vnLBold{
+  display:block;
+  font-weight:800;color:#1a1a1a;letter-spacing:.02em;
+  transform:translateX(100%);
+  animation:vnLeft .7s cubic-bezier(.2,0,0,1) .05s forwards;
 }
 #vnLSep{
   font-weight:300;color:#aaa;margin:0 10px;
-  opacity:0;
-  animation:vnPopIn .25s ease .6s forwards;
+  flex-shrink:0;
 }
-#vnLLight{
-  font-weight:300;color:#777;letter-spacing:.02em;
+#vnLRightClip{
+  overflow:hidden;
   opacity:0;
-  animation:vnDragInLight .55s cubic-bezier(.2,0,0,1) .7s forwards;
+  animation:none;
+  transition:opacity .01s;
+}
+#vnLRightClip.go{opacity:1;}
+#vnLLight{
+  display:block;
+  font-weight:300;color:#777;letter-spacing:.02em;
+  transform:translateX(-100%);
+  animation:vnRight .65s cubic-bezier(.2,0,0,1) .12s forwards;
 }
 </style>
 <div id="vnLoader">
   <div id="vnLWrap">
-    <span id="vnLBold">VOLENU</span><span id="vnLSep">|</span><span id="vnLLight">Cases</span>
+    <div id="vnLLeftClip"><span id="vnLBold">VOLENU</span></div>
+    <span id="vnLSep">|</span>
+    <div id="vnLRightClip"><span id="vnLLight">Cases</span></div>
   </div>
 </div>
 
@@ -215,10 +228,15 @@
 <script>
 (function(){
   window.addEventListener('load',function(){
+    // Show clip containers immediately so overflow hidden works
+    var lc=document.getElementById('vnLLeftClip');
+    var rc=document.getElementById('vnLRightClip');
+    if(lc)lc.classList.add('go');
+    if(rc)rc.classList.add('go');
     setTimeout(function(){
       var l=document.getElementById('vnLoader');
       if(l)l.classList.add('out');
-    },2200);
+    },2000);
   });
   var cx=0,cy=0,rx=0,ry=0,raf;
   var c=document.getElementById('vnC'),r=document.getElementById('vnR');
