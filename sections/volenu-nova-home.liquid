@@ -3,10 +3,9 @@
 <!-- LOADER -->
 <div class="vn-loader" id="vnLoader">
   <div class="vn-loader-text">
-    <span class="vn-loader-bold" id="vnLBold"></span>
-    <span class="vn-loader-sep" id="vnLSep">|</span>
-    <span class="vn-loader-light" id="vnLLight"></span>
-    <span class="vn-loader-cursor" id="vnLCursor"></span>
+    <span class="vn-lc vn-lb"><span class="vn-lc-inner" style="animation-delay:0.100s">V</span></span><span class="vn-lc vn-lb"><span class="vn-lc-inner" style="animation-delay:0.155s">O</span></span><span class="vn-lc vn-lb"><span class="vn-lc-inner" style="animation-delay:0.210s">L</span></span><span class="vn-lc vn-lb"><span class="vn-lc-inner" style="animation-delay:0.265s">E</span></span><span class="vn-lc vn-lb"><span class="vn-lc-inner" style="animation-delay:0.320s">N</span></span><span class="vn-lc vn-lb"><span class="vn-lc-inner" style="animation-delay:0.375s">U</span></span>
+    <span class="vn-ls"><span class="vn-ls-inner" style="animation-delay:0.530s">|</span></span>
+    <span class="vn-lc vn-ll"><span class="vn-lc-inner" style="animation-delay:0.680s">C</span></span><span class="vn-lc vn-ll"><span class="vn-lc-inner" style="animation-delay:0.735s">a</span></span><span class="vn-lc vn-ll"><span class="vn-lc-inner" style="animation-delay:0.790s">s</span></span><span class="vn-lc vn-ll"><span class="vn-lc-inner" style="animation-delay:0.845s">e</span></span><span class="vn-lc vn-ll"><span class="vn-lc-inner" style="animation-delay:0.900s">s</span></span>
   </div>
 </div>
 
@@ -175,45 +174,10 @@
 <script>
 (function(){
   window.addEventListener('load',function(){
-    var bold = 'VOLENU';
-    var light = 'Cases';
-    var bEl = document.getElementById('vnLBold');
-    var sEl = document.getElementById('vnLSep');
-    var lEl = document.getElementById('vnLLight');
-    var cEl = document.getElementById('vnLCursor');
-    var i = 0, j = 0;
-    var delay = 80; // ms per letter
-
-    function typeBold(){
-      if(i < bold.length){
-        bEl.textContent += bold[i];
-        i++;
-        setTimeout(typeBold, delay);
-      } else {
-        // show separator
-        setTimeout(function(){
-          sEl.style.opacity = '1';
-          setTimeout(typeLight, 180);
-        }, 120);
-      }
-    }
-    function typeLight(){
-      if(j < light.length){
-        lEl.textContent += light[j];
-        j++;
-        setTimeout(typeLight, delay + 10);
-      } else {
-        // hide cursor, then exit
-        setTimeout(function(){
-          if(cEl) cEl.style.display = 'none';
-          setTimeout(function(){
-            document.getElementById('vnLoader').classList.add('out');
-          }, 500);
-        }, 400);
-      }
-    }
-    // small delay before starting
-    setTimeout(typeBold, 300);
+    setTimeout(function(){
+      var l=document.getElementById('vnLoader');
+      if(l)l.classList.add('out');
+    },1555);
   });
   var cx=0,cy=0,rx=0,ry=0,raf;
   var c=document.getElementById('vnC'),r=document.getElementById('vnR');
