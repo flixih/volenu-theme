@@ -1,33 +1,35 @@
-<!-- Volenu Scrolling Ticker Bar -->
 <style>
   .volenu-ticker-wrap {
-    background: #111111;
+    background: #000;
     overflow: hidden;
     white-space: nowrap;
-    padding: 8px 0;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
   .volenu-ticker-track {
     display: inline-flex;
-    animation: volenu-ticker 30s linear infinite;
+    animation: volenu-ticker 35s linear infinite;
   }
   .volenu-ticker-track span {
-    color: #fff;
-    font-size: 13px;
+    color: rgba(255,255,255,0.45);
+    font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.05em;
-    padding: 0 24px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    padding: 0 28px;
   }
   .volenu-ticker-track span::before {
-    content: "•";
-    margin-right: 24px;
-    opacity: 0.7;
+    content: "◆";
+    margin-right: 28px;
+    opacity: 0.2;
+    font-size: 7px;
   }
   @keyframes volenu-ticker {
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
   .volenu-countdown-bar {
-    background: #0f5c2e;
+    background: #111;
     color: #fff;
     text-align: center;
     padding: 10px 16px;
@@ -35,97 +37,47 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.05em;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
   }
-  .volenu-timer {
-    display: flex;
-    gap: 6px;
-    align-items: center;
-  }
+  .volenu-timer { display: flex; gap: 4px; align-items: center; }
   .volenu-timer-block {
     background: #fff;
-    color: #22c55e;
-    border-radius: 4px;
+    color: #000;
+    border-radius: 3px;
     padding: 2px 8px;
     font-weight: 800;
     font-size: 14px;
     min-width: 32px;
     text-align: center;
   }
-  .volenu-timer-sep {
-    font-weight: 800;
-    font-size: 16px;
-  }
+  .volenu-timer-sep { font-weight: 800; opacity: 0.4; }
 </style>
 
-<div class="volenu-ticker-wrap" role="region" aria-label="Promotions">
+<div class="volenu-ticker-wrap">
   <div class="volenu-ticker-track">
-    <span>Free Shipping on All Orders</span>
-    <span>AI Smart Glasses — Limited Stock</span>
-    <span>30 Day Moneyback Guarantee</span>
-    <span>Free Shipping on All Orders</span>
-    <span>AI Smart Glasses — Limited Stock</span>
-    <span>30 Day Moneyback Guarantee</span>
-    <span>Free Shipping on All Orders</span>
-    <span>AI Smart Glasses — Limited Stock</span>
-    <span>30 Day Moneyback Guarantee</span>
-    <span>Free Shipping on All Orders</span>
-    <span>AI Smart Glasses — Limited Stock</span>
-    <span>30 Day Moneyback Guarantee</span>
+    <span>Free Worldwide Shipping</span>
+    <span>2 Year Warranty</span>
+    <span>50,000+ Collectors</span>
+    <span>Aviation EVA Foam</span>
+    <span>TSA Approved</span>
+    <span>Scratch-Free Suede</span>
+    <span>30 Day Returns</span>
+    <span>Free Worldwide Shipping</span>
+    <span>2 Year Warranty</span>
+    <span>50,000+ Collectors</span>
+    <span>Aviation EVA Foam</span>
+    <span>TSA Approved</span>
+    <span>Scratch-Free Suede</span>
+    <span>30 Day Returns</span>
   </div>
 </div>
-
-<div class="volenu-countdown-bar">
-  <span>🔥 BOGO Deal Is Live! Buy 1 Get 1 Free — Use Code: <strong>BOGO50</strong></span>
-  <div class="volenu-timer">
-    <div class="volenu-timer-block" id="v-hrs">00</div>
-    <span class="volenu-timer-sep">:</span>
-    <div class="volenu-timer-block" id="v-min">00</div>
-    <span class="volenu-timer-sep">:</span>
-    <div class="volenu-timer-block" id="v-sec">00</div>
-  </div>
-</div>
-
-<script>
-  (function() {
-    var deadline = new Date();
-    deadline.setHours(deadline.getHours() + 3);
-    function pad(n) { return n < 10 ? '0' + n : n; }
-    function tick() {
-      var now = new Date();
-      var diff = Math.max(0, deadline - now);
-      var h = Math.floor(diff / 3600000);
-      var m = Math.floor((diff % 3600000) / 60000);
-      var s = Math.floor((diff % 60000) / 1000);
-      document.getElementById('v-hrs').textContent = pad(h);
-      document.getElementById('v-min').textContent = pad(m);
-      document.getElementById('v-sec').textContent = pad(s);
-    }
-    tick();
-    setInterval(tick, 1000);
-  })();
-</script>
 
 {% schema %}
 {
-  "name": "Announcement bar",
-  "max_blocks": 12,
-  "class": "announcement-bar-section",
-  "blocks": [
-    {
-      "type": "announcement",
-      "name": "Announcement",
-      "settings": [
-        {
-          "type": "text",
-          "id": "text",
-          "default": "Welcome to our store",
-          "label": "Text"
-        }
-      ]
-    }
-  ]
+  "name": "Announcement Bar",
+  "presets": [{ "name": "Announcement Bar" }]
 }
 {% endschema %}

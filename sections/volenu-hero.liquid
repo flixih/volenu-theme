@@ -1,138 +1,424 @@
 <style>
-  .volu-scroll-section {
-    position: relative;
-    height: 300vh;
-    background: #0a0a0a;
-  }
-  .volu-sticky-wrap {
-    position: sticky;
-    top: 0;
-    height: 100vh;
-    overflow: hidden;
-  }
-  .volu-canvas-wrap {
-    position: absolute;
-    inset: 0;
-  }
-  #volu-hero-img-{{ section.id }} {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    display: block;
-  }
-  .volu-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
-    padding: 0 48px 60px;
-    background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 55%);
-  }
-  .volu-headline {
-    font-size: clamp(36px, 6vw, 80px);
-    font-weight: 800;
-    color: #fff;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
-    margin: 0 0 20px;
-  }
-  .volu-headline .accent { color: #22c55e; }
-  .volu-bullets {
-    list-style: none;
-    padding: 0;
-    margin: 0 0 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  .volu-bullets li {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 16px;
-    color: rgba(255,255,255,0.85);
-    font-weight: 500;
-  }
-  .volu-bullets li::before {
-    content: '✓';
-    color: #22c55e;
-    font-weight: 700;
-    font-size: 14px;
-  }
-  .volu-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: #22c55e;
-    color: #fff;
-    font-size: 16px;
-    font-weight: 700;
-    padding: 16px 32px;
-    border-radius: 100px;
-    text-decoration: none;
-    width: fit-content;
-    transition: background 0.2s;
-  }
-  .volu-cta:hover { background: #16a34a; }
-  .volu-progress-bar {
-    position: absolute;
-    bottom: 0; left: 0;
-    height: 3px;
-    background: #22c55e;
-    width: 0%;
-    transition: width 0.1s;
-  }
-  .volu-scroll-hint {
-    position: absolute;
-    bottom: 80px;
-    right: 48px;
-    color: rgba(255,255,255,0.4);
-    font-size: 12px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-  }
-  .volu-scroll-arrow { animation: bounce 1.5s ease-in-out infinite; }
-  @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(6px); }
-  }
-  @media (max-width: 768px) {
-    .volu-overlay { padding: 0 20px 40px; }
-    .volu-scroll-hint { display: none; }
-  }
+/* ===== VOLENU WATCH CASE HERO ===== */
+.volu-scroll-section {
+  position: relative;
+  height: 300vh;
+  background: #000;
+}
+.volu-sticky-wrap {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Marquee ticker */
+.volu-ticker {
+  background: #000;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  padding: 10px 0;
+  overflow: hidden;
+  white-space: nowrap;
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+}
+.volu-ticker__track {
+  display: inline-flex;
+  animation: volu-tick 30s linear infinite;
+}
+.volu-ticker__track span {
+  color: rgba(255,255,255,0.5);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  padding: 0 32px;
+}
+.volu-ticker__track span::before {
+  content: "—";
+  margin-right: 32px;
+  opacity: 0.3;
+}
+@keyframes volu-tick {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* Spinning bezels */
+.volu-bezels {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 1;
+}
+.volu-bezel {
+  position: absolute;
+  opacity: 0.08;
+}
+.volu-bezel svg { display: block; }
+.volu-bezel--1 { top: 10%; right: 15%; width: 280px; height: 280px; animation: spin1 16s linear infinite; }
+.volu-bezel--2 { bottom: 15%; right: 5%; width: 180px; height: 180px; animation: spin1 10s linear infinite reverse; }
+.volu-bezel--3 { top: 40%; right: 38%; width: 140px; height: 140px; animation: spin1 7s linear infinite; }
+.volu-bezel--4 { top: 5%; left: 5%; width: 200px; height: 200px; animation: spin1 20s linear infinite reverse; }
+.volu-bezel--5 { bottom: 5%; left: 10%; width: 320px; height: 320px; animation: spin1 25s linear infinite; }
+@keyframes spin1 { to { transform: rotate(360deg); } }
+
+/* Canvas/image frame */
+.volu-canvas-wrap {
+  position: absolute;
+  inset: 0;
+}
+.volu-canvas-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* Dark overlay */
+.volu-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(0,0,0,0.85) 0%,
+    rgba(0,0,0,0.4) 50%,
+    rgba(0,0,0,0.6) 100%
+  );
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  padding: 0 8%;
+  padding-top: 40px;
+}
+
+/* Hero content */
+.volu-hero-content {
+  max-width: 620px;
+  z-index: 3;
+}
+
+.volu-hero-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.4);
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.volu-hero-label::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: rgba(255,255,255,0.4);
+}
+
+.volu-headline {
+  font-size: clamp(40px, 7vw, 88px);
+  font-weight: 800;
+  color: #fff;
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  margin: 0 0 24px;
+  text-transform: uppercase;
+}
+
+.volu-headline .volu-accent {
+  display: block;
+  color: rgba(255,255,255,0.25);
+  font-weight: 300;
+  font-size: 0.6em;
+  letter-spacing: 0.1em;
+  font-style: italic;
+  text-transform: lowercase;
+}
+
+.volu-sub {
+  font-size: 16px;
+  color: rgba(255,255,255,0.55);
+  line-height: 1.7;
+  margin: 0 0 40px;
+  max-width: 460px;
+  font-weight: 400;
+}
+
+.volu-hero-bullets {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.volu-hero-bullets li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 14px;
+  color: rgba(255,255,255,0.65);
+  font-weight: 500;
+}
+
+.volu-hero-bullets li::before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 1.5px solid rgba(255,255,255,0.3);
+  border-radius: 50%;
+  flex-shrink: 0;
+  background-image: url("data:image/svg+xml,%3Csvg width='8' height='6' viewBox='0 0 8 6' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 3L3 5L7 1' stroke='rgba(255,255,255,0.8)' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.volu-cta-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.volu-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: #fff;
+  color: #000;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 16px 32px;
+  border-radius: 4px;
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.volu-cta:hover {
+  opacity: 0.9;
+  transform: translateY(-2px);
+}
+
+.volu-cta-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: transparent;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 16px 32px;
+  border-radius: 4px;
+  border: 1px solid rgba(255,255,255,0.3);
+  text-decoration: none;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  transition: border-color 0.2s, background 0.2s;
+}
+
+.volu-cta-ghost:hover {
+  border-color: #fff;
+  background: rgba(255,255,255,0.05);
+}
+
+/* Trust row */
+.volu-trust-row {
+  position: absolute;
+  bottom: 40px;
+  left: 0; right: 0;
+  z-index: 4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  padding: 0 8%;
+}
+
+.volu-trust-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.volu-trust-num {
+  font-size: 20px;
+  font-weight: 800;
+  color: #fff;
+  letter-spacing: -0.02em;
+}
+
+.volu-trust-label {
+  font-size: 10px;
+  color: rgba(255,255,255,0.35);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+/* Progress bar */
+.volu-progress-bar {
+  position: absolute;
+  bottom: 0; left: 0;
+  height: 2px;
+  background: rgba(255,255,255,0.8);
+  width: 0%;
+  z-index: 10;
+  transition: width 0.05s;
+}
+
+/* Scroll hint */
+.volu-scroll-hint {
+  position: absolute;
+  bottom: 100px;
+  right: 48px;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  color: rgba(255,255,255,0.25);
+  font-size: 10px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+.volu-scroll-arrow {
+  font-size: 16px;
+  animation: volu-bounce 1.8s ease-in-out infinite;
+}
+@keyframes volu-bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(8px); }
+}
+
+@media (max-width: 768px) {
+  .volu-trust-row { gap: 20px; bottom: 20px; }
+  .volu-scroll-hint { display: none; }
+  .volu-bezel--4, .volu-bezel--5 { display: none; }
+  .volu-overlay { padding: 0 24px; padding-top: 60px; }
+}
 </style>
 
+<!-- VOLENU WATCH CASE HERO -->
 <div class="volu-scroll-section" id="volu-scroll-{{ section.id }}">
   <div class="volu-sticky-wrap">
+
+    <!-- Ticker -->
+    <div class="volu-ticker">
+      <div class="volu-ticker__track">
+        <span>Premium Watch Cases</span>
+        <span>EVA Traveler</span>
+        <span>Display Eight</span>
+        <span>Winder Duo</span>
+        <span>Free Shipping</span>
+        <span>50,000+ Collectors</span>
+        <span>2 Year Warranty</span>
+        <span>Premium Watch Cases</span>
+        <span>EVA Traveler</span>
+        <span>Display Eight</span>
+        <span>Winder Duo</span>
+        <span>Free Shipping</span>
+        <span>50,000+ Collectors</span>
+        <span>2 Year Warranty</span>
+      </div>
+    </div>
+
+    <!-- Spinning Bezels -->
+    <div class="volu-bezels">
+      {% for i in (1..5) %}
+      <div class="volu-bezel volu-bezel--{{ i }}">
+        <svg viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+          <circle cx="100" cy="100" r="90" stroke="white" stroke-width="2"/>
+          <circle cx="100" cy="100" r="76" stroke="white" stroke-width="1" stroke-dasharray="4 8"/>
+          {% for h in (0..11) %}
+            {% assign angle = h | times: 30 %}
+          {% endfor %}
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(0 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(30 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(60 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(90 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(120 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(150 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(180 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(210 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(240 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(270 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(300 100 100)"/>
+          <line x1="100" y1="12" x2="100" y2="24" stroke="white" stroke-width="2.5" transform="rotate(330 100 100)"/>
+          <!-- Minute hand -->
+          <line x1="100" y1="40" x2="100" y2="100" stroke="white" stroke-width="1.5" stroke-linecap="round" transform="rotate(180 100 100)"/>
+          <!-- Hour hand -->
+          <line x1="100" y1="55" x2="100" y2="100" stroke="white" stroke-width="2.5" stroke-linecap="round" transform="rotate(45 100 100)"/>
+          <circle cx="100" cy="100" r="4" fill="white"/>
+        </svg>
+      </div>
+      {% endfor %}
+    </div>
+
+    <!-- Product image / animation canvas -->
     <div class="volu-canvas-wrap">
       <img id="volu-hero-img-{{ section.id }}"
         src="{{ 'frame_000_delay-0.04s.webp' | asset_url }}"
-        alt="Volenu AI Smart Glasses"/>
+        alt="Volenu Watch Case Collection"/>
     </div>
+
+    <!-- Dark overlay + content -->
     <div class="volu-overlay">
-      <h1 class="volu-headline">
-        See the World<br>Through <span class="accent">AI.</span>
-      </h1>
-      <ul class="volu-bullets">
-        <li>Real-Time AI Translation in 40+ Languages</li>
-        <li>4K Photo & Video with Stabilization</li>
-        <li>Hands-Free Voice Control</li>
-        <li>30-Day Money Back Guarantee</li>
-      </ul>
-      <a href="/products/ai-smart-glasses-with-real-time-translation-ai-assistant-4k-photo-taking-video-stabilization-camera-voice-control" class="volu-cta">
-        Shop Now — Free Shipping →
-      </a>
+      <div class="volu-hero-content">
+        <div class="volu-hero-label">New Collection 2026</div>
+        <h1 class="volu-headline">
+          House Your<br>Collection.
+          <span class="volu-accent">premium watch storage</span>
+        </h1>
+        <p class="volu-sub">
+          Every watch tells a story. Make sure it's protected, displayed, and preserved the right way.
+        </p>
+        <ul class="volu-hero-bullets">
+          <li>Aviation-Grade EVA Foam Protection</li>
+          <li>Scratch-Free Suede Interior Lining</li>
+          <li>TSA-Approved Zipper Lock System</li>
+          <li>30-Day Money Back Guarantee</li>
+        </ul>
+        <div class="volu-cta-row">
+          <a href="/collections/all" class="volu-cta">Shop Collection →</a>
+          <a href="#features" class="volu-cta-ghost">View Details</a>
+        </div>
+      </div>
     </div>
+
+    <!-- Trust row -->
+    <div class="volu-trust-row">
+      <div class="volu-trust-item">
+        <span class="volu-trust-num">50K+</span>
+        <span class="volu-trust-label">Collectors</span>
+      </div>
+      <div class="volu-trust-item">
+        <span class="volu-trust-num">15</span>
+        <span class="volu-trust-label">Max Slots</span>
+      </div>
+      <div class="volu-trust-item">
+        <span class="volu-trust-num">24h</span>
+        <span class="volu-trust-label">Dispatch</span>
+      </div>
+      <div class="volu-trust-item">
+        <span class="volu-trust-num">2yr</span>
+        <span class="volu-trust-label">Warranty</span>
+      </div>
+    </div>
+
     <div class="volu-progress-bar" id="volu-progress-{{ section.id }}"></div>
+
     <div class="volu-scroll-hint">
       <span>Scroll</span>
       <span class="volu-scroll-arrow">↓</span>
     </div>
+
   </div>
 </div>
 
