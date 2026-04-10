@@ -2,21 +2,19 @@
 
 <!-- LOADER -->
 <style>
+@keyframes vnBlink{0%,100%{opacity:1}49%{opacity:1}50%,99%{opacity:0}}
+@keyframes vnSU{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(0,-110%,0)}}
 #vnLoader{position:fixed;top:0;left:0;right:0;bottom:0;z-index:99999;background:#f0efe9;display:flex;align-items:center;justify-content:center;}
 #vnLoader.out{animation:vnSU .9s cubic-bezier(.87,0,.13,1) forwards;}
-#vnLText{
-  display:flex;align-items:center;white-space:nowrap;
-  clip-path:inset(0 100% 0 0);
-  animation:vnWipe 1s cubic-bezier(0.22,1,0.36,1) 0.2s forwards;
-}
-@keyframes vnWipe{to{clip-path:inset(0 0% 0 0)}}
-@keyframes vnSU{0%{transform:translate3d(0,0,0)}100%{transform:translate3d(0,-110%,0)}}
+#vnLWrap{font-size:21px;display:flex;align-items:center;white-space:nowrap;font-family:Barlow,sans-serif;}
+#vnLBold{font-weight:800;color:#1a1a1a;letter-spacing:.01em;}
+#vnLSep{font-weight:300;color:#999;margin:0 9px;opacity:0;}
+#vnLLight{font-weight:300;color:#666;letter-spacing:.01em;}
+#vnLCursor{display:inline-block;width:1.5px;height:1.1em;background:#1a1a1a;margin-left:1px;vertical-align:middle;animation:vnBlink .8s step-end infinite;}
 </style>
 <div id="vnLoader">
-  <div id="vnLText">
-    <span style="font-family:Barlow,sans-serif;font-weight:800;font-size:22px;color:#0d0d0d;letter-spacing:.02em;">VOLENU</span>
-    <span style="font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#bbb;margin:0 12px;">|</span>
-    <span style="font-family:Barlow,sans-serif;font-weight:300;font-size:22px;color:#888;letter-spacing:.01em;">Cases</span>
+  <div id="vnLWrap">
+    <span id="vnLBold"></span><span id="vnLSep">|</span><span id="vnLLight"></span><span id="vnLCursor"></span>
   </div>
 </div>
 
@@ -184,7 +182,50 @@
 
 <script>
 (function(){
-  window.addEventListener('load',function(){setTimeout(function(){var l=document.getElementById('vnLoader');if(l)l.classList.add('out');},2200);});
+  window.addEventListener('load',function(){
+    var bold='VOLENU', light='Cases';
+    var bEl=document.getElementById('vnLBold');
+    var sEl=document.getElementById('vnLSep');
+    var lEl=document.getElementById('vnLLight');
+    var cur=document.getElementById('vnLCursor');
+    var loader=document.getElementById('vnLoader');
+    var bi=0, li=0, charDelay=90;
+
+    // Step 1: cursor blinks alone for 400ms
+    setTimeout(function typeBold(){
+      if(!bEl)return;
+      if(bi < bold.length){
+        bEl.textContent = bold.slice(0,bi+1);
+        bi++;
+        setTimeout(typeBold, charDelay);
+      } else {
+        // show separator, move cursor after it
+        setTimeout(function(){
+          sEl.style.opacity='1';
+          // insert cursor after sep
+          setTimeout(typeLight, 120);
+        }, 80);
+      }
+    }, 400);
+
+    function typeLight(){
+      if(!lEl)return;
+      if(li < light.length){
+        lEl.textContent = light.slice(0,li+1);
+        li++;
+        setTimeout(typeLight, charDelay+10);
+      } else {
+        // done - hide cursor, wait, slide out
+        setTimeout(function(){
+          if(cur) cur.style.animation='none';
+          if(cur) cur.style.opacity='0';
+          setTimeout(function(){
+            if(loader) loader.classList.add('out');
+          }, 600);
+        }, 350);
+      }
+    }
+  });
   var cx=0,cy=0,rx=0,ry=0,raf;
   var c=document.getElementById('vnC'),r=document.getElementById('vnR');
   document.addEventListener('mousemove',function(e){cx=e.clientX;cy=e.clientY;if(c){c.style.left=cx+'px';c.style.top=cy+'px'}});
