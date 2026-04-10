@@ -2,10 +2,12 @@
 
 <!-- LOADER -->
 <div class="vn-loader" id="vnLoader">
-  <div class="vn-loader-mark"><div class="vn-loader-mark-inner"></div></div>
-  <div class="vn-loader-word"><div class="vn-loader-word-inner">VOLENU</div></div>
-  <div class="vn-loader-sub-wrap"><div class="vn-loader-sub">Watch Winders</div></div>
-  <div class="vn-loader-line-wrap"><div class="vn-loader-line"></div></div>
+  <div class="vn-loader-text">
+    <span class="vn-loader-bold" id="vnLBold"></span>
+    <span class="vn-loader-sep" id="vnLSep">|</span>
+    <span class="vn-loader-light" id="vnLLight"></span>
+    <span class="vn-loader-cursor" id="vnLCursor"></span>
+  </div>
 </div>
 
 <div class="vn-cursor" id="vnC"></div>
@@ -173,7 +175,45 @@
 <script>
 (function(){
   window.addEventListener('load',function(){
-    setTimeout(function(){document.getElementById('vnLoader').classList.add('out')},2200);
+    var bold = 'VOLENU';
+    var light = 'Cases';
+    var bEl = document.getElementById('vnLBold');
+    var sEl = document.getElementById('vnLSep');
+    var lEl = document.getElementById('vnLLight');
+    var cEl = document.getElementById('vnLCursor');
+    var i = 0, j = 0;
+    var delay = 80; // ms per letter
+
+    function typeBold(){
+      if(i < bold.length){
+        bEl.textContent += bold[i];
+        i++;
+        setTimeout(typeBold, delay);
+      } else {
+        // show separator
+        setTimeout(function(){
+          sEl.style.opacity = '1';
+          setTimeout(typeLight, 180);
+        }, 120);
+      }
+    }
+    function typeLight(){
+      if(j < light.length){
+        lEl.textContent += light[j];
+        j++;
+        setTimeout(typeLight, delay + 10);
+      } else {
+        // hide cursor, then exit
+        setTimeout(function(){
+          if(cEl) cEl.style.display = 'none';
+          setTimeout(function(){
+            document.getElementById('vnLoader').classList.add('out');
+          }, 500);
+        }, 400);
+      }
+    }
+    // small delay before starting
+    setTimeout(typeBold, 300);
   });
   var cx=0,cy=0,rx=0,ry=0,raf;
   var c=document.getElementById('vnC'),r=document.getElementById('vnR');

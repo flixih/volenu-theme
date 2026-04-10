@@ -14,81 +14,47 @@ html,body{overflow-x:hidden}
 
 /* ── LOADER ────────────────────────────────────── */
 .vn-loader{
-  position:fixed;inset:0;background:var(--bg);
-  z-index:9999;display:flex;align-items:center;justify-content:center;
-  transition:opacity .7s ease,visibility .7s ease;
-}
-.vn-loader.out{opacity:0;visibility:hidden;pointer-events:none}
-.vn-loader-logo{
-  font-family:'DM Serif Display',serif;
-  font-size:52px;letter-spacing:.18em;color:var(--text);
-  display:flex;gap:2px;
-}
-.vn-loader-logo span{
-  display:inline-block;opacity:0;transform:translateY(16px);
-  animation:lLetter .7s cubic-bezier(.16,1,.3,1) forwards;
-}
-.vn-loader-logo span:nth-child(1){animation-delay:.05s}
-.vn-loader-logo span:nth-child(2){animation-delay:.1s}
-.vn-loader-logo span:nth-child(3){animation-delay:.15s}
-.vn-loader-logo span:nth-child(4){animation-delay:.2s}
-.vn-loader-logo span:nth-child(5){animation-delay:.25s}
-.vn-loader-logo span:nth-child(6){animation-delay:.3s}
-.vn-loader-bar{width:0;height:1px;background:var(--text);margin:20px auto 0;animation:lBar 1.5s cubic-bezier(.16,1,.3,1) .15s forwards}
-.vn-loader-sub{font-family:'Barlow',sans-serif;font-size:10px;letter-spacing:.35em;text-transform:uppercase;color:var(--text3);margin-top:14px;opacity:0;animation:lFade .5s ease .9s forwards;text-align:center}
-
-/* ── LOADER ────────────────────────────────────── */
-.vn-loader{
   position:fixed;inset:0;z-index:9999;
   background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  gap:0;
+  display:flex;align-items:center;justify-content:center;
 }
 .vn-loader.out{
-  animation:loaderOut .9s cubic-bezier(.76,0,.24,1) forwards;
+  animation:loaderOut .8s cubic-bezier(.76,0,.24,1) .1s forwards;
 }
-/* Logo mark - small icon above wordmark */
-.vn-loader-mark{
-  overflow:hidden;margin-bottom:20px;
-}
-.vn-loader-mark-inner{
-  width:28px;height:28px;
-  border:2px solid var(--text);border-radius:50%;
-  transform:translateY(100%);opacity:0;
-  animation:loaderReveal .7s cubic-bezier(.16,1,.3,1) .2s forwards;
-}
-/* Wordmark */
-.vn-loader-word{
-  overflow:hidden;margin-bottom:4px;
-}
-.vn-loader-word-inner{
+.vn-loader-text{
   font-family:'Barlow',sans-serif;
-  font-weight:900;font-size:42px;letter-spacing:.06em;
-  color:var(--text);line-height:1;
-  transform:translateY(110%);
-  animation:loaderReveal .75s cubic-bezier(.16,1,.3,1) .35s forwards;
+  font-size:22px;
+  letter-spacing:.01em;
+  color:var(--text);
+  display:flex;align-items:center;gap:0;
+  white-space:nowrap;
 }
-/* Sub */
-.vn-loader-sub-wrap{
-  overflow:hidden;margin-bottom:32px;
+.vn-loader-bold{
+  font-weight:800;
+  color:var(--text);
 }
-.vn-loader-sub{
-  font-family:'Barlow',sans-serif;
-  font-weight:400;font-size:10px;letter-spacing:.35em;text-transform:uppercase;
-  color:var(--text3);
-  transform:translateY(120%);
-  animation:loaderReveal .7s cubic-bezier(.16,1,.3,1) .5s forwards;
+.vn-loader-sep{
+  font-weight:300;
+  color:var(--text2);
+  margin:0 10px;
+  opacity:0;
+  transition:opacity .15s ease;
 }
-/* Progress line */
-.vn-loader-line-wrap{
-  width:120px;height:1px;background:rgba(13,13,13,.12);position:relative;overflow:hidden;
+.vn-loader-light{
+  font-weight:300;
+  color:var(--text2);
 }
-.vn-loader-line{
-  position:absolute;left:0;top:0;height:100%;width:0%;background:var(--text);
-  animation:loaderLine 1.4s cubic-bezier(.16,1,.3,1) .6s forwards;
+/* blinking cursor */
+.vn-loader-cursor{
+  display:inline-block;
+  width:2px;height:1.1em;
+  background:var(--text);
+  margin-left:1px;
+  vertical-align:middle;
+  animation:cursorBlink .6s step-end infinite;
 }
 
-/* ── CURSOR ────────────────────────────────────── */
+/* ── CURSOR ────────────────────────────────────── */ ────────────────────────────────────── */
 .vn-cursor{position:fixed;width:6px;height:6px;background:var(--text);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:opacity .2s}
 .vn-cursor-ring{position:fixed;width:30px;height:30px;border:1px solid rgba(13,13,13,.2);border-radius:50%;pointer-events:none;z-index:9997;transform:translate(-50%,-50%);transition:width .3s,height .3s,border-color .3s}
 .vn-cursor-ring.hov{width:50px;height:50px;border-color:rgba(13,13,13,.45)}
@@ -359,4 +325,12 @@ html,body{overflow-x:hidden}
 @keyframes loaderOut{
   0%{transform:translateY(0);opacity:1}
   100%{transform:translateY(-100%);opacity:1}
+}
+@keyframes loaderOut{
+  0%{transform:translateY(0);opacity:1}
+  100%{transform:translateY(-105%);opacity:1}
+}
+@keyframes cursorBlink{
+  0%,100%{opacity:1}
+  50%{opacity:0}
 }
