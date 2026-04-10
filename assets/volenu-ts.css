@@ -102,19 +102,15 @@
   padding:20px 0;
 }
 .ts-logos-track{
-  display:flex;align-items:center;gap:72px;
-  animation:tsScroll 24s linear infinite;
-  white-space:nowrap;
+  display:flex;align-items:center;gap:80px;
+  animation:tsScroll 30s linear infinite;
+  white-space:nowrap;padding:0 40px;
 }
 .ts-logos-track img,.ts-logo-item{
-  height:22px;opacity:.45;filter:grayscale(1);
-  transition:opacity .3s;flex-shrink:0;
+  opacity:.5;filter:grayscale(1);
+  transition:opacity .3s,filter .3s;flex-shrink:0;object-fit:contain;
 }
-.ts-logo-text{
-  font-family:'Jost',sans-serif;font-size:13px;font-weight:600;
-  letter-spacing:.12em;text-transform:uppercase;color:var(--ts-text3);
-  flex-shrink:0;
-}
+.ts-logos-track img:hover,.ts-logo-item:hover{opacity:.85;filter:grayscale(0)}
 
 /* ── PRODUCT GRID ───────────────────── */
 .ts-prod-grid{
