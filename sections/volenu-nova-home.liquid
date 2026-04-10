@@ -2,13 +2,15 @@
 
 <!-- LOADER -->
 <style>
-@keyframes vnLeft{
-  0%{transform:translateX(100%)}
-  100%{transform:translateX(0)}
+@keyframes vnDL{
+  0%{opacity:0;transform:translateX(40px)}
+  20%{opacity:1}
+  100%{opacity:1;transform:translateX(0)}
 }
-@keyframes vnRight{
-  0%{transform:translateX(-100%)}
-  100%{transform:translateX(0)}
+@keyframes vnDR{
+  0%{opacity:0;transform:translateX(-40px)}
+  20%{opacity:1}
+  100%{opacity:1;transform:translateX(0)}
 }
 @keyframes vnSU{
   0%{transform:translate3d(0,0,0)}
@@ -24,42 +26,26 @@
   display:flex;align-items:center;
   font-size:21px;font-family:Barlow,sans-serif;white-space:nowrap;
 }
-#vnLLeftClip{
-  overflow:hidden;
-  opacity:0;
-  animation:none;
-  transition:opacity .01s;
-}
-#vnLLeftClip.go{opacity:1;}
 #vnLBold{
-  display:block;
   font-weight:800;color:#1a1a1a;letter-spacing:.02em;
-  transform:translateX(100%);
-  animation:vnLeft .7s cubic-bezier(.2,0,0,1) .05s forwards;
+  opacity:0;
+  animation:vnDL .65s cubic-bezier(.2,0,0,1) .05s forwards;
 }
 #vnLSep{
   font-weight:300;color:#aaa;margin:0 10px;
   flex-shrink:0;
 }
-#vnLRightClip{
-  overflow:hidden;
-  opacity:0;
-  animation:none;
-  transition:opacity .01s;
-}
-#vnLRightClip.go{opacity:1;}
 #vnLLight{
-  display:block;
   font-weight:300;color:#777;letter-spacing:.02em;
-  transform:translateX(-100%);
-  animation:vnRight .65s cubic-bezier(.2,0,0,1) .8s forwards;
+  opacity:0;
+  animation:vnDR .6s cubic-bezier(.2,0,0,1) .78s forwards;
 }
 </style>
 <div id="vnLoader">
   <div id="vnLWrap">
-    <div id="vnLLeftClip"><span id="vnLBold">VOLENU</span></div>
+    <span id="vnLBold">VOLENU</span>
     <span id="vnLSep">|</span>
-    <div id="vnLRightClip"><span id="vnLLight">Cases</span></div>
+    <span id="vnLLight">Cases</span>
   </div>
 </div>
 
@@ -228,15 +214,10 @@
 <script>
 (function(){
   window.addEventListener('load',function(){
-    // Show clip containers immediately so overflow hidden works
-    var lc=document.getElementById('vnLLeftClip');
-    var rc=document.getElementById('vnLRightClip');
-    if(lc)lc.classList.add('go');
-    if(rc)rc.classList.add('go');
     setTimeout(function(){
       var l=document.getElementById('vnLoader');
       if(l)l.classList.add('out');
-    },2000);
+    },2100);
   });
   var cx=0,cy=0,rx=0,ry=0,raf;
   var c=document.getElementById('vnC'),r=document.getElementById('vnR');
