@@ -149,8 +149,8 @@ html,body{overflow-x:hidden}
 
 /* ── TWO COL ───────────────────────────────────── */
 .vn-2col{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
-.vn-img-wrap{position:relative}
-.vn-img-wrap img{width:100%;display:block;mix-blend-mode:multiply}
+.vn-img-wrap{position:relative;overflow:hidden}
+.vn-img-wrap img{width:100%;display:block;mix-blend-mode:darken}
 .vn-img-cap{
   position:absolute;bottom:0;left:0;right:0;
   border-top:1px solid var(--border);padding:14px 0;
