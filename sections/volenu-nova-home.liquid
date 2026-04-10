@@ -2,11 +2,10 @@
 
 <!-- LOADER -->
 <div class="vn-loader" id="vnLoader">
-  <div>
-    <div class="vn-loader-logo"><span>V</span><span>O</span><span>L</span><span>E</span><span>N</span><span>U</span></div>
-    <div class="vn-loader-bar"></div>
-    <div class="vn-loader-sub">Watch Winders</div>
-  </div>
+  <div class="vn-loader-mark"><div class="vn-loader-mark-inner"></div></div>
+  <div class="vn-loader-word"><div class="vn-loader-word-inner">VOLENU</div></div>
+  <div class="vn-loader-sub-wrap"><div class="vn-loader-sub">Watch Winders</div></div>
+  <div class="vn-loader-line-wrap"><div class="vn-loader-line"></div></div>
 </div>
 
 <div class="vn-cursor" id="vnC"></div>
@@ -174,7 +173,7 @@
 <script>
 (function(){
   window.addEventListener('load',function(){
-    setTimeout(function(){document.getElementById('vnLoader').classList.add('out')},1900);
+    setTimeout(function(){document.getElementById('vnLoader').classList.add('out')},2200);
   });
   var cx=0,cy=0,rx=0,ry=0,raf;
   var c=document.getElementById('vnC'),r=document.getElementById('vnR');
