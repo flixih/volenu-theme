@@ -42,81 +42,17 @@
 </nav>
 
 <!-- ── HERO ──────────────────────────────── -->
-<style>
-.ts-hero{position:relative;height:100vh;overflow:hidden;background:#7a8fa0}
-.ts-hero-product{
-  position:absolute;right:0;top:0;bottom:0;width:42%;
-  display:flex;align-items:center;justify-content:center;
-  z-index:2;
-}
-.ts-hero-product img{
-  height:90vh;width:auto;object-fit:contain;
-  will-change:transform;
-  animation:heroImgIn 1.2s cubic-bezier(.16,1,.3,1) .3s both;
-}
-.ts-hero-top{
-  position:absolute;top:0;left:0;right:0;z-index:3;
-  padding:32px 40px;display:flex;align-items:center;justify-content:space-between;
-}
-.ts-hero-eyebrow-top{
-  font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.22em;
-  text-transform:uppercase;color:rgba(255,255,255,.8);
-}
-.ts-hero-learn{
-  display:flex;align-items:center;gap:8px;
-  font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.15em;
-  text-transform:uppercase;color:#fff;text-decoration:none;
-  background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.4);
-  padding:10px 22px;transition:background .3s;backdrop-filter:blur(4px);
-}
-.ts-hero-learn:hover{background:rgba(255,255,255,.25)}
-.ts-hero-bigtext{
-  position:absolute;bottom:-12vh;left:-1vw;right:0;z-index:1;
-  pointer-events:none;
-  will-change:transform;
-}
-.ts-hero-bigtext span{
-  font-family:'Outfit',sans-serif;
-  font-size:clamp(120px,20vw,240px);
-  font-weight:300;line-height:.85;
-  color:#fff;letter-spacing:-.03em;
-  display:block;
-  opacity:.92;
-  animation:heroTextIn 1.4s cubic-bezier(.16,1,.3,1) .1s both;
-}
-@keyframes heroImgIn{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
-@keyframes heroTextIn{from{opacity:0;transform:translateY(60px)}to{opacity:.92;transform:translateY(0)}}
-</style>
-<section class="ts-hero" id="ts-hero">
-  <div class="ts-hero-top">
-    <span class="ts-hero-eyebrow-top">Discover the craftsmanship behind every case</span>
-    <a href="/collections/all" class="ts-hero-learn">
-      <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M2 7h10M8 3l4 4-4 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-      Learn more
-    </a>
+<section class="ts-hero">
+  <div class="ts-hero-img">
+    <img src="{{ 'winder-open.png' | asset_url }}" alt="Volenu Watch Cases" loading="eager">
   </div>
-  <div class="ts-hero-product">
-    <img src="{{ 'winder-angle.png' | asset_url }}" alt="Volenu Watch Case" loading="eager">
-  </div>
-  <div class="ts-hero-bigtext" id="tsHeroBig">
-    <span>VOLENU</span>
+  <div class="ts-hero-overlay"></div>
+  <div class="ts-hero-content ts-reveal">
+    <span class="ts-hero-eyebrow">Discover the craftsmanship behind every case</span>
+    <h1 class="ts-hero-title">Engineered for<br>the Exceptional</h1>
+    <a href="/collections/all" class="ts-hero-btn gold">Shop the Collection</a>
   </div>
 </section>
-<script>
-(function(){
-  var big = document.getElementById('tsHeroBig');
-  var hero = document.getElementById('ts-hero');
-  if(!big||!hero) return;
-  window.addEventListener('scroll', function(){
-    var scrolled = window.scrollY;
-    var heroH = hero.offsetHeight;
-    if(scrolled < heroH){
-      // Move up as user scrolls - parallax speed 0.45
-      big.style.transform = 'translateY(-' + (scrolled * 0.45) + 'px)';
-    }
-  }, {passive:true});
-})();
-</script>
 
 <!-- ── INTRO LABEL ───────────────────────── -->
 <div class="ts-section ts-section-center" style="padding:60px 40px 40px">
@@ -130,24 +66,24 @@
 <!-- ── BRAND LOGOS ───────────────────────── -->
 <div class="ts-logos-wrap">
   <div class="ts-logos-track">
-    <img class="ts-logo-item" src="{{ 'logo-cartier.png' | asset_url }}" alt="Cartier" style="height:38px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-rolex.png' | asset_url }}" alt="Rolex" style="height:52px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-omega.png' | asset_url }}" alt="Omega" style="height:48px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-panerai.png' | asset_url }}" alt="Panerai" style="height:28px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-hublot.png' | asset_url }}" alt="Hublot" style="height:44px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-ap.png' | asset_url }}" alt="Audemars Piguet" style="height:48px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-patek.png' | asset_url }}" alt="Patek Philippe" style="height:52px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-tagheuer.png' | asset_url }}" alt="TAG Heuer" style="height:52px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-bellross.png' | asset_url }}" alt="Bell & Ross" style="height:36px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-cartier.png' | asset_url }}" alt="Cartier" style="height:38px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-rolex.png' | asset_url }}" alt="Rolex" style="height:52px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-omega.png' | asset_url }}" alt="Omega" style="height:48px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-panerai.png' | asset_url }}" alt="Panerai" style="height:28px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-hublot.png' | asset_url }}" alt="Hublot" style="height:44px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-ap.png' | asset_url }}" alt="Audemars Piguet" style="height:48px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-patek.png' | asset_url }}" alt="Patek Philippe" style="height:52px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-tagheuer.png' | asset_url }}" alt="TAG Heuer" style="height:52px;width:auto;object-fit:contain">
-    <img class="ts-logo-item" src="{{ 'logo-bellross.png' | asset_url }}" alt="Bell & Ross" style="height:36px;width:auto;object-fit:contain">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Cartier_logo.svg" alt="Cartier" style="height:18px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/en/9/93/Rolex_logo.svg" alt="Rolex" style="height:26px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Panerai-Logo.svg" alt="Panerai" style="height:14px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Hublot-Logo.svg" alt="Hublot" style="height:20px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Omega_Logo.svg" alt="Omega" style="height:22px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Audemars_Piguet_logo.svg" alt="Audemars Piguet" style="height:28px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Patek_Philippe_logo.svg" alt="Patek Philippe" style="height:20px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/7/76/TAG_Heuer_logo.svg" alt="TAG Heuer" style="height:28px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/6/63/Bell_%26_Ross_logo.svg" alt="Bell & Ross" style="height:18px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/1/1e/Cartier_logo.svg" alt="Cartier" style="height:18px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/en/9/93/Rolex_logo.svg" alt="Rolex" style="height:26px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/a/ad/Panerai-Logo.svg" alt="Panerai" style="height:14px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/f/f0/Hublot-Logo.svg" alt="Hublot" style="height:20px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/9/9a/Omega_Logo.svg" alt="Omega" style="height:22px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/c/c4/Audemars_Piguet_logo.svg" alt="Audemars Piguet" style="height:28px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/8/82/Patek_Philippe_logo.svg" alt="Patek Philippe" style="height:20px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/7/76/TAG_Heuer_logo.svg" alt="TAG Heuer" style="height:28px">
+    <img class="ts-logo-item" src="https://upload.wikimedia.org/wikipedia/commons/6/63/Bell_%26_Ross_logo.svg" alt="Bell & Ross" style="height:18px">
   </div>
 </div>
 

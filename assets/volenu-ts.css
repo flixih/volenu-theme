@@ -106,8 +106,11 @@
   animation:tsScroll 30s linear infinite;
   white-space:nowrap;padding:0 40px;
 }
-.ts-logo-item{flex-shrink:0;object-fit:contain;opacity:.85;transition:opacity .3s;}
-.ts-logo-item:hover{opacity:1}
+.ts-logos-track img,.ts-logo-item{
+  opacity:.5;filter:grayscale(1);
+  transition:opacity .3s,filter .3s;flex-shrink:0;object-fit:contain;
+}
+.ts-logos-track img:hover,.ts-logo-item:hover{opacity:.85;filter:grayscale(0)}
 
 /* ── PRODUCT GRID ───────────────────── */
 .ts-prod-grid{
