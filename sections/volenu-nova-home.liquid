@@ -113,9 +113,9 @@
 
 <!-- ── HERO VIDEO SCRUB ──────────────────────── -->
 <style>
-.vn-hero-wrap{position:relative;height:400vh}
+.vn-hero-wrap{position:relative;height:100vh}
 .vn-hero-sticky{
-  position:sticky;top:0;height:100vh;
+  position:relative;height:100vh;
   overflow:hidden;background:#0a0a0a;
 }
 .vn-hero-video{
@@ -189,9 +189,11 @@
       class="vn-hero-video"
       id="vhVideo"
       muted
+      autoplay
+      loop
       playsinline
       preload="auto"
-      src="{{ 'hero-video.mp4' | asset_url }}"
+      src="{{ 'Black_carbon_fibre_202604110112.mp4' | asset_url }}"
     ></video>
     <div class="vn-hero-overlay"></div>
     <div class="vn-hero-content" id="vhContent">
