@@ -97,7 +97,7 @@
 
 /* ── LOGO TICKER ────────────────────── */
 .ts-logos-wrap{
-  overflow:hidden;background:var(--ts-bg2);
+  overflow:hidden;background:#ffffff;
   border-top:1px solid var(--ts-border);border-bottom:1px solid var(--ts-border);
   padding:20px 0;
 }
@@ -106,7 +106,7 @@
   animation:tsScroll 30s linear infinite;
   white-space:nowrap;padding:0 40px;
 }
-.ts-logo-item{flex-shrink:0;object-fit:contain;opacity:.9;transition:opacity .3s;mix-blend-mode:multiply;}
+.ts-logo-item{flex-shrink:0;object-fit:contain;opacity:.85;transition:opacity .3s;}
 .ts-logo-item:hover{opacity:1}
 
 /* ── PRODUCT GRID ───────────────────── */
@@ -116,7 +116,7 @@
 }
 .ts-prod-card{text-align:center;cursor:pointer}
 .ts-prod-img{
-  background:var(--ts-bg2);position:relative;overflow:hidden;
+  background:#ffffff;position:relative;overflow:hidden;
   aspect-ratio:1/1;margin-bottom:16px;
   display:flex;align-items:center;justify-content:center;
 }
@@ -221,7 +221,7 @@
 
 /* ── TRUST BADGES ───────────────────── */
 .ts-trust{
-  padding:52px 40px;background:var(--ts-bg2);
+  padding:52px 40px;background:#ffffff;
   border-top:1px solid var(--ts-border);
   display:grid;grid-template-columns:repeat(4,1fr);
   gap:24px;text-align:center;
