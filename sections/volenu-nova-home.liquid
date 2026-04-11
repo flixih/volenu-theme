@@ -23,8 +23,77 @@
   </div>
 </div>
 
-<!-- ── CAT NAV ───────────────────────────── -->
-<nav class="ts-cat-nav">
+<!-- ── OUR NAV ──────────────────────────────── -->
+<style>
+.vn-topnav{
+  position:fixed;top:0;left:0;right:0;z-index:9000;
+  background:#fff;
+  border-bottom:1px solid #e8e4dc;
+}
+.vn-topnav-main{
+  display:grid;grid-template-columns:1fr auto 1fr;
+  align-items:center;padding:0 48px;height:72px;
+}
+.vn-topnav-left{display:flex;gap:32px;list-style:none}
+.vn-topnav-left a{
+  font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.12em;
+  text-transform:uppercase;color:#666;text-decoration:none;transition:color .2s;
+}
+.vn-topnav-left a:hover{color:#111}
+.vn-topnav-logo a{
+  font-family:'Cormorant Garamond',Georgia,serif;
+  font-size:30px;font-weight:600;letter-spacing:.18em;
+  color:#111;text-decoration:none;text-transform:uppercase;
+}
+.vn-topnav-right{
+  display:flex;align-items:center;justify-content:flex-end;gap:24px;
+}
+.vn-topnav-right a{
+  font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:#666;text-decoration:none;transition:color .2s;
+}
+.vn-topnav-right a:hover{color:#111}
+.vn-topnav-cart{
+  font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.1em;
+  text-transform:uppercase;color:#111;text-decoration:none;
+}
+/* Category row */
+.vn-catnav{
+  border-top:1px solid #e8e4dc;
+  display:flex;align-items:center;justify-content:center;
+  gap:48px;padding:0 48px;height:40px;
+  background:#fff;
+}
+.vn-catnav a{
+  font-family:'Jost',sans-serif;font-size:10px;font-weight:500;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:#555;text-decoration:none;transition:color .2s;white-space:nowrap;
+}
+.vn-catnav a:hover{color:#111}
+/* Push page content below fixed nav */
+.vn-nav-spacer{height:112px}
+@media(max-width:768px){
+  .vn-topnav-main{padding:0 16px}
+  .vn-topnav-left{display:none}
+  .vn-catnav{display:none}
+  .vn-nav-spacer{height:72px}
+}
+</style>
+<div class="vn-topnav">
+  <div class="vn-topnav-main">
+    <ul class="vn-topnav-left">
+      <li><a href="/collections/all">Shop All</a></li>
+      <li><a href="/collections/all">Watch Cases</a></li>
+      <li><a href="/collections/all">New Arrivals</a></li>
+    </ul>
+    <div class="vn-topnav-logo"><a href="/">Volenu</a></div>
+    <div class="vn-topnav-right">
+      <a href="/account">Account</a>
+      <a href="/search">Search</a>
+      <a href="/cart" class="vn-topnav-cart">Cart ({{ cart.item_count }})</a>
+    </div>
+  </div>
+  <nav class="vn-catnav">
   <a href="/collections/all">Watch Cases</a>
   <a href="/collections/all">Watch Winders</a>
   <a href="/collections/all">New Arrivals</a>

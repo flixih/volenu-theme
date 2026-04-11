@@ -437,3 +437,6 @@
   .header { padding: 0 16px !important; }
   .ts-cat-nav { display: none; }
 }
+
+/* ── HIDE SHOPIFY HEADER ENTIRELY ─── */
+.shopify-section-header { display: none !important; }
