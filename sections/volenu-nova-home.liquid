@@ -205,57 +205,34 @@ html{scroll-behavior:smooth}body,html{background:#fff!important}
   var TOTAL = 217;
   var section = document.getElementById('vwScrub');
   var img = document.getElementById('vwFrame');
-  var text = document.getElementById('vwText');
-  var hint = document.getElementById('vwHint');
-  if(!section || !img) return;
+  if(!section || !img) { console.log('NO SECTION OR IMG'); return; }
 
   var baseUrl = {{ 'ezgif-frame-001.png' | asset_url | json }};
-  console.log('Volenu scrub baseUrl:', baseUrl);
-  console.log('Frame 050 url:', baseUrl.replace('ezgif-frame-001', 'ezgif-frame-050'));
+  console.log('BASE URL:', baseUrl);
 
   function pad(n){ return n < 10 ? '00'+n : n < 100 ? '0'+n : ''+n; }
-  function frameUrl(n){ return baseUrl.replace('ezgif-frame-001', 'ezgif-frame-' + pad(n)); }
 
-  // Preload all frames
-  var frames = new Array(TOTAL + 1);
-  for(var i = 1; i <= TOTAL; i++){
-    frames[i] = new Image();
-    frames[i].src = frameUrl(i);
-  }
+  // Show frame 50 right away to test it works
+  img.src = baseUrl.replace('ezgif-frame-001', 'ezgif-frame-050');
 
-  var currentFrame = 1;
-  var targetFrame = 1;
+  window.addEventListener('scroll', function(){
+    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    var sectionTop = section.offsetTop;
+    var sectionH = section.offsetHeight;
+    var viewH = window.innerHeight;
+    var scrolled = scrollTop - sectionTop;
+    var maxScroll = sectionH - viewH;
+    if(scrolled < 0) scrolled = 0;
+    if(scrolled > maxScroll) scrolled = maxScroll;
+    var p = maxScroll > 0 ? scrolled / maxScroll : 0;
+    var frame = Math.min(TOTAL, Math.max(1, Math.round(1 + p * (TOTAL - 1))));
+    img.src = baseUrl.replace('ezgif-frame-001', 'ezgif-frame-' + pad(frame));
 
-  function getTargetFrame(){
-    var rect = section.getBoundingClientRect();
-    var maxScroll = section.offsetHeight - window.innerHeight;
-    var scrolled = Math.max(0, -rect.top);
-    var p = Math.min(1, Math.max(0, scrolled / maxScroll));
-    return Math.round(1 + p * (TOTAL - 1));
-  }
-
-  function updateFrame(){
-    // Lerp toward target
-    targetFrame = getTargetFrame();
-    currentFrame += (targetFrame - currentFrame) * 0.15;
-    var idx = Math.min(TOTAL, Math.max(1, Math.round(currentFrame)));
-
-    if(frames[idx] && frames[idx].complete && frames[idx].naturalWidth > 0){
-      img.src = frames[idx].src;
-    }
-
-    // Fade text
-    var p = (idx - 1) / (TOTAL - 1);
+    var text = document.getElementById('vwText');
+    var hint = document.getElementById('vwHint');
     if(text) text.style.opacity = Math.max(0, 1 - p * 4);
     if(hint) hint.style.opacity = Math.max(0, 1 - p * 10);
-
-    requestAnimationFrame(updateFrame);
-  }
-
-  // Show first frame immediately
-  img.src = baseUrl;
-  img.style.opacity = '1';
-  updateFrame();
+  }, {passive: true});
 })();
 </script>
 
