@@ -205,34 +205,56 @@ html{scroll-behavior:smooth}body,html{background:#fff!important}
   var TOTAL = 217;
   var section = document.getElementById('vwScrub');
   var img = document.getElementById('vwFrame');
-  if(!section || !img) { console.log('NO SECTION OR IMG'); return; }
+  var text = document.getElementById('vwText');
+  var hint = document.getElementById('vwHint');
+  if(!section || !img) return;
 
   var baseUrl = {{ 'ezgif-frame-001.png' | asset_url | json }};
-  console.log('BASE URL:', baseUrl);
-
   function pad(n){ return n < 10 ? '00'+n : n < 100 ? '0'+n : ''+n; }
+  function frameUrl(n){ return baseUrl.replace('ezgif-frame-001','ezgif-frame-'+pad(n)); }
 
-  // Show frame 50 right away to test it works
-  img.src = baseUrl.replace('ezgif-frame-001', 'ezgif-frame-050');
+  // Preload all frames
+  var cache = {};
+  for(var i=1;i<=TOTAL;i++){
+    cache[i] = new Image();
+    cache[i].src = frameUrl(i);
+  }
+
+  var currentF = 1.0;   // what's drawn
+  var targetF  = 1.0;   // where scroll says we should be
+  var lastDrawn = 0;
+
+  function getScrollProgress(){
+    var scrollTop = window.pageYOffset;
+    var sectionTop = section.offsetTop;
+    var maxScroll  = section.offsetHeight - window.innerHeight;
+    var scrolled   = Math.max(0, Math.min(maxScroll, scrollTop - sectionTop));
+    return maxScroll > 0 ? scrolled / maxScroll : 0;
+  }
 
   window.addEventListener('scroll', function(){
-    var scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    var sectionTop = section.offsetTop;
-    var sectionH = section.offsetHeight;
-    var viewH = window.innerHeight;
-    var scrolled = scrollTop - sectionTop;
-    var maxScroll = sectionH - viewH;
-    if(scrolled < 0) scrolled = 0;
-    if(scrolled > maxScroll) scrolled = maxScroll;
-    var p = maxScroll > 0 ? scrolled / maxScroll : 0;
-    var frame = Math.min(TOTAL, Math.max(1, Math.round(1 + p * (TOTAL - 1))));
-    img.src = baseUrl.replace('ezgif-frame-001', 'ezgif-frame-' + pad(frame));
+    var p = getScrollProgress();
+    targetF = 1 + p * (TOTAL - 1);
+  }, {passive: true});
 
-    var text = document.getElementById('vwText');
-    var hint = document.getElementById('vwHint');
+  function tick(){
+    // Lerp — 0.08 = Nova-style smooth lag
+    currentF += (targetF - currentF) * 0.08;
+
+    var idx = Math.min(TOTAL, Math.max(1, Math.round(currentF)));
+    if(idx !== lastDrawn && cache[idx] && cache[idx].complete){
+      img.src = cache[idx].src;
+      lastDrawn = idx;
+    }
+
+    var p = (currentF - 1) / (TOTAL - 1);
     if(text) text.style.opacity = Math.max(0, 1 - p * 4);
     if(hint) hint.style.opacity = Math.max(0, 1 - p * 10);
-  }, {passive: true});
+
+    requestAnimationFrame(tick);
+  }
+
+  tick();
 })();
 </script>
 
