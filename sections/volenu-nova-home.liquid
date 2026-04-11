@@ -104,97 +104,257 @@
 
 <!-- ── NAV ──────────────────────────────── -->
 <!-- ── HERO ──────────────────────────────── -->
-<style>
-.vn-hero-scroll{
-  position:relative;
-  height:300vh; /* scroll distance */
-}
-.vn-hero-sticky{
-  position:sticky;
-  top:0;
-  height:100vh;
-  overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-  background:#111;
-}
-.vn-hero-img{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-}
-.vn-hero-img img{
-  width:100%;height:100%;object-fit:cover;
-  transition:none;
-  will-change:opacity;
-}
-#heroImgClosed{opacity:1;z-index:2;position:absolute;inset:0;object-fit:cover;width:100%;height:100%}
-#heroImgOpen{opacity:0;z-index:1;position:absolute;inset:0;object-fit:cover;width:100%;height:100%}
+<section class="ts-hero">
+  <div class="ts-hero-img">
+    <img src="{{ 'winder-open.png' | asset_url }}" alt="Volenu Watch Cases" loading="eager">
+  </div>
+  <div class="ts-hero-overlay"></div>
+  <div class="ts-hero-content ts-reveal">
+    <span class="ts-hero-eyebrow">Discover the craftsmanship behind every case</span>
+    <h1 class="ts-hero-title">Engineered for<br>the Exceptional</h1>
+    <a href="/collections/all" class="ts-hero-btn gold">Shop the Collection</a>
+  </div>
+</section>
 
-/* Text overlay */
-.vn-hero-text{
-  position:absolute;bottom:10%;left:50%;transform:translateX(-50%);
-  z-index:10;text-align:center;pointer-events:none;
-}
-.vn-hero-text h1{
-  font-family:'Outfit',sans-serif;font-weight:300;
-  font-size:clamp(56px,10vw,120px);
-  color:#fff;letter-spacing:-.02em;line-height:1;
-  opacity:0;animation:htIn 1s .3s both;
-}
-.vn-hero-text p{
-  font-family:'Jost',sans-serif;font-size:12px;
-  letter-spacing:.3em;text-transform:uppercase;
-  color:rgba(255,255,255,.6);margin-top:16px;
-  opacity:0;animation:htIn .8s .7s both;
-}
-.vn-hero-scroll-hint{
-  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
-  z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;
-  opacity:0;animation:htIn .8s 1.2s both;
-}
-.vn-hero-scroll-hint span{
-  font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.25em;
-  text-transform:uppercase;color:rgba(255,255,255,.5);
-}
-.vn-scroll-line{width:1px;height:40px;background:linear-gradient(#fff,transparent);animation:scrollPulse 2s infinite}
+<!-- ── INTRO LABEL ───────────────────────── -->
+<div class="ts-section ts-section-center" style="padding:60px 40px 40px">
+  <div class="ts-reveal">
+    <span class="ts-eyebrow">Volenu</span>
+    <h2 class="ts-h2">Watch Cases</h2>
+    <p class="ts-sub">Designed for the world's most prestigious timepieces</p>
+  </div>
+</div>
 
-@keyframes htIn{from{opacity:0;transform:translateX(-50%) translateY(20px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
-@keyframes htIn2{from{opacity:0}to{opacity:1}}
-@keyframes scrollPulse{0%,100%{opacity:.6;height:40px}50%{opacity:.2;height:20px}}
-</style>
+<!-- ── BRAND LOGOS ───────────────────────── -->
+<div class="ts-logos-wrap">
+  <div class="ts-logos-track">
+    <img class="ts-logo-item" src="{{ 'richard-mille.png' | asset_url }}" alt="Richard Mille" style="height:14px">
+    <img class="ts-logo-item" src="{{ 'patek-philippe.png' | asset_url }}" alt="Patek Philippe" style="height:32px">
+    <img class="ts-logo-item" src="{{ 'audemars-piguet.png' | asset_url }}" alt="Audemars Piguet" style="height:30px">
+    <img class="ts-logo-item" src="{{ 'omega.png' | asset_url }}" alt="Omega" style="height:30px">
+    <img class="ts-logo-item" src="{{ 'bell-ross.png' | asset_url }}" alt="Bell &amp; Ross" style="height:22px">
+    <img class="ts-logo-item" src="{{ 'cartier.png' | asset_url }}" alt="Cartier" style="height:20px">
+    <img class="ts-logo-item" src="{{ 'rolex.png' | asset_url }}" alt="Rolex" style="height:34px">
+    <img class="ts-logo-item" src="{{ 'panerai.png' | asset_url }}" alt="Panerai" style="height:14px">
+    <img class="ts-logo-item" src="{{ 'hublot.png' | asset_url }}" alt="Hublot" style="height:28px">
+    <img class="ts-logo-item" src="{{ 'tag-heuer.png' | asset_url }}" alt="TAG Heuer" style="height:36px">
+    <img class="ts-logo-item" src="{{ 'richard-mille.png' | asset_url }}" alt="Richard Mille" style="height:14px">
+    <img class="ts-logo-item" src="{{ 'patek-philippe.png' | asset_url }}" alt="Patek Philippe" style="height:32px">
+    <img class="ts-logo-item" src="{{ 'audemars-piguet.png' | asset_url }}" alt="Audemars Piguet" style="height:30px">
+    <img class="ts-logo-item" src="{{ 'omega.png' | asset_url }}" alt="Omega" style="height:30px">
+    <img class="ts-logo-item" src="{{ 'bell-ross.png' | asset_url }}" alt="Bell &amp; Ross" style="height:22px">
+    <img class="ts-logo-item" src="{{ 'cartier.png' | asset_url }}" alt="Cartier" style="height:20px">
+    <img class="ts-logo-item" src="{{ 'rolex.png' | asset_url }}" alt="Rolex" style="height:34px">
+    <img class="ts-logo-item" src="{{ 'panerai.png' | asset_url }}" alt="Panerai" style="height:14px">
+    <img class="ts-logo-item" src="{{ 'hublot.png' | asset_url }}" alt="Hublot" style="height:28px">
+    <img class="ts-logo-item" src="{{ 'tag-heuer.png' | asset_url }}" alt="TAG Heuer" style="height:36px">
+  </div>
+</div>
 
-<section class="vn-hero-scroll" id="heroScroll">
-  <div class="vn-hero-sticky" id="heroSticky">
-    <img id="heroImgClosed" src="{{ 'hero-closed.png' | asset_url }}" alt="Volenu Watch Winder closed">
-    <img id="heroImgOpen" src="{{ 'hero-open.png' | asset_url }}" alt="Volenu Watch Winder open">
-    <div class="vn-hero-text">
-      <h1>VOLENU</h1>
-      <p>Engineered for the exceptional</p>
+<!-- ── NEW ARRIVALS ──────────────────────── -->
+<section class="ts-section" id="new-arrivals">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="ts-section-center ts-reveal">
+      <h2 class="ts-h2">New Arrivals</h2>
     </div>
-    <div class="vn-hero-scroll-hint">
-      <span>Scroll to open</span>
-      <div class="vn-scroll-line"></div>
+    <div class="ts-prod-grid">
+      {% assign new_products = collections.all.products | limit: 4 %}
+      {% for product in new_products %}
+      <div class="ts-prod-card ts-reveal ts-d{{ forloop.index }}">
+        <a href="{{ product.url }}" style="text-decoration:none;color:inherit">
+          <div class="ts-prod-img">
+            {% if product.images.first %}
+            <img src="{{ product.images.first | img_url: '600x600' }}" alt="{{ product.title }}" loading="lazy">
+            {% else %}
+            <img src="{{ 'winder-front.png' | asset_url }}" alt="{{ product.title }}">
+            {% endif %}
+            <span class="ts-badge ts-badge-new">New</span>
+          </div>
+          <div class="ts-prod-name">{{ product.title | upcase | truncate: 40 }}</div>
+          <div class="ts-prod-price">
+            {% if product.compare_at_price > product.price %}
+            <span class="ts-prod-price-sale">{{ product.price | money }}</span>
+            <span class="ts-prod-price-og">{{ product.compare_at_price | money }}</span>
+            {% else %}
+            {{ product.price | money }}
+            {% endif %}
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="ts-section-center">
+      <a href="/collections/all" class="ts-btn ts-reveal">View All Products</a>
     </div>
   </div>
 </section>
 
+<!-- ── TESTIMONIAL ───────────────────────── -->
+<div class="ts-testimonial">
+  <span class="ts-quote-mark ts-reveal">"</span>
+  <p class="ts-quote-text ts-reveal">"Beautiful! The quality exceeded all my expectations. My watches have never been better protected and the display is stunning."</p>
+  <span class="ts-quote-author ts-reveal">⭐⭐⭐⭐⭐ &nbsp;·&nbsp; Verified Buyer</span>
+</div>
+
+<!-- ── DEALS / MORE PRODUCTS ─────────────── -->
+<section class="ts-section ts-section-alt" id="deals">
+  <div style="max-width:1300px;margin:0 auto">
+    <div class="ts-section-center ts-reveal">
+      <h2 class="ts-h2">Best Sellers</h2>
+    </div>
+    <div class="ts-prod-grid">
+      {% assign deal_products = collections.all.products | offset: 4 | limit: 4 %}
+      {% for product in deal_products %}
+      <div class="ts-prod-card ts-reveal ts-d{{ forloop.index }}">
+        <a href="{{ product.url }}" style="text-decoration:none;color:inherit">
+          <div class="ts-prod-img">
+            {% if product.images.first %}
+            <img src="{{ product.images.first | img_url: '600x600' }}" alt="{{ product.title }}" loading="lazy">
+            {% else %}
+            <img src="{{ 'winder-angle.png' | asset_url }}" alt="{{ product.title }}">
+            {% endif %}
+            {% if product.compare_at_price > product.price %}
+            <span class="ts-badge">On Sale</span>
+            {% endif %}
+          </div>
+          <div class="ts-prod-name">{{ product.title | upcase | truncate: 40 }}</div>
+          <div class="ts-prod-price">
+            {% if product.compare_at_price > product.price %}
+            <span class="ts-prod-price-sale">{{ product.price | money }}</span>
+            <span class="ts-prod-price-og">{{ product.compare_at_price | money }}</span>
+            {% else %}
+            {{ product.price | money }}
+            {% endif %}
+          </div>
+        </a>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="ts-section-center">
+      <a href="/collections/all" class="ts-btn ts-reveal">Shop All</a>
+    </div>
+  </div>
+</section>
+
+<!-- ── FULL BANNER ───────────────────────── -->
+<div class="ts-banner">
+  <img src="{{ 'winder-open.png' | asset_url }}" alt="Volenu Collection">
+</div>
+
+<!-- ── COLLECTION TILES ──────────────────── -->
+<section class="ts-section" id="collections-section">
+  <div style="max-width:1400px;margin:0 auto">
+    <div class="ts-section-center ts-reveal">
+      <h2 class="ts-h2">Shop by Collection</h2>
+    </div>
+    <div class="ts-coll-grid" style="margin-top:48px">
+      <div class="ts-coll-tile ts-reveal">
+        <img src="{{ 'winder-front.png' | asset_url }}" alt="Watch Cases">
+        <div class="ts-coll-overlay"></div>
+        <div class="ts-coll-content">
+          <span class="ts-coll-name">Watch Cases</span>
+          <a href="/collections/all" class="ts-coll-btn">View Products</a>
+        </div>
+      </div>
+      <div class="ts-coll-tile ts-reveal ts-d1">
+        <img src="{{ 'winder-angle.png' | asset_url }}" alt="New Arrivals">
+        <div class="ts-coll-overlay"></div>
+        <div class="ts-coll-content">
+          <span class="ts-coll-name">New Arrivals</span>
+          <a href="/collections/all" class="ts-coll-btn">View Products</a>
+        </div>
+      </div>
+      <div class="ts-coll-tile ts-reveal ts-d2">
+        <img src="{{ 'winder-open.png' | asset_url }}" alt="Best Sellers">
+        <div class="ts-coll-overlay"></div>
+        <div class="ts-coll-content">
+          <span class="ts-coll-name">Best Sellers</span>
+          <a href="/collections/all" class="ts-coll-btn">View Products</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TRUST BADGES ──────────────────────── -->
+<div class="ts-trust">
+  <div class="ts-reveal">
+    <span class="ts-trust-icon">🎁</span>
+    <span class="ts-trust-title">Free Delivery Worldwide</span>
+  </div>
+  <div class="ts-reveal ts-d1">
+    <span class="ts-trust-icon">↩</span>
+    <span class="ts-trust-title">30-Day Returns</span>
+  </div>
+  <div class="ts-reveal ts-d2">
+    <span class="ts-trust-icon">★</span>
+    <span class="ts-trust-title">5 Star Customer Service</span>
+  </div>
+  <div class="ts-reveal ts-d3">
+    <span class="ts-trust-icon">🔒</span>
+    <span class="ts-trust-title">Secure Payments</span>
+  </div>
+</div>
+
+<!-- ── NEWSLETTER ────────────────────────── -->
+<div class="ts-newsletter">
+  <div class="ts-reveal">
+    <span class="ts-eyebrow">Keep me updated</span>
+    <h2 class="ts-h2">Newsletter</h2>
+    <p class="ts-sub">Subscribe for exclusive deals and new arrivals</p>
+    <div class="ts-newsletter-form">
+      <input type="email" class="ts-newsletter-input" placeholder="E-mail">
+      <button class="ts-newsletter-submit">Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ────────────────────────────── -->
+<footer class="ts-footer">
+  <div>
+    <span class="ts-footer-tagline">Time is precious and so is your watch</span>
+    <span class="ts-footer-brand">Volenu</span>
+    <p class="ts-footer-desc">Premium watch cases engineered for the serious collector. Protecting your timepieces with precision and elegance.</p>
+  </div>
+  <div>
+    <span class="ts-footer-col-title">Shop</span>
+    <ul class="ts-footer-links">
+      <li><a href="/collections/all">All Products</a></li>
+      <li><a href="/collections/all">New Arrivals</a></li>
+      <li><a href="/collections/all">Best Sellers</a></li>
+      <li><a href="/collections/all">Watch Cases</a></li>
+    </ul>
+  </div>
+  <div>
+    <span class="ts-footer-col-title">Info</span>
+    <ul class="ts-footer-links">
+      <li><a href="/pages/about">About Us</a></li>
+      <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
+      <li><a href="/policies/refund-policy">Refund Policy</a></li>
+      <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+    </ul>
+  </div>
+  <div>
+    <span class="ts-footer-col-title">Customer Service</span>
+    <ul class="ts-footer-links">
+      <li><a href="/pages/faq">FAQ</a></li>
+      <li><a href="/pages/contact">Contact Us</a></li>
+      <li><a href="/policies/refund-policy">Returns</a></li>
+      <li><a href="https://volenu.com">volenu.com</a></li>
+    </ul>
+  </div>
+</footer>
+<div class="ts-footer-bottom">
+  <span>© 2024 Volenu. All rights reserved.</span>
+  <span>Premium Watch Cases</span>
+</div>
+
 <script>
-(function(){
-  var section = document.getElementById('heroScroll');
-  var closed = document.getElementById('heroImgClosed');
-  var open = document.getElementById('heroImgOpen');
-  if(!section||!closed||!open) return;
-
-  window.addEventListener('scroll', function(){
-    var rect = section.getBoundingClientRect();
-    var sectionH = section.offsetHeight;
-    var scrolled = -rect.top;
-    var progress = Math.max(0, Math.min(1, scrolled / (sectionH * 0.5)));
-
-    // Crossfade: closed fades out, open fades in
-    closed.style.opacity = 1 - progress;
-    open.style.opacity = progress;
-  }, {passive:true});
-})();
+window.addEventListener('load',function(){
+  setTimeout(function(){var l=document.getElementById('vnLoader');if(l)l.classList.add('out');},3100);
+  var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('on')})},{threshold:0.07});
+  document.querySelectorAll('.ts-reveal').forEach(function(el){io.observe(el)});
+});
 </script>
 
 {% schema %}
