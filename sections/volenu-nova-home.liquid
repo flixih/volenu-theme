@@ -110,95 +110,84 @@
 </nav>
 
 <!-- ── NAV ──────────────────────────────── -->
-<!-- ── HERO VIDEO ────────────────────────────── -->
+<!-- ── HERO VIDEO SCRUB ──────────────────────── -->
 <style>
-.vn-hero-wrap{
-  position:relative;
-  height:200vh;
-}
+.vn-hero-wrap{position:relative;height:400vh}
 .vn-hero-sticky{
-  position:sticky;
-  top:0;
-  height:100vh;
-  overflow:hidden;
-  background:#111;
+  position:sticky;top:0;height:100vh;
+  overflow:hidden;background:#0a0a0a;
 }
 .vn-hero-video{
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
+  position:absolute;inset:0;
+  width:100%;height:100%;
   object-fit:cover;
-  will-change:transform;
 }
 .vn-hero-overlay{
   position:absolute;inset:0;
-  background:linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.5) 100%);
+  background:linear-gradient(to bottom,rgba(0,0,0,0.1) 0%,rgba(0,0,0,0.55) 100%);
   z-index:1;
 }
 .vn-hero-content{
-  position:absolute;
-  bottom:15%;left:50%;
+  position:absolute;bottom:14%;left:50%;
   transform:translateX(-50%);
-  z-index:2;text-align:center;
-  width:100%;
-  will-change:transform,opacity;
+  z-index:2;text-align:center;width:100%;
+  transition:opacity .3s ease;
 }
 .vn-hero-content h1{
   font-family:'Cormorant Garamond',Georgia,serif;
-  font-size:clamp(14px,2vw,18px);
-  font-weight:400;letter-spacing:.4em;
-  text-transform:uppercase;color:rgba(255,255,255,.7);
-  margin-bottom:16px;
-  opacity:0;animation:vhIn .8s .3s both;
+  font-size:clamp(13px,1.8vw,16px);font-weight:400;
+  letter-spacing:.4em;text-transform:uppercase;
+  color:rgba(255,255,255,.65);margin-bottom:14px;
+  opacity:0;animation:vhIn .8s .4s both;
 }
 .vn-hero-content h2{
   font-family:'Cormorant Garamond',Georgia,serif;
-  font-size:clamp(48px,8vw,96px);
-  font-weight:300;line-height:.9;
-  color:#fff;letter-spacing:.08em;text-transform:uppercase;
-  margin-bottom:36px;
-  opacity:0;animation:vhIn 1s .6s both;
+  font-size:clamp(44px,7vw,88px);font-weight:300;
+  line-height:.92;color:#fff;letter-spacing:.08em;
+  text-transform:uppercase;margin-bottom:32px;
+  opacity:0;animation:vhIn 1s .7s both;
 }
 .vn-hero-content a{
   display:inline-block;
   font-family:'Jost',sans-serif;font-size:11px;
   font-weight:500;letter-spacing:.22em;text-transform:uppercase;
-  background:rgba(201,168,76,0.9);color:#fff;
-  padding:14px 44px;text-decoration:none;
+  background:rgba(201,168,76,.9);color:#fff;
+  padding:13px 42px;text-decoration:none;
   transition:background .3s;
-  opacity:0;animation:vhIn .8s .9s both;
+  opacity:0;animation:vhIn .8s 1s both;
 }
-.vn-hero-content a:hover{background:rgba(201,168,76,1)}
+.vn-hero-content a:hover{background:#c9a84c}
 .vn-scroll-cue{
-  position:absolute;bottom:32px;left:50%;
-  transform:translateX(-50%);
-  z-index:2;display:flex;flex-direction:column;
-  align-items:center;gap:10px;
-  opacity:0;animation:vhIn .8s 1.2s both;
+  position:absolute;bottom:28px;left:50%;
+  transform:translateX(-50%);z-index:2;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
+  opacity:0;animation:vhIn .8s 1.3s both;
 }
 .vn-scroll-cue span{
   font-family:'Jost',sans-serif;font-size:10px;
   letter-spacing:.25em;text-transform:uppercase;
-  color:rgba(255,255,255,.5);
+  color:rgba(255,255,255,.45);
 }
 .vn-scroll-cue-line{
-  width:1px;height:44px;
-  background:linear-gradient(rgba(255,255,255,.6),transparent);
+  width:1px;height:40px;
+  background:linear-gradient(rgba(255,255,255,.5),transparent);
   animation:scPulse 2s infinite;
 }
-@keyframes vhIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-@keyframes scPulse{0%,100%{opacity:.7}50%{opacity:.2}}
+.vn-progress{
+  position:absolute;bottom:0;left:0;height:2px;
+  background:rgba(201,168,76,.6);z-index:3;
+  width:0%;transition:width .1s linear;
+}
+@keyframes vhIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+@keyframes scPulse{0%,100%{opacity:.6}50%{opacity:.15}}
 </style>
 
 <div class="vn-hero-wrap" id="vhWrap">
-  <div class="vn-hero-sticky">
+  <div class="vn-hero-sticky" id="vhSticky">
     <video
       class="vn-hero-video"
       id="vhVideo"
-      autoplay
       muted
-      loop
       playsinline
       preload="auto"
       src="{{ 'hero-video.mp4' | asset_url }}"
@@ -209,38 +198,57 @@
       <h2>Engineered for<br>the Exceptional</h2>
       <a href="/collections/all">Shop the Collection</a>
     </div>
-    <div class="vn-scroll-cue">
-      <span>Scroll</span>
+    <div class="vn-scroll-cue" id="vhCue">
+      <span>Scroll to reveal</span>
       <div class="vn-scroll-cue-line"></div>
     </div>
+    <div class="vn-progress" id="vhProgress"></div>
   </div>
 </div>
 
 <script>
 (function(){
   var wrap = document.getElementById('vhWrap');
-  var content = document.getElementById('vhContent');
   var video = document.getElementById('vhVideo');
+  var content = document.getElementById('vhContent');
+  var cue = document.getElementById('vhCue');
+  var progress = document.getElementById('vhProgress');
+  if(!wrap||!video) return;
 
-  // Sync video playback with scroll
-  window.addEventListener('scroll', function(){
-    if(!wrap) return;
-    var rect = wrap.getBoundingClientRect();
-    var wrapH = wrap.offsetHeight;
-    var scrolled = -rect.top;
-    var progress = Math.max(0, Math.min(1, scrolled / (wrapH - window.innerHeight)));
+  // Wait for video metadata so we know duration
+  function init(){
+    var duration = video.duration || 8;
 
-    // Parallax: content moves up as you scroll
-    if(content){
-      var moveY = scrolled * 0.3;
-      var fade = Math.max(0, 1 - progress * 2);
-      content.style.transform = 'translateX(-50%) translateY(-' + moveY + 'px)';
-      content.style.opacity = fade;
-    }
+    window.addEventListener('scroll', function(){
+      var rect = wrap.getBoundingClientRect();
+      var wrapH = wrap.offsetHeight - window.innerHeight;
+      var scrolled = Math.max(0, -rect.top);
+      var p = Math.min(1, scrolled / wrapH);
 
-    // Video: scrub through based on scroll position (if not looping you want this)
-    // Since video is looping we just let it play — parallax is the scroll effect
-  }, {passive:true});
+      // Scrub video to scroll position
+      video.currentTime = p * duration;
+
+      // Progress bar
+      if(progress) progress.style.width = (p * 100) + '%';
+
+      // Fade out content as video progresses past 40%
+      if(content){
+        var contentFade = Math.max(0, 1 - (p - 0.1) * 4);
+        content.style.opacity = contentFade;
+      }
+      if(cue){
+        cue.style.opacity = Math.max(0, 1 - p * 8);
+      }
+    }, {passive:true});
+  }
+
+  if(video.readyState >= 1){
+    init();
+  } else {
+    video.addEventListener('loadedmetadata', init);
+    // Fallback
+    setTimeout(init, 2000);
+  }
 })();
 </script>
 
