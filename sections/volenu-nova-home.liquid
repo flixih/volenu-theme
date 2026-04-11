@@ -350,6 +350,8 @@
 </div>
 
 <script>
+// Failsafe: always exit loader after 4s no matter what
+setTimeout(function(){var l=document.getElementById('vnLoader');if(l&&!l.classList.contains('out'))l.classList.add('out');},4000);
 window.addEventListener('load',function(){
   setTimeout(function(){var l=document.getElementById('vnLoader');if(l)l.classList.add('out');},3100);
   var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting)x.target.classList.add('on')})},{threshold:0.07});
