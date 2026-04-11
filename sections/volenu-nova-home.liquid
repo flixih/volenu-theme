@@ -214,7 +214,8 @@ html{scroll-behavior:smooth}body,html{background:#fff!important}
   for(var i=1;i<=TOTAL;i++){
     var f = new Image();
     var n = i < 10 ? '00'+i : i < 100 ? '0'+i : ''+i;
-    f.src = {{ 'ezgif-frame-001.png' | asset_url | json }}.replace('001', n);
+    var base = {{ 'ezgif-frame-001.png' | asset_url | json }};
+    f.src = base.replace('ezgif-frame-001', 'ezgif-frame-' + n);
     frames.push(f);
   }
 
