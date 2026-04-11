@@ -210,6 +210,8 @@ html{scroll-behavior:smooth}body,html{background:#fff!important}
   if(!section || !img) return;
 
   var baseUrl = {{ 'ezgif-frame-001.png' | asset_url | json }};
+  console.log('Volenu scrub baseUrl:', baseUrl);
+  console.log('Frame 050 url:', baseUrl.replace('ezgif-frame-001', 'ezgif-frame-050'));
 
   function pad(n){ return n < 10 ? '00'+n : n < 100 ? '0'+n : ''+n; }
   function frameUrl(n){ return baseUrl.replace('ezgif-frame-001', 'ezgif-frame-' + pad(n)); }
@@ -250,6 +252,9 @@ html{scroll-behavior:smooth}body,html{background:#fff!important}
     requestAnimationFrame(updateFrame);
   }
 
+  // Show first frame immediately
+  img.src = baseUrl;
+  img.style.opacity = '1';
   updateFrame();
 })();
 </script>
