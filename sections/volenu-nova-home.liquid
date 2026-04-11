@@ -252,6 +252,389 @@
 })();
 </script>
 
+<!-- ── INTRO / BRAND STORY ──────────────────── -->
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&display=swap');
+.vn-section{padding:100px 80px}
+.vn-section--dark{background:#0d0d0d;color:#fff}
+.vn-section--gray{background:#f7f6f2}
+.vn-label{font-family:'Jost',sans-serif;font-size:10px;font-weight:500;letter-spacing:.28em;text-transform:uppercase;color:#999;margin-bottom:20px}
+.vn-section--dark .vn-label{color:#666}
+.vn-h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(42px,5vw,72px);font-weight:300;line-height:1;letter-spacing:.02em;color:#111;margin-bottom:24px}
+.vn-h2 em{font-style:italic;color:#c9a84c}
+.vn-section--dark .vn-h2{color:#fff}
+.vn-p{font-family:'Jost',sans-serif;font-size:15px;font-weight:300;line-height:1.8;color:#666;max-width:520px}
+.vn-section--dark .vn-p{color:#888}
+.vn-btn{display:inline-block;font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;text-decoration:none;padding:13px 40px;transition:.3s}
+.vn-btn--gold{background:#c9a84c;color:#fff}
+.vn-btn--gold:hover{background:#b8973b}
+.vn-btn--outline{border:1px solid #fff;color:#fff;margin-left:16px}
+.vn-btn--outline:hover{background:#fff;color:#111}
+
+/* Two-col layout */
+.vn-two-col{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center}
+.vn-two-col--rev{direction:rtl}.vn-two-col--rev>*{direction:ltr}
+
+/* Stats row */
+.vn-stats{display:flex;gap:48px;margin-top:48px;padding-top:48px;border-top:1px solid #e8e4dc}
+.vn-stat-num{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;color:#111;line-height:1}
+.vn-stat-label{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:#999;margin-top:8px}
+
+/* Ticker */
+.vn-ticker-wrap{overflow:hidden;border-top:1px solid #e8e4dc;border-bottom:1px solid #e8e4dc;background:#fff;padding:18px 0}
+.vn-ticker-track{display:flex;gap:0;white-space:nowrap;animation:vnTick 28s linear infinite}
+.vn-ticker-item{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#aaa;padding:0 40px;border-right:1px solid #e8e4dc}
+@keyframes vnTick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* Feature grid */
+.vn-features-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid #e8e4dc;border-left:1px solid #e8e4dc}
+.vn-feature-card{border-right:1px solid #e8e4dc;border-bottom:1px solid #e8e4dc;padding:40px 36px;transition:.3s}
+.vn-feature-card:hover{background:#f7f6f2;transform:translateY(-2px)}
+.vn-feature-num{font-family:'Cormorant Garamond',serif;font-size:13px;color:#ccc;letter-spacing:.1em;margin-bottom:20px}
+.vn-feature-icon{width:28px;height:28px;margin-bottom:16px;color:#c9a84c}
+.vn-feature-title{font-family:'Jost',sans-serif;font-size:13px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:#111;margin-bottom:12px}
+.vn-feature-desc{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;line-height:1.7;color:#888}
+
+/* Product grid */
+.vn-products-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:48px}
+.vn-product-card{background:#f5f4f0;position:relative;overflow:hidden;cursor:pointer}
+.vn-product-card:hover .vn-product-img{transform:scale(1.05)}
+.vn-product-img{width:100%;aspect-ratio:1;object-fit:cover;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.vn-product-img-placeholder{width:100%;aspect-ratio:1;background:linear-gradient(135deg,#e8e6e0,#d4d0c8);display:flex;align-items:center;justify-content:center}
+.vn-product-info{padding:16px}
+.vn-product-name{font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:#111;margin-bottom:6px}
+.vn-product-price{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:#666}
+.vn-product-badge{position:absolute;top:12px;left:12px;font-family:'Jost',sans-serif;font-size:9px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;padding:4px 10px;border-radius:100px}
+.vn-badge-new{background:#c9a84c;color:#fff}
+.vn-badge-sale{background:#cc4444;color:#fff}
+
+/* Testimonial */
+.vn-testimonial{text-align:center;padding:100px 80px}
+.vn-quote-mark{font-family:'Cormorant Garamond',serif;font-size:120px;line-height:.8;color:#c9a84c;margin-bottom:24px}
+.vn-quote-text{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,3vw,36px);font-style:italic;font-weight:300;line-height:1.5;color:#111;max-width:700px;margin:0 auto 32px}
+.vn-quote-stars{font-size:16px;color:#c9a84c;letter-spacing:4px;margin-bottom:12px}
+.vn-quote-author{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#999}
+
+/* Specs */
+.vn-specs-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid #e8e4dc;margin-top:48px}
+.vn-specs-col{border-right:1px solid #e8e4dc}
+.vn-specs-col:last-child{border-right:0}
+.vn-specs-group-title{font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#111;padding:20px 28px;border-bottom:1px solid #e8e4dc;background:#f7f6f2}
+.vn-spec-row{display:flex;justify-content:space-between;align-items:baseline;padding:14px 28px;border-bottom:1px solid #f0efe9}
+.vn-spec-key{font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:#999}
+.vn-spec-val{font-family:'Jost',sans-serif;font-size:12px;font-weight:500;color:#111}
+
+/* CTA dark */
+.vn-cta{text-align:center;padding:120px 80px;background:#0d0d0d;position:relative;overflow:hidden}
+.vn-cta-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:'Cormorant Garamond',serif;font-size:18vw;font-weight:600;color:rgba(255,255,255,.03);letter-spacing:.05em;white-space:nowrap;pointer-events:none}
+.vn-cta-tag{font-family:'Jost',sans-serif;font-size:10px;letter-spacing:.28em;text-transform:uppercase;color:#555;margin-bottom:24px}
+.vn-cta h2{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,68px);font-weight:300;color:#fff;margin-bottom:40px;line-height:1.1}
+.vn-cta-trust{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.1em;color:#555;margin-top:32px}
+
+/* Trust badges */
+.vn-trust{background:#fff;border-top:1px solid #e8e4dc;border-bottom:1px solid #e8e4dc}
+.vn-trust-grid{display:grid;grid-template-columns:repeat(4,1fr);divide-x:1px solid #e8e4dc}
+.vn-trust-item{text-align:center;padding:40px 20px;border-right:1px solid #e8e4dc}
+.vn-trust-item:last-child{border-right:0}
+.vn-trust-icon{width:32px;height:32px;margin:0 auto 16px;color:#c9a84c}
+.vn-trust-title{font-family:'Jost',sans-serif;font-size:11px;font-weight:500;letter-spacing:.15em;text-transform:uppercase;color:#111;margin-bottom:6px}
+.vn-trust-sub{font-family:'Jost',sans-serif;font-size:12px;font-weight:300;color:#999}
+
+/* Brand logos */
+.vn-logos-wrap{overflow:hidden;padding:32px 0;border-bottom:1px solid #e8e4dc}
+.vn-logos-track{display:flex;align-items:center;white-space:nowrap;animation:vnTick 32s linear infinite}
+.vn-logo-item{display:inline-flex;align-items:center;padding:0 48px;opacity:.45;transition:opacity .3s;filter:grayscale(1)}
+.vn-logo-item:hover{opacity:1;filter:none}
+.vn-logo-item span{font-size:16px;font-weight:700;letter-spacing:.05em;white-space:nowrap}
+
+/* Scroll reveal */
+.vn-reveal{opacity:0;transform:translateY(26px);transition:opacity .85s cubic-bezier(.16,1,.3,1),transform .85s cubic-bezier(.16,1,.3,1)}
+.vn-reveal.is-visible{opacity:1;transform:translateY(0)}
+.vn-reveal-d1{transition-delay:.1s}.vn-reveal-d2{transition-delay:.2s}.vn-reveal-d3{transition-delay:.3s}
+
+/* Footer */
+.vn-footer{background:#0d0d0d;color:#fff;padding:80px}
+.vn-footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:60px}
+.vn-footer-brand{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;letter-spacing:.15em;color:#fff;margin-bottom:12px}
+.vn-footer-tagline{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#555;margin-bottom:16px}
+.vn-footer-desc{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;line-height:1.8;color:#555}
+.vn-footer-col-title{font-family:'Jost',sans-serif;font-size:10px;font-weight:600;letter-spacing:.25em;text-transform:uppercase;color:#fff;margin-bottom:20px}
+.vn-footer-links{list-style:none;padding:0;margin:0}
+.vn-footer-links li{margin-bottom:12px}
+.vn-footer-links a{font-family:'Jost',sans-serif;font-size:13px;font-weight:300;color:#555;text-decoration:none;transition:.2s}
+.vn-footer-links a:hover{color:#fff}
+.vn-footer-bottom{border-top:1px solid #222;padding-top:28px;display:flex;justify-content:space-between;align-items:center}
+.vn-footer-copy{font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.08em;color:#444}
+
+@media(max-width:768px){
+  .vn-section{padding:64px 24px}
+  .vn-two-col{grid-template-columns:1fr;gap:40px}
+  .vn-features-grid{grid-template-columns:1fr 1fr}
+  .vn-products-grid{grid-template-columns:repeat(2,1fr)}
+  .vn-testimonial{padding:64px 24px}
+  .vn-specs-grid{grid-template-columns:1fr}
+  .vn-trust-grid{grid-template-columns:repeat(2,1fr)}
+  .vn-cta{padding:80px 24px}
+  .vn-footer{padding:48px 24px}
+  .vn-footer-grid{grid-template-columns:1fr;gap:36px}
+}
+</style>
+
+<!-- ── BRAND STORY ── -->
+<section class="vn-section">
+  <div class="vn-two-col">
+    <div>
+      <p class="vn-label vn-reveal">The Volenu Standard</p>
+      <h2 class="vn-h2 vn-reveal vn-reveal-d1">Excellence<br><em>Evolved.</em></h2>
+      <p class="vn-p vn-reveal vn-reveal-d2">At Volenu we deliver the True Precision experience by housing your most prized automatic timepieces in a vault engineered for performance. Every rotor, every panel, every hinge — crafted to honor your collection.</p>
+      <div class="vn-stats vn-reveal vn-reveal-d3">
+        <div>
+          <div class="vn-stat-num">500+</div>
+          <div class="vn-stat-label">Collectors Worldwide</div>
+        </div>
+        <div>
+          <div class="vn-stat-num">4.9★</div>
+          <div class="vn-stat-label">Average Rating</div>
+        </div>
+        <div>
+          <div class="vn-stat-num">30</div>
+          <div class="vn-stat-label">Day Guarantee</div>
+        </div>
+      </div>
+    </div>
+    <div class="vn-reveal vn-reveal-d2">
+      <div style="background:linear-gradient(135deg,#1a1a1a,#2a2a2a);aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;">
+        {% assign product = collections.all.products.first %}
+        {% if product and product.featured_image %}
+          <img src="{{ product.featured_image | img_url: '800x' }}" alt="{{ product.title }}" style="width:100%;height:100%;object-fit:cover;mix-blend-mode:lighten">
+        {% else %}
+          <div style="text-align:center;padding:40px">
+            <div style="font-family:'Cormorant Garamond',serif;font-size:48px;color:rgba(255,255,255,.15);letter-spacing:.1em">VOLENU</div>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ── TICKER ── -->
+<div class="vn-ticker-wrap">
+  <div class="vn-ticker-track">
+    {% for i in (1..2) %}
+      <span class="vn-ticker-item">Quad Elite Watch Winder</span>
+      <span class="vn-ticker-item">4 Independent Rotors</span>
+      <span class="vn-ticker-item">Piano Black Lacquer</span>
+      <span class="vn-ticker-item">Carbon Fibre Panels</span>
+      <span class="vn-ticker-item">Silent Motor Technology</span>
+      <span class="vn-ticker-item">Free Shipping</span>
+      <span class="vn-ticker-item">30-Day Guarantee</span>
+      <span class="vn-ticker-item">Dual LCD Display</span>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ── FEATURES ── -->
+<section class="vn-section vn-section--gray">
+  <p class="vn-label vn-reveal" style="text-align:center">Engineered for Precision</p>
+  <h2 class="vn-h2 vn-reveal" style="text-align:center;max-width:600px;margin:0 auto 56px">Built for the serious collector.</h2>
+  <div class="vn-features-grid">
+    {% assign features = "4 Independent Rotors|Silent Motor Technology|Piano Lacquer Finish|Dual LCD Display|Security Key Lock|Adjustable Turn Settings" | split: "|" %}
+    {% assign feat_descs = "Each rotor winds independently, supporting any automatic movement regardless of size or weight.|Whisper-quiet operation so your winders never disturb the peace of your collection room.|High-gloss piano black lacquer finish with carbon fibre side panels for a boardroom-ready aesthetic.|Two silver LCD panels let you program each rotor's direction, speed, and rest cycles precisely.|Keyed security door keeps your collection protected while the glass keeps it on display.|CW, CCW, and bi-directional modes with TPD settings from 650 to 1950 turns per day." | split: "|" %}
+    {% for feat in features %}
+    <div class="vn-feature-card vn-reveal" style="transition-delay:{{ forloop.index0 | times: 0.08 }}s">
+      <div class="vn-feature-num">0{{ forloop.index }}</div>
+      <div class="vn-feature-title">{{ feat }}</div>
+      <div class="vn-feature-desc">{{ feat_descs[forloop.index0] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ── NEW ARRIVALS ── -->
+<section class="vn-section">
+  <div style="display:flex;justify-content:space-between;align-items:baseline">
+    <div>
+      <p class="vn-label vn-reveal">Fresh In</p>
+      <h2 class="vn-h2 vn-reveal vn-reveal-d1" style="margin-bottom:0">New Arrivals</h2>
+    </div>
+    <a href="/collections/all" class="vn-btn vn-btn--gold vn-reveal">View All</a>
+  </div>
+  <div class="vn-products-grid">
+    {% for product in collections.all.products limit: 8 %}
+    <a href="{{ product.url }}" class="vn-product-card vn-reveal" style="text-decoration:none;transition-delay:{{ forloop.index0 | times: 0.06 }}s">
+      {% if product.compare_at_price > product.price %}
+        <span class="vn-product-badge vn-badge-sale">Sale</span>
+      {% else %}
+        <span class="vn-product-badge vn-badge-new">New</span>
+      {% endif %}
+      {% if product.featured_image %}
+        <img class="vn-product-img" src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}">
+      {% else %}
+        <div class="vn-product-img-placeholder">
+          <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="12" cy="12" r="4"/></svg>
+        </div>
+      {% endif %}
+      <div class="vn-product-info">
+        <div class="vn-product-name">{{ product.title }}</div>
+        <div class="vn-product-price">{{ product.price | money }}</div>
+      </div>
+    </a>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ── TESTIMONIAL ── -->
+<div class="vn-testimonial vn-section--gray">
+  <div class="vn-quote-mark vn-reveal">"</div>
+  <p class="vn-quote-text vn-reveal vn-reveal-d1">Beautiful! The quality exceeded all my expectations. My watches have never been better protected — this winder is a piece of art in itself.</p>
+  <div class="vn-quote-stars vn-reveal vn-reveal-d2">★★★★★</div>
+  <div class="vn-quote-author vn-reveal vn-reveal-d3">Carlos M. — Verified Buyer</div>
+</div>
+
+<!-- ── BRAND LOGOS ── -->
+<div class="vn-logos-wrap">
+  <div class="vn-logos-track">
+    {% for i in (1..2) %}
+      <span class="vn-logo-item"><span style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;letter-spacing:.08em;color:#111">Cartier</span></span>
+      <span class="vn-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:15px;letter-spacing:.12em;color:#006039">ROLEX</span></span>
+      <span class="vn-logo-item"><span style="font-family:'Times New Roman',serif;font-size:18px;letter-spacing:.04em;color:#111">Ω OMEGA</span></span>
+      <span class="vn-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:14px;letter-spacing:.18em;color:#111">PANERAI</span></span>
+      <span class="vn-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:14px;letter-spacing:.15em;color:#111">HUBLOT</span></span>
+      <span class="vn-logo-item"><span style="font-family:'Times New Roman',serif;font-style:italic;font-size:12px;letter-spacing:.06em;color:#111">Audemars Piguet</span></span>
+      <span class="vn-logo-item"><span style="font-family:'Times New Roman',serif;font-style:italic;font-size:13px;letter-spacing:.05em;color:#111">Patek Philippe</span></span>
+      <span class="vn-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:14px;letter-spacing:.1em;color:#cc0000">TAG HEUER</span></span>
+      <span class="vn-logo-item"><span style="font-family:'Times New Roman',serif;font-size:16px;letter-spacing:.06em;color:#111">Bell & Ross</span></span>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- ── SPECS ── -->
+<section class="vn-section">
+  <p class="vn-label vn-reveal" style="text-align:center">Technical Details</p>
+  <h2 class="vn-h2 vn-reveal" style="text-align:center;margin-bottom:0">Precision engineered,<br>down to the spec.</h2>
+  <div class="vn-specs-grid">
+    <div class="vn-specs-col">
+      <div class="vn-specs-group-title">Winding</div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Rotors</span><span class="vn-spec-val">4 Independent</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Direction</span><span class="vn-spec-val">CW / CCW / Bi</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">TPD Range</span><span class="vn-spec-val">650 – 1950</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Rest Cycle</span><span class="vn-spec-val">Programmable</span></div>
+      <div class="vn-specs-group-title">Capacity</div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Watch Bays</span><span class="vn-spec-val">4 Watches</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Pillow Type</span><span class="vn-spec-val">Black Velvet</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Lug Width</span><span class="vn-spec-val">Up to 22mm</span></div>
+    </div>
+    <div class="vn-specs-col">
+      <div class="vn-specs-group-title">Display & Control</div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Panels</span><span class="vn-spec-val">2 LCD Displays</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Memory</span><span class="vn-spec-val">Power-off save</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Lock</span><span class="vn-spec-val">Security Key</span></div>
+      <div class="vn-specs-group-title">Design & Materials</div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Exterior</span><span class="vn-spec-val">Piano Black Lacquer</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Side Panels</span><span class="vn-spec-val">Carbon Fibre</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Door</span><span class="vn-spec-val">Tempered Glass</span></div>
+      <div class="vn-spec-row"><span class="vn-spec-key">Motor</span><span class="vn-spec-val">Ultra-silent</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── CTA DARK ── -->
+<section class="vn-cta">
+  <div class="vn-cta-watermark">VOLENU</div>
+  <p class="vn-cta-tag vn-reveal">Limited Stock Available</p>
+  <h2 class="vn-cta h2 vn-reveal vn-reveal-d1" style="font-family:'Cormorant Garamond',serif;font-size:clamp(36px,5vw,68px);font-weight:300;color:#fff;margin-bottom:40px;line-height:1.1;position:relative;z-index:1">Your collection deserves this.</h2>
+  <div class="vn-reveal vn-reveal-d2" style="position:relative;z-index:1">
+    <a href="/collections/all" class="vn-btn vn-btn--gold">→ Order Now</a>
+    <a href="/collections/all" class="vn-btn vn-btn--outline">View All Products</a>
+  </div>
+  <p class="vn-cta-trust vn-reveal vn-reveal-d3" style="position:relative;z-index:1">Free Shipping · 30-Day Money Back Guarantee · Secure Checkout</p>
+</section>
+
+<!-- ── TRUST BADGES ── -->
+<div class="vn-trust">
+  <div class="vn-trust-grid">
+    <div class="vn-trust-item">
+      <svg class="vn-trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      <div class="vn-trust-title">Free Delivery</div>
+      <div class="vn-trust-sub">Worldwide shipping</div>
+    </div>
+    <div class="vn-trust-item">
+      <svg class="vn-trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 14l-4-4 4-4M15 10h-4m9 4a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      <div class="vn-trust-title">30-Day Returns</div>
+      <div class="vn-trust-sub">No questions asked</div>
+    </div>
+    <div class="vn-trust-item">
+      <svg class="vn-trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"/></svg>
+      <div class="vn-trust-title">5 Star Service</div>
+      <div class="vn-trust-sub">4.9 avg rating</div>
+    </div>
+    <div class="vn-trust-item">
+      <svg class="vn-trust-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+      <div class="vn-trust-title">Secure Payments</div>
+      <div class="vn-trust-sub">256-bit encryption</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── FOOTER ── -->
+<footer class="vn-footer">
+  <div class="vn-footer-grid">
+    <div>
+      <div class="vn-footer-brand">Volenu</div>
+      <div class="vn-footer-tagline">Engineered for the Exceptional</div>
+      <p class="vn-footer-desc">Precision watch winders and cases crafted for the serious collector. Every detail engineered to honor your timepieces.</p>
+    </div>
+    <div>
+      <div class="vn-footer-col-title">Shop</div>
+      <ul class="vn-footer-links">
+        <li><a href="/collections/all">All Products</a></li>
+        <li><a href="/collections/all">Watch Winders</a></li>
+        <li><a href="/collections/all">Watch Cases</a></li>
+        <li><a href="/collections/all">New Arrivals</a></li>
+        <li><a href="/collections/all">Best Sellers</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="vn-footer-col-title">Info</div>
+      <ul class="vn-footer-links">
+        <li><a href="/pages/about">About Volenu</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+        <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/policies/refund-policy">Refund Policy</a></li>
+        <li><a href="/policies/shipping-policy">Shipping</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="vn-footer-col-title">Support</div>
+      <ul class="vn-footer-links">
+        <li><a href="/pages/contact">Help Center</a></li>
+        <li><a href="/pages/contact">Order Tracking</a></li>
+        <li><a href="/pages/contact">Returns</a></li>
+        <li><a href="/pages/contact">Warranty</a></li>
+        <li><a href="/pages/contact">FAQ</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="vn-footer-bottom">
+    <span class="vn-footer-copy">© {{ 'now' | date: '%Y' }} Volenu. All rights reserved.</span>
+    <span class="vn-footer-copy">Premium Watch Cases & Winders</span>
+  </div>
+</footer>
+
+<!-- ── SCROLL REVEAL JS ── -->
+<script>
+(function(){
+  var els = document.querySelectorAll('.vn-reveal');
+  if(!els.length) return;
+  var obs = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting) e.target.classList.add('is-visible');
+    });
+  },{threshold:0.12});
+  els.forEach(function(el){ obs.observe(el); });
+})();
+</script>
+
 {% schema %}
 {"name":"Volenu Nova Home","settings":[]}
 {% endschema %}
