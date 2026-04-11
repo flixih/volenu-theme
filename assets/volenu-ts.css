@@ -440,3 +440,7 @@
 
 /* ── HIDE SHOPIFY HEADER ENTIRELY ─── */
 .shopify-section-header { display: none !important; }
+
+/* Fix scroll trap on hero */
+.vn-hero-sticky{pointer-events:none}
+.vn-hero-content a, .vn-hero-content{pointer-events:auto}
