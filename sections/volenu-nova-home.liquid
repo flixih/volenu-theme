@@ -20,7 +20,7 @@
 .vw-dropdown-col h4{font-family:'Raleway',sans-serif;font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#111;margin-bottom:14px}
 .vw-dropdown-col a{display:block;font-family:'Raleway',sans-serif;font-size:12px;font-weight:300;color:#555;text-decoration:none;margin-bottom:10px;letter-spacing:.04em}
 .vw-dropdown-col a:hover{color:#000}
-.vw-hero{position:relative;height:80vh;overflow:hidden;background:#1a1a1a}
+.vw-hero{position:relative;height:80vh;overflow:hidden;background:#0a0a0a}
 .vw-hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .vw-hero-overlay{position:absolute;inset:0;background:rgba(0,0,0,.3)}
 .vw-hero-text{position:absolute;left:8%;bottom:15%;color:#fff}
@@ -63,6 +63,7 @@
 .vw-logos-track{display:flex;align-items:center;white-space:nowrap;animation:vwTick 32s linear infinite}
 .vw-logo-item{display:inline-flex;align-items:center;padding:0 52px;opacity:.35;transition:.3s}
 .vw-logo-item:hover{opacity:.9}
+html{scroll-behavior:smooth}body,html{background:#fff!important}
 @keyframes vwTick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 .vw-testimonial{text-align:center;padding:80px 48px;background:#fff}
 .vw-testimonial blockquote{font-family:'EB Garamond',serif;font-size:clamp(18px,2.5vw,26px);font-style:italic;color:#222;max-width:700px;margin:0 auto 24px;line-height:1.6}
@@ -173,11 +174,84 @@
   <div class="vw-mainnav-item"><a href="/pages/contact">Contact</a></div>
 </nav>
 
-<div class="vw-hero">
-  <video class="vw-hero-video" autoplay muted loop playsinline src="{{ 'Black_carbon_fibre_202604110112.mp4' | asset_url }}"></video>
-  <div class="vw-hero-overlay"></div>
-  <div class="vw-hero-text vw-reveal"><h2>Engineered for<br>the Exceptional.</h2><a href="/collections/all">Shop the Collection</a></div>
+<style>
+.vw-scrub-section{position:relative;height:500vh;background:#fff}
+.vw-scrub-sticky{position:sticky;top:0;height:100vh;overflow:hidden;background:#111}
+.vw-scrub-canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.vw-scrub-text{position:absolute;left:8%;bottom:15%;color:#fff;z-index:2;transition:opacity .3s}
+.vw-scrub-text h2{font-family:'EB Garamond',Georgia,serif;font-size:clamp(28px,4vw,52px);font-weight:400;line-height:1.15;margin-bottom:20px;letter-spacing:.02em}
+.vw-scrub-text a{display:inline-block;border:1px solid #fff;font-family:'Raleway',sans-serif;font-size:11px;font-weight:500;letter-spacing:.2em;text-transform:uppercase;color:#fff;text-decoration:none;padding:12px 36px;transition:.3s}
+.vw-scrub-text a:hover{background:#fff;color:#111}
+.vw-scrub-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:2;text-align:center;transition:opacity .3s}
+.vw-scrub-hint span{font-family:'Raleway',sans-serif;font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:rgba(255,255,255,.4);display:block;margin-bottom:8px}
+.vw-scrub-hint-line{width:1px;height:36px;background:linear-gradient(rgba(255,255,255,.4),transparent);margin:0 auto;animation:vwPulse 2s infinite}
+@keyframes vwPulse{0%,100%{opacity:.6}50%{opacity:.1}}
+</style>
+<div class="vw-scrub-section" id="vwScrub">
+  <div class="vw-scrub-sticky">
+    <img id="vwFrame" class="vw-scrub-canvas" src="{{ 'ezgif-frame-001.png' | asset_url }}" alt="">
+    <div class="vw-scrub-text" id="vwText">
+      <h2>Engineered for<br>the Exceptional.</h2>
+      <a href="/collections/all">Shop the Collection</a>
+    </div>
+    <div class="vw-scrub-hint" id="vwHint">
+      <span>Scroll to reveal</span>
+      <div class="vw-scrub-hint-line"></div>
+    </div>
+  </div>
 </div>
+<script>
+(function(){
+  var TOTAL = 217;
+  var section = document.getElementById('vwScrub');
+  var img = document.getElementById('vwFrame');
+  var text = document.getElementById('vwText');
+  var hint = document.getElementById('vwHint');
+  if(!section||!img) return;
+
+  // Preload all frames
+  var frames = [];
+  for(var i=1;i<=TOTAL;i++){
+    var f = new Image();
+    var n = i < 10 ? '00'+i : i < 100 ? '0'+i : ''+i;
+    f.src = {{ 'ezgif-frame-001.png' | asset_url | json }}.replace('001', n);
+    frames.push(f);
+  }
+
+  var currentIdx = 0;
+  var targetIdx = 0;
+  var rafId = null;
+
+  function lerp(a,b,t){return a+(b-a)*t;}
+
+  function render(){
+    var idx = Math.round(currentIdx);
+    if(idx !== Math.round(targetIdx) || Math.abs(currentIdx-targetIdx) > 0.1){
+      currentIdx = lerp(currentIdx, targetIdx, 0.12);
+    }
+    var newIdx = Math.min(TOTAL-1, Math.max(0, Math.round(currentIdx)));
+    if(newIdx !== Math.round(currentIdx-1) && frames[newIdx] && frames[newIdx].complete){
+      img.src = frames[newIdx].src;
+    }
+    rafId = requestAnimationFrame(render);
+  }
+
+  window.addEventListener('scroll', function(){
+    var rect = section.getBoundingClientRect();
+    var maxScroll = section.offsetHeight - window.innerHeight;
+    var scrolled = Math.max(0, -rect.top);
+    var p = Math.min(1, scrolled / maxScroll);
+    targetIdx = p * (TOTAL - 1);
+
+    // Fade text out after 25% scroll
+    var textOpacity = Math.max(0, 1 - (p - 0.05) * 6);
+    if(text) text.style.opacity = textOpacity;
+    if(hint) hint.style.opacity = Math.max(0, 1 - p * 10);
+  }, {passive:true});
+
+  render();
+})();
+</script>
 
 <div class="vw-section-title vw-reveal"><h2>Best Sellers</h2></div>
 <div class="vw-slider-wrap">
@@ -218,6 +292,8 @@
 
 <div class="vw-logos"><div class="vw-logos-track">{% for i in (1..2) %}<span class="vw-logo-item"><span style="font-family:'Times New Roman',serif;font-style:italic;font-size:18px;color:#111">Cartier</span></span><span class="vw-logo-item"><span style="font-family:Arial Black,sans-serif;font-weight:900;font-size:14px;letter-spacing:.1em;color:#006039">ROLEX</span></span><span class="vw-logo-item"><span style="font-family:'Times New Roman',serif;font-size:18px;color:#111">Ω OMEGA</span></span><span class="vw-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:13px;letter-spacing:.15em;color:#111">PANERAI</span></span><span class="vw-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:13px;letter-spacing:.12em;color:#111">HUBLOT</span></span><span class="vw-logo-item"><span style="font-family:'Times New Roman',serif;font-style:italic;font-size:13px;color:#111">Audemars Piguet</span></span><span class="vw-logo-item"><span style="font-family:'Times New Roman',serif;font-style:italic;font-size:13px;color:#111">Patek Philippe</span></span><span class="vw-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:13px;letter-spacing:.08em;color:#cc0000">TAG HEUER</span></span><span class="vw-logo-item"><span style="font-family:'Times New Roman',serif;font-size:15px;color:#111">Bell & Ross</span></span>{% endfor %}</div></div>
 
+
+<div class="vw-logos"><div class="vw-logos-track">{% for i in (1..2) %}<span class="vw-logo-item"><span style="font-family:Times New Roman,serif;font-style:italic;font-size:18px;color:#111">Cartier</span></span><span class="vw-logo-item"><span style="font-family:Arial Black,sans-serif;font-weight:900;font-size:14px;letter-spacing:.1em;color:#006039">ROLEX</span></span><span class="vw-logo-item"><span style="font-family:Times New Roman,serif;font-size:18px;color:#111">Omega</span></span><span class="vw-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:13px;letter-spacing:.15em;color:#111">PANERAI</span></span><span class="vw-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:13px;letter-spacing:.12em;color:#111">HUBLOT</span></span><span class="vw-logo-item"><span style="font-family:Times New Roman,serif;font-style:italic;font-size:13px;color:#111">Audemars Piguet</span></span><span class="vw-logo-item"><span style="font-family:Times New Roman,serif;font-style:italic;font-size:13px;color:#111">Patek Philippe</span></span><span class="vw-logo-item"><span style="font-family:Arial,sans-serif;font-weight:900;font-size:13px;letter-spacing:.08em;color:#cc0000">TAG HEUER</span></span><span class="vw-logo-item"><span style="font-family:Times New Roman,serif;font-size:15px;color:#111">Bell and Ross</span></span>{% endfor %}</div></div>
 <div class="vw-features">
   <div class="vw-feat-item vw-reveal"><h4>Free Standard Shipping</h4><p>Complimentary delivery on every order, worldwide</p></div>
   <div class="vw-feat-item vw-reveal"><h4>30-Day Returns</h4><p>Not satisfied? Return within 30 days, no questions asked</p></div>
