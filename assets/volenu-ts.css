@@ -322,3 +322,118 @@
   .ts-newsletter-input{border-right:1px solid var(--ts-border);border-bottom:none}
   .ts-hero-title{font-size:clamp(32px,10vw,60px)}
 }
+
+/* ── WOLF-STYLE PREMIUM HEADER OVERRIDE ─────────────────────────── */
+.shopify-section-header {
+  position: sticky !important;
+  top: 0;
+  z-index: 300;
+}
+
+/* Announcement bar */
+.announcement-bar, .shopify-section-header-group + * .announcement-bar {
+  background: #111 !important;
+  color: #fff !important;
+  text-align: center;
+  font-family: 'Jost', sans-serif !important;
+  font-size: 11px !important;
+  letter-spacing: .2em !important;
+  text-transform: uppercase !important;
+  padding: 9px 20px !important;
+}
+
+/* Top utility bar (account/search) */
+.header-utility-bar {
+  display: none !important;
+}
+
+/* Main header - white, centered logo */
+.header {
+  background: #fff !important;
+  border-bottom: 1px solid #e8e4dc !important;
+  padding: 0 40px !important;
+  height: 80px !important;
+  display: grid !important;
+  grid-template-columns: 1fr auto 1fr !important;
+  align-items: center !important;
+}
+
+/* Logo centered */
+.header__heading {
+  grid-column: 2 !important;
+  justify-self: center !important;
+}
+.header__heading-link {
+  font-family: 'Cormorant Garamond', Georgia, serif !important;
+  font-size: 32px !important;
+  font-weight: 600 !important;
+  letter-spacing: .15em !important;
+  color: #111 !important;
+  text-decoration: none !important;
+  text-transform: uppercase !important;
+}
+.header__heading-link * { color: #111 !important; }
+
+/* Left nav links */
+.header__inline-menu {
+  grid-column: 1 !important;
+  justify-self: start !important;
+}
+.header__inline-menu .list-menu--inline {
+  gap: 32px !important;
+}
+.header__inline-menu a {
+  font-family: 'Jost', sans-serif !important;
+  font-size: 11px !important;
+  letter-spacing: .12em !important;
+  text-transform: uppercase !important;
+  color: #666 !important;
+  text-decoration: none !important;
+  transition: color .2s !important;
+}
+.header__inline-menu a:hover { color: #111 !important; }
+
+/* Right icons (search, cart, account) */
+.header__icons {
+  grid-column: 3 !important;
+  justify-self: end !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 20px !important;
+}
+.header__icon svg { color: #111 !important; }
+
+/* Remove any black/dark bg from header */
+.header, .header-wrapper {
+  background-color: #ffffff !important;
+  color: #111 !important;
+}
+
+/* Category nav below header - Wolf style */
+.ts-cat-nav {
+  background: #fff;
+  border-bottom: 1px solid #e8e4dc;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 48px;
+  padding: 0 40px;
+  height: 44px;
+}
+.ts-cat-nav a {
+  font-family: 'Jost', sans-serif;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: .2em;
+  text-transform: uppercase;
+  color: #555;
+  text-decoration: none;
+  transition: color .2s;
+  white-space: nowrap;
+}
+.ts-cat-nav a:hover { color: #111; }
+
+@media(max-width:768px) {
+  .header { padding: 0 16px !important; }
+  .ts-cat-nav { display: none; }
+}
