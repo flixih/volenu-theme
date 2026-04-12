@@ -109,17 +109,22 @@ body { overflow-x: hidden; }
 .vr-panel-img {
   width: 100%; height: 100%;
   object-fit: cover; object-position: center;
-  transform: scale(1.06);
-  transition: transform 8s ease;
 }
-.vr-panel.active .vr-panel-img { transform: scale(1); }
 .vr-panel-bg {
   width: 100%; height: 100%;
   background-size: cover; background-position: center;
-  transform: scale(1.06);
-  transition: transform 8s ease;
 }
-.vr-panel.active .vr-panel-bg { transform: scale(1); }
+
+/* ── Smooth scroll lerp ── */
+html {
+  scroll-behavior: auto;
+}
+#vr-lenis-wrap {
+  position: fixed; inset: 0; overflow: hidden;
+}
+#vr-scroll-content {
+  will-change: transform;
+}
 .vr-panel-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0.45) 100%);
@@ -749,7 +754,18 @@ body { overflow-x: hidden; }
     });
   };
 
-  // ── Gallery drag scroll ──
+  // ── Lenis smooth scroll — lerp 0.03 (Odd Ritual speed) ──
+  (function() {
+    var s = document.createElement('script');
+    s.src = 'https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js';
+    s.onload = function() {
+      var lenis = new Lenis({ lerp: 0.03, smoothWheel: true, wheelMultiplier: 0.8 });
+      function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
+      requestAnimationFrame(raf);
+    };
+    document.head.appendChild(s);
+  })();
+
   var gs = document.getElementById('vr-gallery-scroll');
   if (gs) {
     var isDragging = false, startX, scrollLeft;
