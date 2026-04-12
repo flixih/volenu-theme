@@ -1,11 +1,11 @@
 {
   "sections": {
-    "volenu_nova_home": {
-      "type": "volenu-nova-home",
+    "volenu_parijan_home": {
+      "type": "volenu-parijan-home",
       "settings": {}
     }
   },
   "order": [
-    "volenu_nova_home"
+    "volenu_parijan_home"
   ]
 }

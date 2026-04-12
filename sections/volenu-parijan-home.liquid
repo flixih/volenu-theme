@@ -1,0 +1,676 @@
+{% comment %} Volenu — Parijan-style Homepage {% endcomment %}
+
+<style>
+  /* ── Reset & base ── */
+  #vp-root *, #vp-root *::before, #vp-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  #vp-root { font-family: 'Outfit', sans-serif; color: #111; background: #fff; }
+
+  /* ── Announcement bar ── */
+  .vp-announce {
+    background: #111;
+    color: #fff;
+    text-align: center;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    padding: 9px 40px;
+    position: relative;
+  }
+  .vp-announce a { color: #fff; text-decoration: none; }
+  .vp-announce-arr {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    background: none; border: none; color: #fff;
+    font-size: 14px; cursor: pointer; padding: 0 12px;
+  }
+  .vp-announce-arr.left { left: 0; }
+  .vp-announce-arr.right { right: 0; }
+
+  /* ── Nav ── */
+  .vp-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    height: 56px;
+    border-bottom: 1px solid #e8e8e8;
+    background: #fff;
+    position: sticky;
+    top: 0;
+    z-index: 200;
+  }
+  .vp-nav-left { display: flex; align-items: center; gap: 24px; }
+  .vp-nav-left a, .vp-nav-left button {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: #111;
+    text-decoration: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 4px;
+    padding: 0;
+  }
+  .vp-nav-left a.sale { color: #cc0000; font-weight: 700; }
+  .vp-logo {
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-size: 22px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    color: #111;
+    text-decoration: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .vp-nav-right { display: flex; align-items: center; gap: 18px; }
+  .vp-nav-right a, .vp-nav-right button {
+    color: #111; background: none; border: none;
+    cursor: pointer; text-decoration: none; font-size: 11px;
+    letter-spacing: 0.06em; font-family: 'Outfit', sans-serif;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .vp-nav-icon { width: 18px; height: 18px; stroke: #111; fill: none; stroke-width: 1.5; }
+
+  /* Dropdown */
+  .vp-dropdown { position: relative; }
+  .vp-dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background: #fff;
+    border: 1px solid #e8e8e8;
+    min-width: 180px;
+    z-index: 300;
+    padding: 8px 0;
+  }
+  .vp-dropdown:hover .vp-dropdown-menu { display: block; }
+  .vp-dropdown-menu a {
+    display: block;
+    padding: 8px 20px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: #111;
+    text-decoration: none;
+    font-weight: 400;
+    white-space: nowrap;
+  }
+  .vp-dropdown-menu a:hover { background: #f5f5f5; }
+
+  /* ── Filter pills ── */
+  .vp-pills {
+    display: flex;
+    gap: 6px;
+    padding: 14px 24px;
+    border-bottom: 1px solid #e8e8e8;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .vp-pills::-webkit-scrollbar { display: none; }
+  .vp-pill {
+    flex-shrink: 0;
+    border: 1px solid #ddd;
+    border-radius: 100px;
+    padding: 5px 14px;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    color: #111;
+    background: #fff;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .vp-pill:hover, .vp-pill.active {
+    background: #111;
+    color: #fff;
+    border-color: #111;
+  }
+
+  /* ── Hero image ── */
+  .vp-hero {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 320px;
+    overflow: hidden;
+    background: #1a1a1a;
+  }
+  .vp-hero img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+  }
+  .vp-hero-label {
+    position: absolute;
+    bottom: 32px;
+    left: 32px;
+    color: #fff;
+    font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+    font-size: clamp(28px, 4vw, 48px);
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+  }
+  .vp-hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 50%);
+  }
+
+  /* ── Collection toolbar ── */
+  .vp-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 14px 24px;
+    border-bottom: 1px solid #e8e8e8;
+    gap: 8px;
+  }
+  .vp-toolbar span { font-size: 11px; letter-spacing: 0.08em; color: #666; }
+  .vp-toolbar select {
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    border: none;
+    background: none;
+    color: #111;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* ── Product grid ── */
+  .vp-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid #e8e8e8;
+  }
+  .vp-card {
+    border-right: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    padding: 0;
+    position: relative;
+    cursor: pointer;
+  }
+  .vp-card:nth-child(4n) { border-right: none; }
+  .vp-card-img {
+    position: relative;
+    background: #f0f0f0;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
+  .vp-card-img img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+  }
+  .vp-card:hover .vp-card-img img { transform: scale(1.04); }
+  .vp-save-badge {
+    position: absolute;
+    top: 10px; left: 10px;
+    background: #cc0000;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 3px 7px;
+    z-index: 2;
+  }
+  .vp-quick-add {
+    position: absolute;
+    bottom: 10px;
+    left: 10px; right: 10px;
+    background: #111;
+    color: #fff;
+    border: none;
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    padding: 10px;
+    cursor: pointer;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: all 0.2s;
+    font-family: 'Outfit', sans-serif;
+  }
+  .vp-card:hover .vp-quick-add { opacity: 1; transform: translateY(0); }
+  .vp-card-info { padding: 12px 14px 16px; }
+  .vp-card-name {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    color: #111;
+    margin-bottom: 6px;
+    line-height: 1.4;
+  }
+  .vp-card-prices { display: flex; gap: 8px; align-items: center; margin-bottom: 8px; }
+  .vp-price-orig { font-size: 11px; color: #999; text-decoration: line-through; }
+  .vp-price-sale { font-size: 11px; color: #cc0000; font-weight: 600; }
+  .vp-swatches { display: flex; gap: 5px; flex-wrap: wrap; }
+  .vp-swatch {
+    width: 16px; height: 16px;
+    border-radius: 50%;
+    border: 1.5px solid #ddd;
+    cursor: pointer;
+    transition: border-color 0.15s;
+  }
+  .vp-swatch:hover { border-color: #111; }
+  .vp-swatch-more {
+    font-size: 9px;
+    color: #666;
+    letter-spacing: 0.06em;
+    display: flex;
+    align-items: center;
+  }
+
+  /* ── Instagram section ── */
+  .vp-insta {
+    padding: 48px 24px 24px;
+    text-align: center;
+    border-top: 1px solid #e8e8e8;
+  }
+  .vp-insta-logo {
+    width: 56px; height: 56px;
+    background: #111;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 12px;
+  }
+  .vp-insta-logo span {
+    color: #fff;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.1em;
+  }
+  .vp-insta-handle { font-size: 13px; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 4px; }
+  .vp-insta-followers { font-size: 11px; color: #666; letter-spacing: 0.06em; margin-bottom: 20px; }
+  .vp-insta-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3px;
+  }
+  .vp-insta-tile {
+    aspect-ratio: 1;
+    background: #f0f0f0;
+    overflow: hidden;
+  }
+  .vp-insta-tile img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ── Footer ── */
+  .vp-footer {
+    background: #111;
+    color: #fff;
+    padding: 48px 24px 24px;
+    margin-top: 48px;
+  }
+  .vp-footer-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 40px;
+    margin-bottom: 40px;
+  }
+  .vp-footer-brand {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 26px;
+    letter-spacing: 0.15em;
+    margin-bottom: 12px;
+  }
+  .vp-footer p { font-size: 11px; color: #888; line-height: 1.7; letter-spacing: 0.04em; }
+  .vp-footer h4 { font-size: 10px; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 14px; }
+  .vp-footer ul { list-style: none; }
+  .vp-footer ul li { margin-bottom: 8px; }
+  .vp-footer ul li a { font-size: 11px; color: #888; text-decoration: none; letter-spacing: 0.04em; }
+  .vp-footer ul li a:hover { color: #fff; }
+  .vp-footer-bottom {
+    border-top: 1px solid #333;
+    padding-top: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .vp-footer-bottom span { font-size: 10px; color: #555; letter-spacing: 0.06em; }
+
+  /* ── Pagination ── */
+  .vp-pagination {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    padding: 32px 24px;
+    border-top: 1px solid #e8e8e8;
+  }
+  .vp-page-btn {
+    width: 32px; height: 32px;
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    transition: all 0.15s;
+  }
+  .vp-page-btn:hover { background: #111; color: #fff; border-color: #111; }
+  .vp-page-info { font-size: 11px; letter-spacing: 0.08em; color: #666; }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .vp-nav-left { display: none; }
+    .vp-logo { position: static; transform: none; font-size: 18px; }
+    .vp-grid { grid-template-columns: repeat(2, 1fr); }
+    .vp-card:nth-child(4n) { border-right: 1px solid #e8e8e8; }
+    .vp-card:nth-child(2n) { border-right: none; }
+    .vp-footer-grid { grid-template-columns: 1fr 1fr; }
+    .vp-insta-grid { grid-template-columns: repeat(3, 1fr); }
+    .vp-hero { height: 45vh; }
+  }
+
+  @media (max-width: 480px) {
+    .vp-footer-grid { grid-template-columns: 1fr; }
+    .vp-insta-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div id="vp-root">
+
+  <!-- Announcement bar -->
+  <div class="vp-announce">
+    <button class="vp-announce-arr left">&#8592;</button>
+    <span>SPRING/SUMMER SALE — FREE SHIPPING ON ORDERS OVER $75</span>
+    <button class="vp-announce-arr right">&#8594;</button>
+  </div>
+
+  <!-- Nav -->
+  <nav class="vp-nav">
+    <div class="vp-nav-left">
+      <div class="vp-dropdown">
+        <button>SHOP ▾</button>
+        <div class="vp-dropdown-menu">
+          <a href="/collections/new-arrivals">NEW ARRIVALS</a>
+          <a href="/collections/watch-winders">WATCH WINDERS</a>
+          <a href="/collections/watch-cases">WATCH CASES</a>
+          <a href="/collections/accessories">ACCESSORIES</a>
+          <a href="/collections/best-sellers">BEST SELLERS</a>
+        </div>
+      </div>
+      <a href="/collections/sale" class="sale">SALE</a>
+      <a href="/pages/about">ABOUT US</a>
+      <div class="vp-dropdown">
+        <button>SUPPORT ▾</button>
+        <div class="vp-dropdown-menu">
+          <a href="/pages/faq">FAQ</a>
+          <a href="/pages/track-order">TRACK ORDER</a>
+          <a href="/pages/contact">CONTACT US</a>
+        </div>
+      </div>
+    </div>
+
+    <a href="/" class="vp-logo">VOLENU</a>
+
+    <div class="vp-nav-right">
+      <a href="/pages/track-order">
+        <svg class="vp-nav-icon" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </a>
+      <a href="/account">
+        <svg class="vp-nav-icon" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <a href="/cart">
+        <svg class="vp-nav-icon" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+        <span id="vp-cart-count">{{ cart.item_count }}</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- Filter pills -->
+  <div class="vp-pills">
+    <button class="vp-pill active" data-filter="all" onclick="vpFilter(this,'all')">ALL</button>
+    <button class="vp-pill" data-filter="best-sellers" onclick="vpFilter(this,'best-sellers')">BESTSELLERS</button>
+    <button class="vp-pill" data-filter="watch-winders" onclick="vpFilter(this,'watch-winders')">WATCH WINDERS</button>
+    <button class="vp-pill" data-filter="watch-cases" onclick="vpFilter(this,'watch-cases')">WATCH CASES</button>
+    <button class="vp-pill" data-filter="new-arrivals" onclick="vpFilter(this,'new-arrivals')">NEW ARRIVALS</button>
+    <button class="vp-pill" data-filter="accessories" onclick="vpFilter(this,'accessories')">ACCESSORIES</button>
+  </div>
+
+  <!-- Hero -->
+  <div class="vp-hero" id="vp-hero">
+    {% assign hero_collection = collections['watch-winders'] %}
+    {% if hero_collection and hero_collection.image %}
+      <img src="{{ hero_collection.image | img_url: '1600x' }}" alt="Volenu">
+    {% else %}
+      <div style="width:100%;height:100%;background:linear-gradient(135deg,#1a1a2e 0%,#16213e 50%,#0f3460 100%);display:flex;align-items:center;justify-content:center;">
+        <span style="color:#fff;font-family:serif;font-size:48px;letter-spacing:0.2em;opacity:0.3;">VOLENU</span>
+      </div>
+    {% endif %}
+    <div class="vp-hero-overlay"></div>
+    <div class="vp-hero-label" id="vp-hero-label">WATCH WINDERS</div>
+  </div>
+
+  <!-- Toolbar -->
+  <div class="vp-toolbar">
+    <span>Sort by:</span>
+    <select onchange="vpSort(this.value)">
+      <option value="featured">FEATURED</option>
+      <option value="price-asc">PRICE: LOW TO HIGH</option>
+      <option value="price-desc">PRICE: HIGH TO LOW</option>
+      <option value="newest">NEWEST</option>
+    </select>
+  </div>
+
+  <!-- Product grid -->
+  <div class="vp-grid" id="vp-grid">
+    {% assign all_products = collections.all.products %}
+    {% if all_products.size == 0 %}
+      <!-- Placeholder cards if no products yet -->
+      {% for i in (1..8) %}
+      <div class="vp-card">
+        <div class="vp-card-img">
+          <div style="width:100%;height:100%;background:{% cycle '#e8e8e8','#f0f0f0','#e4e4e4','#ebebeb' %};"></div>
+          <div class="vp-save-badge">SAVE ${{ 20 | plus: i | times: 5 }}.00</div>
+          <button class="vp-quick-add">+ QUICK ADD</button>
+        </div>
+        <div class="vp-card-info">
+          <div class="vp-card-name">QUAD ELITE WATCH WINDER 0{{ i }}</div>
+          <div class="vp-card-prices">
+            <span class="vp-price-orig">${{ 150 | plus: i | times: 2 }}.00</span>
+            <span class="vp-price-sale">${{ 99 | plus: i | times: 2 }}.00</span>
+          </div>
+          <div class="vp-swatches">
+            <div class="vp-swatch" style="background:#1a1a1a;" title="Black"></div>
+            <div class="vp-swatch" style="background:#8b7355;" title="Walnut"></div>
+            <div class="vp-swatch" style="background:#c0c0c0;" title="Silver"></div>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    {% else %}
+      {% for product in all_products limit: 16 %}
+      {% assign original_price = product.compare_at_price_max %}
+      {% assign sale_price = product.price %}
+      {% assign savings = original_price | minus: sale_price %}
+      <div class="vp-card" data-tags="{{ product.tags | join: ',' | downcase }}" data-price="{{ product.price }}">
+        <div class="vp-card-img">
+          <a href="{{ product.url }}">
+            <img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
+          </a>
+          {% if savings > 0 %}
+            <div class="vp-save-badge">SAVE {{ savings | money }}</div>
+          {% endif %}
+          <button class="vp-quick-add" onclick="vpAddToCart('{{ product.variants.first.id }}')">+ QUICK ADD</button>
+        </div>
+        <div class="vp-card-info">
+          <div class="vp-card-name">{{ product.title | upcase }}</div>
+          <div class="vp-card-prices">
+            {% if original_price > sale_price %}
+              <span class="vp-price-orig">{{ original_price | money }}</span>
+              <span class="vp-price-sale">{{ sale_price | money }}</span>
+            {% else %}
+              <span class="vp-price-sale">{{ sale_price | money }}</span>
+            {% endif %}
+          </div>
+          {% assign color_option = product.options_by_name['Color'] %}
+          {% if color_option %}
+          <div class="vp-swatches">
+            {% for value in color_option.values limit: 4 %}
+              {% assign color_lower = value | downcase | replace: ' ', '' %}
+              {% assign swatch_color = '#888' %}
+              {% if color_lower == 'black' %}{% assign swatch_color = '#1a1a1a' %}
+              {% elsif color_lower == 'white' %}{% assign swatch_color = '#fff' %}
+              {% elsif color_lower == 'navy' or color_lower == 'darknavy' %}{% assign swatch_color = '#1a2744' %}
+              {% elsif color_lower == 'brown' or color_lower == 'walnut' %}{% assign swatch_color = '#8b6347' %}
+              {% elsif color_lower == 'silver' %}{% assign swatch_color = '#c0c0c0' %}
+              {% elsif color_lower == 'gold' %}{% assign swatch_color = '#c9a84c' %}
+              {% endif %}
+              <div class="vp-swatch" style="background:{{ swatch_color }};" title="{{ value }}"></div>
+            {% endfor %}
+            {% if color_option.values.size > 4 %}
+              <span class="vp-swatch-more">+{{ color_option.values.size | minus: 4 }}</span>
+            {% endif %}
+          </div>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+
+  <!-- Pagination -->
+  <div class="vp-pagination">
+    <button class="vp-page-btn">&#8592;</button>
+    <span class="vp-page-info">1 / 1</span>
+    <button class="vp-page-btn">&#8594;</button>
+  </div>
+
+  <!-- Instagram section -->
+  <div class="vp-insta">
+    <div class="vp-insta-logo"><span>V</span></div>
+    <div class="vp-insta-handle">@VOLUENOFFICIAL</div>
+    <div class="vp-insta-followers">Follow us on Instagram</div>
+    <div class="vp-insta-grid">
+      {% for i in (1..5) %}
+      <div class="vp-insta-tile" style="background:{% cycle '#ddd','#e5e5e5','#d8d8d8','#e0e0e0','#d5d5d5' %};"></div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="vp-footer">
+    <div class="vp-footer-grid">
+      <div>
+        <div class="vp-footer-brand">VOLENU</div>
+        <p>Premium watch winders and cases for the serious collector. Engineered for the exceptional.</p>
+      </div>
+      <div>
+        <h4>SHOP</h4>
+        <ul>
+          <li><a href="/collections/new-arrivals">New Arrivals</a></li>
+          <li><a href="/collections/watch-winders">Watch Winders</a></li>
+          <li><a href="/collections/watch-cases">Watch Cases</a></li>
+          <li><a href="/collections/sale">Sale</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>INFORMATION</h4>
+        <ul>
+          <li><a href="/pages/about">About Us</a></li>
+          <li><a href="/pages/faq">FAQ</a></li>
+          <li><a href="/pages/track-order">Track Order</a></li>
+          <li><a href="/pages/contact">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>CUSTOMER SERVICE</h4>
+        <ul>
+          <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
+          <li><a href="/policies/refund-policy">Returns</a></li>
+          <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+          <li><a href="/policies/terms-of-service">Terms of Service</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="vp-footer-bottom">
+      <span>© 2025 VOLENU. ALL RIGHTS RESERVED.</span>
+      <span>PREMIUM WATCH CASES & WINDERS</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  // Filter pills
+  function vpFilter(btn, filter) {
+    document.querySelectorAll('.vp-pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+
+    // Update hero label
+    const labels = {
+      'all': 'ALL PRODUCTS',
+      'best-sellers': 'BEST SELLERS',
+      'watch-winders': 'WATCH WINDERS',
+      'watch-cases': 'WATCH CASES',
+      'new-arrivals': 'NEW ARRIVALS',
+      'accessories': 'ACCESSORIES'
+    };
+    document.getElementById('vp-hero-label').textContent = labels[filter] || 'ALL PRODUCTS';
+
+    // Filter cards
+    document.querySelectorAll('.vp-card').forEach(card => {
+      if (filter === 'all') {
+        card.style.display = '';
+      } else {
+        const tags = (card.dataset.tags || '').toLowerCase();
+        card.style.display = tags.includes(filter) ? '' : 'none';
+      }
+    });
+  }
+
+  // Sort
+  function vpSort(value) {
+    const grid = document.getElementById('vp-grid');
+    const cards = Array.from(grid.querySelectorAll('.vp-card'));
+    cards.sort((a, b) => {
+      if (value === 'price-asc') return (parseInt(a.dataset.price) || 0) - (parseInt(b.dataset.price) || 0);
+      if (value === 'price-desc') return (parseInt(b.dataset.price) || 0) - (parseInt(a.dataset.price) || 0);
+      return 0;
+    });
+    cards.forEach(c => grid.appendChild(c));
+  }
+
+  // Quick add to cart
+  function vpAddToCart(variantId) {
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: 1 })
+    }).then(() => {
+      const count = document.getElementById('vp-cart-count');
+      if (count) count.textContent = parseInt(count.textContent || 0) + 1;
+    });
+  }
+
+  // Announcement bar rotation
+  const msgs = [
+    'SPRING/SUMMER SALE — FREE SHIPPING ON ORDERS OVER $75',
+    '30-DAY MONEY BACK GUARANTEE — SHOP WITH CONFIDENCE',
+    'NEW ARRIVALS: QUAD ELITE WATCH WINDER — SHOP NOW'
+  ];
+  let msgIdx = 0;
+  const announceTxt = document.querySelector('.vp-announce span');
+  document.querySelector('.vp-announce-arr.right').addEventListener('click', () => {
+    msgIdx = (msgIdx + 1) % msgs.length;
+    announceTxt.textContent = msgs[msgIdx];
+  });
+  document.querySelector('.vp-announce-arr.left').addEventListener('click', () => {
+    msgIdx = (msgIdx - 1 + msgs.length) % msgs.length;
+    announceTxt.textContent = msgs[msgIdx];
+  });
+</script>
+
+{% schema %}
+{
+  "name": "Volenu Parijan Home",
+  "settings": [],
+  "presets": [{ "name": "Volenu Parijan Home" }]
+}
+{% endschema %}
