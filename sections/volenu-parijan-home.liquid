@@ -441,6 +441,17 @@
     </div>
   </nav>
 
+  <!-- Hero banner -->
+  <div style="position:relative;width:100%;overflow:hidden;max-height:520px;">
+    <img src="{{ 'hero-banner.png' | asset_url }}" alt="Dress with class for less" style="width:100%;height:100%;object-fit:cover;display:block;">
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(0,0,0,0.05) 0%,rgba(0,0,0,0.35) 100%);"></div>
+    <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;color:#fff;padding:24px;">
+      <div style="font-family:'Outfit',sans-serif;font-size:clamp(10px,1.2vw,13px);letter-spacing:0.22em;font-weight:500;margin-bottom:8px;text-shadow:0 1px 4px rgba(0,0,0,0.4);">DRESS WITH CLASS FOR LESS</div>
+      <div style="font-family:'Outfit',sans-serif;font-size:clamp(48px,8vw,96px);font-weight:800;letter-spacing:0.02em;line-height:1;text-shadow:0 2px 12px rgba(0,0,0,0.3);margin-bottom:8px;">60% OFF</div>
+      <div style="font-family:'Cormorant Garamond','Times New Roman',serif;font-size:clamp(16px,2.2vw,26px);font-style:italic;font-weight:400;letter-spacing:0.06em;text-shadow:0 1px 6px rgba(0,0,0,0.4);">Sitewide Spring/Summer</div>
+    </div>
+  </div>
+
   <!-- Filter pills -->
   <div class="vp-pills">
     <button class="vp-pill active" data-filter="all" onclick="vpFilter(this,'all')">ALL</button>
