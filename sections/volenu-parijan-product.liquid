@@ -1,0 +1,752 @@
+{% comment %} Volenu — Parijan-style Product Page {% endcomment %}
+
+<style>
+  .vpp-root *, .vpp-root *::before, .vpp-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  .vpp-root { font-family: 'Outfit', sans-serif; color: #111; background: #fff; }
+
+  /* ── Layout ── */
+  .vpp-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 32px 24px;
+  }
+
+  /* ── Gallery ── */
+  .vpp-gallery { position: sticky; top: 80px; align-self: start; padding-right: 32px; }
+  .vpp-main-img {
+    width: 100%;
+    aspect-ratio: 3/4;
+    background: #f5f5f5;
+    overflow: hidden;
+    position: relative;
+    cursor: zoom-in;
+  }
+  .vpp-main-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+  .vpp-main-img:hover img { transform: scale(1.04); }
+  .vpp-zoom-btn {
+    position: absolute; bottom: 14px; right: 14px;
+    background: rgba(255,255,255,0.85); border: none;
+    border-radius: 50%; width: 36px; height: 36px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer; font-size: 16px;
+  }
+  .vpp-thumbs {
+    display: flex; gap: 8px; margin-top: 10px;
+    overflow-x: auto; scrollbar-width: none;
+  }
+  .vpp-thumbs::-webkit-scrollbar { display: none; }
+  .vpp-thumb {
+    flex-shrink: 0;
+    width: 72px; height: 90px;
+    background: #f0f0f0;
+    overflow: hidden;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: border-color 0.15s;
+  }
+  .vpp-thumb.active { border-color: #111; }
+  .vpp-thumb img { width: 100%; height: 100%; object-fit: cover; }
+  .vpp-gallery-arrow {
+    position: absolute; top: 50%; transform: translateY(-50%);
+    background: rgba(255,255,255,0.85); border: none;
+    width: 36px; height: 36px; border-radius: 50%;
+    font-size: 16px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    z-index: 2;
+  }
+  .vpp-gallery-arrow.left { left: 8px; }
+  .vpp-gallery-arrow.right { right: 8px; }
+
+  /* ── Info panel ── */
+  .vpp-info { padding-left: 16px; }
+
+  .vpp-stars { display: flex; align-items: center; gap: 6px; margin-bottom: 10px; }
+  .vpp-stars-row { color: #f5a623; font-size: 14px; }
+  .vpp-stars-label { font-size: 11px; color: #666; letter-spacing: 0.04em; }
+
+  .vpp-title {
+    font-size: clamp(18px, 2.2vw, 26px);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.2;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+
+  .vpp-price-row { display: flex; align-items: center; gap: 10px; margin-bottom: 16px; }
+  .vpp-price-orig { font-size: 15px; color: #999; text-decoration: line-through; }
+  .vpp-price-sale { font-size: 15px; color: #cc0000; font-weight: 700; }
+  .vpp-save-badge {
+    background: #cc0000; color: #fff;
+    font-size: 10px; font-weight: 700;
+    letter-spacing: 0.06em;
+    padding: 3px 8px;
+  }
+
+  /* Size selector */
+  .vpp-option-label {
+    font-size: 11px; letter-spacing: 0.1em; font-weight: 600;
+    margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .vpp-option-label a { font-weight: 400; color: #666; text-decoration: underline; font-size: 10px; }
+  .vpp-sizes { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .vpp-size {
+    min-width: 48px; height: 40px;
+    border: 1.5px solid #ddd;
+    background: #fff;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.06em;
+    cursor: pointer;
+    transition: all 0.15s;
+    font-family: 'Outfit', sans-serif;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 12px;
+  }
+  .vpp-size.active { border-color: #111; background: #111; color: #fff; }
+  .vpp-size:hover:not(.active) { border-color: #111; }
+  .vpp-size.sold-out { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+
+  /* Stock */
+  .vpp-stock {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: #cc0000; font-weight: 500;
+    letter-spacing: 0.06em; margin-bottom: 18px;
+  }
+  .vpp-stock-dot { width: 8px; height: 8px; border-radius: 50%; background: #cc0000; flex-shrink: 0; }
+
+  /* Buy options */
+  .vpp-buy-opts { display: flex; flex-direction: column; gap: 8px; margin-bottom: 16px; }
+  .vpp-buy-opt {
+    border: 1.5px solid #ddd;
+    padding: 14px 16px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    position: relative;
+    transition: border-color 0.15s;
+  }
+  .vpp-buy-opt.active { border-color: #111; }
+  .vpp-buy-opt-left { display: flex; align-items: center; gap: 10px; }
+  .vpp-radio {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid #ddd;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    transition: border-color 0.15s;
+  }
+  .vpp-buy-opt.active .vpp-radio { border-color: #111; }
+  .vpp-radio-inner {
+    width: 10px; height: 10px; border-radius: 50%;
+    background: #111; display: none;
+  }
+  .vpp-buy-opt.active .vpp-radio-inner { display: block; }
+  .vpp-buy-opt-title { font-size: 12px; font-weight: 600; letter-spacing: 0.06em; }
+  .vpp-buy-opt-sub { font-size: 11px; color: #888; margin-top: 1px; }
+  .vpp-buy-opt-price { text-align: right; }
+  .vpp-buy-opt-price .main { font-size: 14px; font-weight: 700; }
+  .vpp-buy-opt-price .orig { font-size: 11px; color: #999; text-decoration: line-through; }
+  .vpp-popular-badge {
+    position: absolute; top: -1px; right: -1px;
+    background: #111; color: #fff;
+    font-size: 9px; letter-spacing: 0.08em; font-weight: 700;
+    padding: 3px 8px;
+  }
+
+  /* ATC button */
+  .vpp-atc {
+    width: 100%; padding: 16px;
+    background: #111; color: #fff;
+    border: none; font-size: 12px;
+    letter-spacing: 0.16em; font-weight: 700;
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    margin-bottom: 12px;
+    transition: opacity 0.2s;
+  }
+  .vpp-atc:hover { opacity: 0.85; }
+
+  /* Sale banner */
+  .vpp-sale-banner {
+    border: 1px solid #e8e8e8;
+    padding: 12px 16px;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 16px;
+    font-size: 12px; font-weight: 500;
+    letter-spacing: 0.04em;
+  }
+  .vpp-sale-icon { font-size: 16px; }
+
+  /* Trust badges */
+  .vpp-trust {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border: 1px solid #e8e8e8;
+    margin-bottom: 24px;
+  }
+  .vpp-trust-item {
+    padding: 14px 10px;
+    text-align: center;
+    border-right: 1px solid #e8e8e8;
+    font-size: 10px; letter-spacing: 0.06em; color: #444;
+    line-height: 1.4;
+  }
+  .vpp-trust-item:last-child { border-right: none; }
+  .vpp-trust-icon { font-size: 18px; margin-bottom: 4px; }
+
+  /* Description */
+  .vpp-desc-headline {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; font-style: italic;
+    margin-bottom: 12px; line-height: 1.3;
+  }
+  .vpp-desc-body { font-size: 13px; line-height: 1.7; color: #444; margin-bottom: 16px; }
+  .vpp-desc-subtitle { font-size: 14px; font-weight: 700; color: #111; margin-bottom: 8px; }
+  .vpp-desc-list { padding-left: 20px; margin-bottom: 16px; }
+  .vpp-desc-list li { font-size: 13px; line-height: 1.7; color: #444; }
+  .vpp-desc-list li strong { color: #111; }
+
+  /* Accordions */
+  .vpp-accordion { border-top: 1px solid #e8e8e8; margin-top: 8px; }
+  .vpp-accord-item { border-bottom: 1px solid #e8e8e8; }
+  .vpp-accord-head {
+    width: 100%; background: none; border: none;
+    padding: 16px 0;
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; letter-spacing: 0.1em; font-weight: 600;
+    cursor: pointer; font-family: 'Outfit', sans-serif;
+    color: #111;
+  }
+  .vpp-accord-icon { font-size: 18px; transition: transform 0.2s; }
+  .vpp-accord-item.open .vpp-accord-icon { transform: rotate(180deg); }
+  .vpp-accord-body { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
+  .vpp-accord-item.open .vpp-accord-body { max-height: 300px; }
+  .vpp-accord-body p { font-size: 13px; line-height: 1.7; color: #444; padding-bottom: 16px; }
+
+  /* ── Community section ── */
+  .vpp-community {
+    border-top: 1px solid #e8e8e8;
+    padding: 64px 24px 0;
+    text-align: center;
+  }
+  .vpp-community-label { font-size: 10px; letter-spacing: 0.16em; color: #888; margin-bottom: 6px; }
+  .vpp-community-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 500; letter-spacing: 0.06em;
+    margin-bottom: 8px; line-height: 1.2;
+  }
+  .vpp-community-sub { font-size: 13px; color: #555; margin-bottom: 28px; line-height: 1.6; }
+  .vpp-community-sub strong { color: #111; }
+  .vpp-community-imgs {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 3px;
+    margin-bottom: 0;
+  }
+  .vpp-community-img {
+    aspect-ratio: 4/5;
+    background: #e8e8e8;
+    overflow: hidden;
+  }
+  .vpp-community-img img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* ── Brand banner ── */
+  .vpp-brand-banner {
+    position: relative;
+    height: 320px;
+    overflow: hidden;
+    background: #1a1a1a;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .vpp-brand-banner img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; position: absolute; }
+  .vpp-brand-banner-text {
+    position: relative; z-index: 2;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(28px, 5vw, 56px);
+    color: #fff; letter-spacing: 0.2em; font-weight: 500;
+  }
+
+  /* ── Returns section ── */
+  .vpp-returns {
+    background: #f8f8f8;
+    padding: 56px 24px;
+    text-align: center;
+  }
+  .vpp-returns-title { font-size: 13px; letter-spacing: 0.12em; font-weight: 600; margin-bottom: 10px; }
+  .vpp-returns-body { font-size: 13px; color: #555; line-height: 1.7; max-width: 480px; margin: 0 auto; }
+
+  /* ── You May Also Like ── */
+  .vpp-related { padding: 48px 24px; }
+  .vpp-related-title {
+    font-size: 14px; letter-spacing: 0.16em; font-weight: 700;
+    margin-bottom: 24px; text-transform: uppercase;
+  }
+  .vpp-related-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    border-top: 1px solid #e8e8e8;
+    border-left: 1px solid #e8e8e8;
+  }
+  .vpp-related-card {
+    border-right: 1px solid #e8e8e8;
+    border-bottom: 1px solid #e8e8e8;
+    cursor: pointer;
+    position: relative;
+  }
+  .vpp-related-img { position: relative; aspect-ratio: 3/4; background: #f5f5f5; overflow: hidden; }
+  .vpp-related-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s; }
+  .vpp-related-card:hover .vpp-related-img img { transform: scale(1.04); }
+  .vpp-related-save {
+    position: absolute; top: 8px; left: 8px;
+    background: #cc0000; color: #fff;
+    font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+    padding: 3px 6px;
+  }
+  .vpp-related-info { padding: 10px 12px 14px; }
+  .vpp-related-name { font-size: 10px; letter-spacing: 0.1em; font-weight: 600; margin-bottom: 5px; }
+  .vpp-related-prices { display: flex; gap: 6px; align-items: center; margin-bottom: 7px; }
+  .vpp-related-orig { font-size: 11px; color: #999; text-decoration: line-through; }
+  .vpp-related-sale { font-size: 11px; color: #cc0000; font-weight: 700; }
+  .vpp-related-swatches { display: flex; gap: 4px; }
+  .vpp-related-swatch {
+    width: 14px; height: 14px; border-radius: 50%;
+    border: 1.5px solid #ddd; cursor: pointer;
+  }
+
+  /* ── Testimonial ── */
+  .vpp-testimonial {
+    background: #f8f8f8;
+    padding: 56px 24px;
+    text-align: center;
+  }
+  .vpp-testimonial-label { font-size: 10px; letter-spacing: 0.16em; color: #888; margin-bottom: 16px; }
+  .vpp-testimonial-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-style: italic; line-height: 1.5;
+    max-width: 600px; margin: 0 auto 12px;
+  }
+  .vpp-testimonial-author { font-size: 12px; letter-spacing: 0.08em; color: #666; }
+
+  /* ── Sticky ATC ── */
+  .vpp-sticky {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: #fff; border-top: 1px solid #e8e8e8;
+    padding: 12px 24px;
+    display: flex; align-items: center; justify-content: space-between;
+    z-index: 500;
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+    gap: 16px;
+  }
+  .vpp-sticky.show { transform: translateY(0); }
+  .vpp-sticky-info { display: flex; align-items: center; gap: 12px; }
+  .vpp-sticky-img { width: 48px; height: 60px; background: #f0f0f0; overflow: hidden; flex-shrink: 0; }
+  .vpp-sticky-img img { width: 100%; height: 100%; object-fit: cover; }
+  .vpp-sticky-name { font-size: 11px; letter-spacing: 0.08em; font-weight: 600; }
+  .vpp-sticky-price { font-size: 12px; color: #cc0000; font-weight: 700; margin-top: 2px; }
+  .vpp-sticky-btn {
+    background: #111; color: #fff; border: none;
+    padding: 12px 28px; font-size: 11px;
+    letter-spacing: 0.12em; font-weight: 700;
+    cursor: pointer; white-space: nowrap;
+    font-family: 'Outfit', sans-serif;
+  }
+
+  /* ── Mobile ── */
+  @media (max-width: 768px) {
+    .vpp-main { grid-template-columns: 1fr; padding: 0; gap: 0; }
+    .vpp-gallery { position: static; padding-right: 0; }
+    .vpp-info { padding: 20px 16px; }
+    .vpp-related-grid { grid-template-columns: repeat(2, 1fr); }
+    .vpp-community-imgs { grid-template-columns: repeat(3, 1fr); }
+    .vpp-sticky-info { display: none; }
+  }
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<div class="vpp-root">
+<div class="vpp-main">
+
+  <!-- Gallery -->
+  <div class="vpp-gallery">
+    <div class="vpp-main-img" id="vpp-main-img">
+      {% if product.featured_image %}
+        <img src="{{ product.featured_image | img_url: '800x' }}" alt="{{ product.title }}" id="vpp-big-img">
+      {% else %}
+        <div style="width:100%;height:100%;background:#f0f0f0;"></div>
+      {% endif %}
+      <button class="vpp-gallery-arrow left" onclick="vppSlide(-1)">&#8249;</button>
+      <button class="vpp-gallery-arrow right" onclick="vppSlide(1)">&#8250;</button>
+      <button class="vpp-zoom-btn">&#9906;</button>
+    </div>
+    <div class="vpp-thumbs" id="vpp-thumbs">
+      {% for image in product.images %}
+        <div class="vpp-thumb {% if forloop.first %}active{% endif %}" onclick="vppSetImg({{ forloop.index0 }})">
+          <img src="{{ image | img_url: '200x' }}" alt="{{ product.title }} {{ forloop.index }}">
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- Info -->
+  <div class="vpp-info">
+
+    <!-- Stars -->
+    <div class="vpp-stars">
+      <span class="vpp-stars-row">★★★★★</span>
+      <span class="vpp-stars-label">4.9/5 based on 1,289+ reviews</span>
+    </div>
+
+    <!-- Title -->
+    <h1 class="vpp-title">{{ product.title }}</h1>
+
+    <!-- Price -->
+    <div class="vpp-price-row">
+      {% if product.compare_at_price_max > product.price %}
+        <span class="vpp-price-orig">{{ product.compare_at_price_max | money }}</span>
+        <span class="vpp-price-sale">{{ product.price | money }}</span>
+        {% assign savings = product.compare_at_price_max | minus: product.price %}
+        <span class="vpp-save-badge">SAVE {{ savings | money }}</span>
+      {% else %}
+        <span class="vpp-price-sale">{{ product.price | money }}</span>
+      {% endif %}
+    </div>
+
+    <!-- Size selector -->
+    {% assign size_option = product.options_by_name['Size'] %}
+    {% if size_option %}
+    <div class="vpp-option-label">
+      Size: <span id="vpp-selected-size">{{ size_option.values.first }}</span>
+      <a href="#">What's my size?</a>
+    </div>
+    <div class="vpp-sizes">
+      {% for value in size_option.values %}
+        <button class="vpp-size {% if forloop.first %}active{% endif %}"
+          onclick="vppSelectSize(this, '{{ value }}')">{{ value }}</button>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Color selector -->
+    {% assign color_option = product.options_by_name['Color'] %}
+    {% if color_option %}
+    <div class="vpp-option-label" style="margin-bottom:8px;">
+      Color: <span id="vpp-selected-color">{{ color_option.values.first }}</span>
+    </div>
+    <div class="vpp-sizes" style="margin-bottom:14px;">
+      {% for value in color_option.values %}
+        {% assign color_lower = value | downcase | replace: ' ', '' %}
+        {% assign sw = '#888' %}
+        {% if color_lower == 'black' %}{% assign sw = '#1a1a1a' %}
+        {% elsif color_lower == 'white' or color_lower == 'cream' %}{% assign sw = '#f5f5f0' %}
+        {% elsif color_lower == 'navy' or color_lower == 'darknavy' %}{% assign sw = '#1a2744' %}
+        {% elsif color_lower == 'beige' or color_lower == 'sand' %}{% assign sw = '#d4c5a9' %}
+        {% elsif color_lower == 'brown' %}{% assign sw = '#8b6347' %}
+        {% elsif color_lower == 'green' or color_lower == 'olive' %}{% assign sw = '#5c6e2e' %}
+        {% elsif color_lower == 'blue' or color_lower == 'lightblue' %}{% assign sw = '#6aaccc' %}
+        {% elsif color_lower == 'grey' or color_lower == 'gray' %}{% assign sw = '#9e9e9e' %}
+        {% endif %}
+        <button class="vpp-size {% if forloop.first %}active{% endif %}"
+          style="width:32px;height:32px;padding:0;background:{{ sw }};border-color:{% if forloop.first %}#111{% else %}#ddd{% endif %};"
+          title="{{ value }}"
+          onclick="vppSelectColor(this, '{{ value }}')"></button>
+      {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Stock -->
+    <div class="vpp-stock">
+      <div class="vpp-stock-dot"></div>
+      Only few items left
+    </div>
+
+    <!-- Buy options -->
+    <div class="vpp-buy-opts">
+      <div class="vpp-buy-opt active" onclick="vppSelectBuy(this, 1)">
+        <div class="vpp-buy-opt-left">
+          <div class="vpp-radio"><div class="vpp-radio-inner"></div></div>
+          <div>
+            <div class="vpp-buy-opt-title">BUY 1</div>
+            <div class="vpp-buy-opt-sub">Standard price</div>
+          </div>
+        </div>
+        <div class="vpp-buy-opt-price">
+          <div class="main">{{ product.price | money }}</div>
+          {% if product.compare_at_price_max > product.price %}
+            <div class="orig">{{ product.compare_at_price_max | money }}</div>
+          {% endif %}
+        </div>
+      </div>
+      <div class="vpp-buy-opt" onclick="vppSelectBuy(this, 2)">
+        <div class="vpp-popular-badge">MOST POPULAR</div>
+        <div class="vpp-buy-opt-left">
+          <div class="vpp-radio"><div class="vpp-radio-inner"></div></div>
+          <div>
+            <div class="vpp-buy-opt-title">BUY 2</div>
+            <div class="vpp-buy-opt-sub">You save 10%</div>
+          </div>
+        </div>
+        {% assign buy2_price = product.price | times: 2 | times: 0.9 | round %}
+        {% assign buy2_orig = product.price | times: 2 %}
+        <div class="vpp-buy-opt-price">
+          <div class="main">{{ buy2_price | money }}</div>
+          <div class="orig">{{ buy2_orig | money }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Add to cart -->
+    <button class="vpp-atc" onclick="vppAddToCart()">ADD TO CART</button>
+
+    <!-- Sale banner -->
+    <div class="vpp-sale-banner">
+      <span class="vpp-sale-icon">🎁</span>
+      <span>2026 Sale: Up to 60% Off</span>
+    </div>
+
+    <!-- Trust badges -->
+    <div class="vpp-trust">
+      <div class="vpp-trust-item">
+        <div class="vpp-trust-icon">🎧</div>
+        World-class customer support
+      </div>
+      <div class="vpp-trust-item">
+        <div class="vpp-trust-icon">📦</div>
+        Free Shipping Over $100
+      </div>
+      <div class="vpp-trust-item">
+        <div class="vpp-trust-icon">↩️</div>
+        30 Days Money Back Guarantee
+      </div>
+    </div>
+
+    <!-- Description -->
+    <div class="vpp-desc-headline">{{ section.settings.desc_headline | default: 'Dress with class — for less.' }}</div>
+    <div class="vpp-desc-body">{{ product.description | strip_html | truncate: 300 }}</div>
+
+    {% if section.settings.desc_subtitle != blank %}
+    <div class="vpp-desc-subtitle">{{ section.settings.desc_subtitle }}</div>
+    <ul class="vpp-desc-list">
+      {% unless section.settings.desc_bullet_1 == blank %}<li>{{ section.settings.desc_bullet_1 }}</li>{% endunless %}
+      {% unless section.settings.desc_bullet_2 == blank %}<li>{{ section.settings.desc_bullet_2 }}</li>{% endunless %}
+      {% unless section.settings.desc_bullet_3 == blank %}<li>{{ section.settings.desc_bullet_3 }}</li>{% endunless %}
+    </ul>
+    {% endif %}
+
+    <!-- Accordions -->
+    <div class="vpp-accordion">
+      <div class="vpp-accord-item">
+        <button class="vpp-accord-head" onclick="vppToggle(this)">
+          <span>SHIPPING & RETURNS</span>
+          <span class="vpp-accord-icon">⌄</span>
+        </button>
+        <div class="vpp-accord-body">
+          <p>All orders will be dispatched within <strong>1-3 Business Days</strong>, and shipping will take around <strong>7-10 business days worldwide</strong> depending on your shipping location.<br><br>Shipping is FREE for orders over $100.<br><br>Not satisfied with your purchase? You can return your items <strong>within 30 days</strong>, no questions asked.</p>
+        </div>
+      </div>
+      <div class="vpp-accord-item">
+        <button class="vpp-accord-head" onclick="vppToggle(this)">
+          <span>SIZING</span>
+          <span class="vpp-accord-icon">⌄</span>
+        </button>
+        <div class="vpp-accord-body">
+          <p>Our products fit true to size. If you're between two sizes, we recommend choosing one size up for the best fit.</p>
+        </div>
+      </div>
+      <div class="vpp-accord-item">
+        <button class="vpp-accord-head" onclick="vppToggle(this)">
+          <span>CARE GUIDE</span>
+          <span class="vpp-accord-icon">⌄</span>
+        </button>
+        <div class="vpp-accord-body">
+          <p>We strongly recommend <strong>hand-washing</strong> all our products. When using a machine wash, make sure to use choose hand-wash to prevent shrinking / damaging our premium materials.<br><br><strong>Air drying only.</strong></p>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /vpp-info -->
+</div><!-- /vpp-main -->
+
+<!-- Community section -->
+<div class="vpp-community">
+  <div class="vpp-community-label">· ——— ·</div>
+  <div class="vpp-community-title">JOIN THE VOLENU<br>COMMUNITY</div>
+  <div class="vpp-community-sub">With over <strong>10,000+ collectors</strong>, the Volenu community is bigger than ever before.</div>
+  <div class="vpp-community-imgs">
+    {% for i in (1..5) %}
+    <div class="vpp-community-img" style="background:{% cycle '#d5d5d5','#c8c8c8','#ddd','#cfcfcf','#d8d8d8' %};"></div>
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Brand banner -->
+<div class="vpp-brand-banner">
+  <div class="vpp-brand-banner-text">VOLENU</div>
+</div>
+
+<!-- Returns -->
+<div class="vpp-returns">
+  <div class="vpp-returns-title">30-DAY FREE RETURNS</div>
+  <div class="vpp-returns-body">Ensuring customer satisfaction is our commitment. Should you find yourself dissatisfied with your purchase, rest assured that we offer a <strong>30-day</strong> return period.</div>
+</div>
+
+<!-- You May Also Like -->
+<div class="vpp-related">
+  <div class="vpp-related-title">YOU MAY ALSO LIKE</div>
+  <div class="vpp-related-grid">
+    {% assign related = collections.all.products | where: 'id', product.id %}
+    {% assign shown = 0 %}
+    {% for p in collections.all.products %}
+      {% if p.id != product.id and shown < 8 %}
+        {% assign savings = p.compare_at_price_max | minus: p.price %}
+        <div class="vpp-related-card" onclick="window.location='{{ p.url }}'">
+          <div class="vpp-related-img">
+            {% if p.featured_image %}
+              <img src="{{ p.featured_image | img_url: '400x' }}" alt="{{ p.title }}" loading="lazy">
+            {% else %}
+              <div style="width:100%;height:100%;background:#f0f0f0;"></div>
+            {% endif %}
+            {% if savings > 0 %}
+              <div class="vpp-related-save">SAVE {{ savings | money }}</div>
+            {% endif %}
+          </div>
+          <div class="vpp-related-info">
+            <div class="vpp-related-name">{{ p.title | upcase }}</div>
+            <div class="vpp-related-prices">
+              {% if p.compare_at_price_max > p.price %}
+                <span class="vpp-related-orig">{{ p.compare_at_price_max | money }}</span>
+                <span class="vpp-related-sale">{{ p.price | money }}</span>
+              {% else %}
+                <span class="vpp-related-sale">{{ p.price | money }}</span>
+              {% endif %}
+            </div>
+            {% assign color_opt = p.options_by_name['Color'] %}
+            {% if color_opt %}
+            <div class="vpp-related-swatches">
+              {% for val in color_opt.values limit: 4 %}
+                {% assign cl = val | downcase | replace: ' ', '' %}
+                {% assign sc = '#888' %}
+                {% if cl == 'black' %}{% assign sc = '#1a1a1a' %}{% elsif cl == 'white' or cl == 'cream' %}{% assign sc = '#f5f5f0' %}{% elsif cl == 'navy' %}{% assign sc = '#1a2744' %}{% elsif cl == 'beige' or cl == 'sand' %}{% assign sc = '#d4c5a9' %}{% elsif cl == 'brown' %}{% assign sc = '#8b6347' %}{% elsif cl == 'green' %}{% assign sc = '#5c6e2e' %}{% elsif cl == 'blue' %}{% assign sc = '#6aaccc' %}{% endif %}
+                <div class="vpp-related-swatch" style="background:{{ sc }};"></div>
+              {% endfor %}
+              {% if color_opt.values.size > 4 %}<span style="font-size:9px;color:#666;"> +{{ color_opt.values.size | minus: 4 }}</span>{% endif %}
+            </div>
+            {% endif %}
+          </div>
+        </div>
+        {% assign shown = shown | plus: 1 %}
+      {% endif %}
+    {% endfor %}
+  </div>
+</div>
+
+<!-- Testimonial -->
+<div class="vpp-testimonial">
+  <div class="vpp-testimonial-label">OUR CUSTOMERS LOVE US</div>
+  <div class="vpp-testimonial-text">"Volenu is the definition of precision engineering! I feel confident knowing my watches are protected in a vault built to last."</div>
+  <div class="vpp-testimonial-author">— Marcus T., New York</div>
+</div>
+
+<!-- Sticky ATC -->
+<div class="vpp-sticky" id="vpp-sticky">
+  <div class="vpp-sticky-info">
+    {% if product.featured_image %}
+    <div class="vpp-sticky-img">
+      <img src="{{ product.featured_image | img_url: '120x' }}" alt="{{ product.title }}">
+    </div>
+    {% endif %}
+    <div>
+      <div class="vpp-sticky-name">{{ product.title | upcase | truncate: 40 }}</div>
+      <div class="vpp-sticky-price">{{ product.price | money }}</div>
+    </div>
+  </div>
+  <button class="vpp-sticky-btn" onclick="vppAddToCart()">ADD TO CART</button>
+</div>
+
+</div><!-- /vpp-root -->
+
+<script>
+  // Image gallery
+  const vppImgs = [{% for img in product.images %}"{{ img | img_url: '800x' }}"{% unless forloop.last %},{% endunless %}{% endfor %}];
+  let vppIdx = 0;
+
+  function vppSetImg(i) {
+    vppIdx = i;
+    document.getElementById('vpp-big-img').src = vppImgs[i];
+    document.querySelectorAll('.vpp-thumb').forEach((t, j) => t.classList.toggle('active', j === i));
+  }
+
+  function vppSlide(dir) {
+    vppSetImg((vppIdx + dir + vppImgs.length) % vppImgs.length);
+  }
+
+  // Size select
+  function vppSelectSize(btn, val) {
+    document.querySelectorAll('.vpp-sizes .vpp-size:not([title])').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('vpp-selected-size') && (document.getElementById('vpp-selected-size').textContent = val);
+  }
+
+  // Color select
+  function vppSelectColor(btn, val) {
+    document.querySelectorAll('.vpp-size[title]').forEach(b => { b.style.borderColor = '#ddd'; b.classList.remove('active'); });
+    btn.style.borderColor = '#111';
+    btn.classList.add('active');
+    document.getElementById('vpp-selected-color') && (document.getElementById('vpp-selected-color').textContent = val);
+  }
+
+  // Buy option
+  let vppQty = 1;
+  function vppSelectBuy(el, qty) {
+    document.querySelectorAll('.vpp-buy-opt').forEach(o => o.classList.remove('active'));
+    el.classList.add('active');
+    vppQty = qty;
+  }
+
+  // Add to cart
+  function vppAddToCart() {
+    const variantId = {{ product.variants.first.id }};
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: variantId, quantity: vppQty })
+    }).then(() => { window.location.href = '/cart'; });
+  }
+
+  // Accordion
+  function vppToggle(btn) {
+    const item = btn.closest('.vpp-accord-item');
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.vpp-accord-item').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  }
+
+  // Sticky ATC
+  const vppSticky = document.getElementById('vpp-sticky');
+  const vppAtcBtn = document.querySelector('.vpp-atc');
+  if (vppAtcBtn && vppSticky) {
+    window.addEventListener('scroll', () => {
+      const rect = vppAtcBtn.getBoundingClientRect();
+      vppSticky.classList.toggle('show', rect.bottom < 0);
+    }, { passive: true });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Volenu Parijan Product",
+  "settings": [
+    { "type": "text", "id": "desc_headline", "label": "Description headline", "default": "Engineered for the exceptional." },
+    { "type": "text", "id": "desc_subtitle", "label": "Bullet subtitle", "default": "Premium Materials" },
+    { "type": "text", "id": "desc_bullet_1", "label": "Bullet 1" },
+    { "type": "text", "id": "desc_bullet_2", "label": "Bullet 2" },
+    { "type": "text", "id": "desc_bullet_3", "label": "Bullet 3" }
+  ],
+  "presets": [{ "name": "Volenu Parijan Product" }]
+}
+{% endschema %}
