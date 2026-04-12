@@ -44,7 +44,7 @@ body { overflow-x: hidden; }
   font-size: 11px; letter-spacing: 0.28em; font-weight: 600;
   color: #fff; text-decoration: none;
 }
-.vr-nav-logo img { height: 28px; width: auto; filter: invert(1); }
+.vr-nav-logo img { height: 22px; width: auto; filter: invert(1); display: block; }
 .vr-nav-right { display: flex; align-items: center; gap: 24px; }
 .vr-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
@@ -222,23 +222,81 @@ html {
 }
 @keyframes vrMarquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
-/* ─── MANIFESTO ─── */
+/* ─── LOGO + MANIFESTO (Odd Ritual bird+text style) ─── */
 #vr-manifesto {
   padding: 80px 40px;
-  max-width: 900px; margin: 0 auto; text-align: center;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 64px;
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
   opacity: 0; transform: translateY(32px);
   transition: opacity 0.9s ease, transform 0.9s ease;
 }
 #vr-manifesto.visible { opacity: 1; transform: translateY(0); }
+.vr-manifesto-logo { width: 100%; max-width: 160px; display: block; }
 .vr-manifesto-label {
   font-size: 9px; letter-spacing: 0.3em; color: #999;
-  margin-bottom: 24px; display: block;
+  margin-bottom: 16px; display: block;
 }
 #vr-manifesto p {
-  font-size: clamp(16px, 2.2vw, 22px);
-  line-height: 1.6; color: #333; font-weight: 400;
+  font-size: clamp(18px, 2.4vw, 26px);
+  line-height: 1.5; color: #111; font-weight: 700;
+  letter-spacing: -0.01em;
 }
 #vr-manifesto strong { color: #111; }
+
+/* ─── SHOP NOW HOVER FALL ─── */
+#vr-shopnow {
+  position: relative;
+  background: #5c5650;
+  overflow: hidden;
+  cursor: pointer;
+  height: 220px;
+  display: flex; align-items: flex-end;
+}
+#vr-shopnow-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.55;
+}
+.vr-sn-content {
+  position: relative; z-index: 2;
+  padding: 0 40px 32px;
+}
+.vr-sn-line {
+  display: block;
+  font-size: clamp(28px, 4.5vw, 52px);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.02em; line-height: 1;
+  overflow: hidden;
+}
+.vr-sn-inner {
+  display: block;
+  transition: transform 0.55s cubic-bezier(.87,0,.13,1);
+  transform: translateY(0);
+}
+/* "SHOP NOW" stays, subtitle falls down on hover */
+.vr-sn-sub .vr-sn-inner {
+  color: rgba(255,255,255,0.55);
+  transform: translateY(0);
+  transition: transform 0.5s cubic-bezier(.87,0,.13,1) 0.05s,
+              color 0.4s ease;
+}
+#vr-shopnow:hover .vr-sn-sub .vr-sn-inner {
+  transform: translateY(110%);
+}
+/* Underline dashes like Odd Ritual */
+.vr-sn-dashes {
+  display: flex; gap: 3px; margin-bottom: 10px;
+  opacity: 0; transition: opacity 0.3s ease;
+}
+#vr-shopnow:hover .vr-sn-dashes { opacity: 1; }
+.vr-sn-dashes span {
+  width: 14px; height: 1px; background: rgba(255,255,255,0.5);
+  display: block;
+}
 
 /* ─── FEATURED PRODUCTS ─── */
 #vr-products { padding: 0 0 64px; }
@@ -411,7 +469,9 @@ html {
   #vr-nav { padding: 0 20px; }
   .vr-panel-content { padding: 0 24px 48px; }
   #vr-dots { right: 20px; bottom: 20px; }
-  #vr-manifesto { padding: 56px 24px; }
+  #vr-manifesto { padding: 56px 24px; grid-template-columns: 1fr; gap: 24px; }
+  .vr-manifesto-logo { max-width: 100px; }
+  .vr-sn-content { padding: 0 24px 28px; }
   .vr-products-head { padding: 0 24px 20px; }
   .vr-products-scroll { padding: 0 24px; }
   .vr-prod-card { width: 220px; }
@@ -450,7 +510,7 @@ html {
 <!-- Nav -->
 <nav id="vr-nav">
   <a href="/" class="vr-nav-logo">
-    <img src="{{ 'volenu-logo.png' | asset_url }}" alt="Volenu">
+    <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="Volenu">
   </a>
   <div class="vr-nav-right">
     <a href="/collections/sale">SALE</a>
@@ -527,10 +587,30 @@ html {
   </div>
 </div>
 
-<!-- Manifesto -->
+<!-- Manifesto — logo left, text right (Odd Ritual style) -->
 <section id="vr-manifesto">
-  <span class="vr-manifesto-label">( Our Philosophy )</span>
-  <p>Born from a love of <strong>precision craftsmanship</strong>, rooted in a vision of quality and elegance expressed through what you wear on your wrist. For us, it's about the good times, the <strong>details that matter</strong>, and an appreciation for the culture of horology wherever you go.</p>
+  <img class="vr-manifesto-logo" src="{{ 'volenu-wordmark.png' | asset_url }}" alt="Volenu">
+  <div>
+    <span class="vr-manifesto-label">( Our Philosophy )</span>
+    <p>Born from a shared love of <strong>precision craftsmanship</strong>, rooted in a vision of quality and elegance expressed through what you wear on your wrist. For us, it's about the good times, the <strong>details that matter</strong>, and an appreciation for the culture of horology wherever you go.</p>
+  </div>
+</section>
+
+<!-- SHOP NOW — hover falling text -->
+<section id="vr-shopnow" onclick="window.location='/collections/all'">
+  <img id="vr-shopnow-img" src="{{ 'hero-banner.png' | asset_url }}" alt="Shop Now">
+  <div class="vr-sn-content">
+    <div class="vr-sn-dashes">
+      <span></span><span></span><span></span><span></span>
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="vr-sn-line">
+      <span class="vr-sn-inner">SHOP NOW</span>
+    </div>
+    <div class="vr-sn-line vr-sn-sub">
+      <span class="vr-sn-inner">EXPLORE THE COLLECTION</span>
+    </div>
+  </div>
 </section>
 
 <!-- Featured Products -->
