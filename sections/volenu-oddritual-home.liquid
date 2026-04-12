@@ -524,48 +524,10 @@ html {
   </div>
 </nav>
 
-<!-- Hero panels -->
+<!-- Hero — single static image -->
 <section id="vr-hero">
-
-  <!-- Panel 01 — Hero yacht -->
-  <div class="vr-panel active" id="vr-p0">
-    <img class="vr-panel-img" src="{{ 'hero-banner.png' | asset_url }}" alt="Volenu">
-    <div class="vr-panel-overlay"></div>
-    <div class="vr-panel-content">
-      <div class="vr-panel-num">01</div>
-      <div class="vr-panel-title">Explore the Collection</div>
-      <a href="/collections/all" class="vr-panel-cta">Shop Now →</a>
-    </div>
-  </div>
-
-  <!-- Panel 02 — About -->
-  <div class="vr-panel" id="vr-p1">
-    <img class="vr-panel-img" src="{{ 'hero-banner.png' | asset_url }}" alt="Volenu" style="filter:brightness(0.85) saturate(0.8);">
-    <div class="vr-panel-overlay"></div>
-    <div class="vr-panel-content">
-      <div class="vr-panel-num">02</div>
-      <div class="vr-panel-title">A modern expression<br>of precision</div>
-      <a href="/pages/about" class="vr-panel-cta">About Us →</a>
-    </div>
-  </div>
-
-  <!-- Panel 03 — Community -->
-  <div class="vr-panel" id="vr-p2">
-    <img class="vr-panel-img" src="{{ 'hero-banner.png' | asset_url }}" alt="Volenu" style="filter:brightness(0.65) saturate(0.4);">
-    <div class="vr-panel-overlay"></div>
-    <div class="vr-panel-content">
-      <div class="vr-panel-num">03</div>
-      <div class="vr-panel-title">Join the<br>Community</div>
-      <a href="https://instagram.com/volenuofficial" class="vr-panel-cta">Follow on Instagram →</a>
-    </div>
-  </div>
-
-  <!-- Dots -->
-  <div id="vr-dots">
-    <button class="vr-dot active" onclick="vrGoPanel(0)"></button>
-    <button class="vr-dot" onclick="vrGoPanel(1)"></button>
-    <button class="vr-dot" onclick="vrGoPanel(2)"></button>
-  </div>
+  <img class="vr-panel-img" src="{{ 'hero-banner.png' | asset_url }}" alt="Volenu" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;">
+  <div class="vr-panel-overlay"></div>
 
   <!-- Scroll hint -->
   <div id="vr-scroll-hint">
@@ -786,25 +748,7 @@ html {
     document.getElementById('vr-menu').classList.remove('open');
   });
 
-  // ── Hero panel rotation ──
-  var vrPanel = 0;
-  var vrPanels = document.querySelectorAll('.vr-panel');
-  var vrDots = document.querySelectorAll('.vr-dot');
-
-  window.vrGoPanel = function(n) {
-    vrPanels[vrPanel].classList.remove('active');
-    vrDots[vrPanel].classList.remove('active');
-    vrPanel = n;
-    vrPanels[vrPanel].classList.add('active');
-    vrDots[vrPanel].classList.add('active');
-  };
-
-  // Auto-advance every 5s
-  setInterval(function() {
-    vrGoPanel((vrPanel + 1) % vrPanels.length);
-  }, 5000);
-
-  // Hide scroll hint on scroll
+  // ── Hide scroll hint on scroll ──
   window.addEventListener('scroll', function() {
     var hint = document.getElementById('vr-scroll-hint');
     if (hint) hint.style.opacity = window.scrollY > 60 ? '0' : '1';
