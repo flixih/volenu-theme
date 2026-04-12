@@ -38,18 +38,26 @@ body { overflow-x: hidden; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 32px; height: 60px;
-  mix-blend-mode: difference;
+  transition: background 0.4s ease;
 }
 .vr-nav-logo {
-  font-size: 11px; letter-spacing: 0.28em; font-weight: 600;
-  color: #fff; text-decoration: none;
+  text-decoration: none;
 }
-.vr-nav-logo img { height: 22px; width: auto; filter: invert(1); display: block; }
+.vr-nav-logo img {
+  height: 22px; width: auto; display: block;
+  filter: invert(1); /* white on hero */
+  transition: filter 0.4s ease;
+}
+#vr-nav.scrolled .vr-nav-logo img {
+  filter: invert(0); /* black when scrolled */
+}
 .vr-nav-right { display: flex; align-items: center; gap: 24px; }
 .vr-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
   color: #fff; text-decoration: none;
+  transition: color 0.4s ease;
 }
+#vr-nav.scrolled .vr-nav-right a { color: #111; }
 .vr-cart-count {
   font-size: 10px; letter-spacing: 0.1em; color: #fff;
 }
@@ -59,8 +67,9 @@ body { overflow-x: hidden; }
 }
 #vr-menu-btn span {
   display: block; width: 22px; height: 1px; background: #fff;
-  transition: all 0.3s ease;
+  transition: background 0.4s ease;
 }
+#vr-nav.scrolled #vr-menu-btn span { background: #111; }
 
 /* ─── MOBILE MENU ─── */
 #vr-menu {
@@ -757,6 +766,13 @@ html {
 
 <script>
 (function() {
+
+  // ── Nav color on scroll ──
+  var vrNav = document.getElementById('vr-nav');
+  var vrHeroH = window.innerHeight;
+  window.addEventListener('scroll', function() {
+    vrNav.classList.toggle('scrolled', window.scrollY > vrHeroH * 0.85);
+  }, { passive: true });
 
   // ── Loader ──
   window.addEventListener('load', function() {
