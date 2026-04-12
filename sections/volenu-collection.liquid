@@ -1,0 +1,402 @@
+{% comment %} Volenu — Odd Ritual style collection page {% endcomment %}
+
+<style>
+/* Hide Shopify default header */
+.shopify-section-header, .site-header, .header-section,
+[id*="shopify-section-header"], [id*="announcement"],
+.volenu-ticker-wrap { display: none !important; }
+
+body { overflow-x: hidden; background: #fff; }
+
+#vc-root {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #111; background: #fff;
+  padding-top: 60px;
+}
+
+/* ── NAV (same as homepage) ── */
+#vc-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 60px;
+  background: #fff;
+  border-bottom: 1px solid #e8e8e8;
+}
+.vc-nav-logo {
+  font-size: 18px; font-weight: 800; letter-spacing: -0.02em;
+  color: #111; text-decoration: none;
+}
+.vc-nav-right { display: flex; align-items: center; gap: 24px; }
+.vc-nav-right a {
+  font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
+  color: #111; text-decoration: none;
+}
+#vc-menu-btn {
+  background: none; border: none; cursor: pointer;
+  display: flex; flex-direction: column; gap: 5px; padding: 4px;
+}
+#vc-menu-btn span { display: block; width: 22px; height: 1px; background: #111; }
+
+/* ── MENU OVERLAY ── */
+#vc-menu {
+  position: fixed; inset: 0; z-index: 800;
+  background: #111;
+  display: flex; flex-direction: column;
+  justify-content: center; padding: 48px 40px;
+  transform: translateY(-100%);
+  transition: transform 0.6s cubic-bezier(.87,0,.13,1);
+}
+#vc-menu.open { transform: translateY(0); }
+#vc-menu-close {
+  position: absolute; top: 20px; right: 28px;
+  background: none; border: none; color: #fff;
+  font-size: 28px; cursor: pointer;
+}
+.vc-menu-links a {
+  display: block; font-size: clamp(32px, 6vw, 52px);
+  color: #fff; text-decoration: none;
+  font-weight: 700; line-height: 1.1; margin-bottom: 10px;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+#vc-menu.open .vc-menu-links a { opacity: 1; transform: translateY(0); }
+#vc-menu.open .vc-menu-links a:nth-child(1) { transition-delay: 0.1s; }
+#vc-menu.open .vc-menu-links a:nth-child(2) { transition-delay: 0.15s; }
+#vc-menu.open .vc-menu-links a:nth-child(3) { transition-delay: 0.2s; }
+#vc-menu.open .vc-menu-links a:nth-child(4) { transition-delay: 0.25s; }
+#vc-menu.open .vc-menu-links a:nth-child(5) { transition-delay: 0.3s; }
+
+/* ── COLLECTION HERO ── */
+.vc-hero {
+  position: relative;
+  height: 40vh; min-height: 240px;
+  overflow: hidden; background: #1a1a1a;
+  display: flex; align-items: flex-end;
+}
+.vc-hero img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  opacity: 0.55;
+}
+.vc-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to bottom, transparent 30%, rgba(0,0,0,0.5) 100%);
+}
+.vc-hero-content {
+  position: relative; z-index: 2;
+  padding: 0 40px 36px;
+}
+.vc-hero-eyebrow {
+  font-size: 9px; letter-spacing: 0.28em; color: rgba(255,255,255,0.6);
+  margin-bottom: 6px;
+}
+.vc-hero-title {
+  font-size: clamp(32px, 5vw, 60px);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.02em; line-height: 1;
+}
+
+/* ── SORT / FILTER BAR ── */
+.vc-bar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 40px;
+  border-bottom: 1px solid #e8e8e8;
+}
+.vc-bar-count { font-size: 10px; letter-spacing: 0.1em; color: #999; }
+.vc-bar-right { display: flex; align-items: center; gap: 16px; }
+.vc-sort-label { font-size: 10px; letter-spacing: 0.1em; color: #999; }
+.vc-sort {
+  font-size: 10px; letter-spacing: 0.1em; font-weight: 600;
+  border: none; background: none; color: #111;
+  cursor: pointer; font-family: inherit;
+  appearance: none; padding-right: 12px;
+}
+
+/* ── PRODUCT GRID (Odd Ritual — full bleed 3 col) ── */
+.vc-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: none;
+}
+.vc-card {
+  position: relative; cursor: pointer;
+  border-right: 1px solid #e8e8e8;
+  border-bottom: 1px solid #e8e8e8;
+}
+.vc-card:nth-child(3n) { border-right: none; }
+.vc-card-img {
+  position: relative;
+  aspect-ratio: 3/4;
+  background: #f2f2f2;
+  overflow: hidden;
+}
+.vc-card-img img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transition: opacity 0.5s ease;
+}
+.vc-img-hover { opacity: 0; }
+.vc-card:hover .vc-img-main { opacity: 0; }
+.vc-card:hover .vc-img-hover { opacity: 1; }
+.vc-save-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: #cc0000; color: #fff;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+  padding: 3px 8px; z-index: 2;
+}
+.vc-sold-badge {
+  position: absolute; top: 12px; left: 12px;
+  background: #111; color: #fff;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+  padding: 3px 8px; z-index: 2;
+}
+.vc-quick {
+  position: absolute; bottom: 12px; left: 12px; right: 12px;
+  background: rgba(17,17,17,0.88); color: #fff; border: none;
+  font-size: 9px; letter-spacing: 0.16em; font-weight: 600;
+  padding: 11px; cursor: pointer; opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.2s, transform 0.2s;
+  font-family: inherit;
+}
+.vc-card:hover .vc-quick { opacity: 1; transform: translateY(0); }
+
+.vc-card-info {
+  display: flex; align-items: flex-start;
+  justify-content: space-between;
+  padding: 14px 16px 18px;
+  border-top: 1px solid #e8e8e8;
+}
+.vc-card-name {
+  font-size: 10px; letter-spacing: 0.1em; font-weight: 600;
+  color: #111; line-height: 1.4;
+  flex: 1; padding-right: 12px;
+}
+.vc-card-price-col { text-align: right; flex-shrink: 0; }
+.vc-price-orig { font-size: 10px; color: #bbb; text-decoration: line-through; display: block; }
+.vc-price-sale { font-size: 11px; color: #cc0000; font-weight: 700; }
+.vc-price-reg { font-size: 11px; color: #555; }
+
+/* ── LOAD MORE ── */
+.vc-load-more {
+  display: flex; justify-content: center;
+  padding: 48px 40px;
+  border-top: 1px solid #e8e8e8;
+}
+.vc-load-btn {
+  font-size: 10px; letter-spacing: 0.18em; font-weight: 600;
+  border: 1px solid #111; background: none; color: #111;
+  padding: 14px 40px; cursor: pointer;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+.vc-load-btn:hover { background: #111; color: #fff; }
+
+/* ── FOOTER ── */
+.vc-footer {
+  background: #111; color: #fff;
+  padding: 56px 40px 28px;
+}
+.vc-footer-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px; margin-bottom: 48px;
+}
+.vc-footer-brand { font-size: 13px; letter-spacing: 0.28em; font-weight: 700; margin-bottom: 10px; }
+.vc-footer-tag { font-size: 11px; color: #555; line-height: 1.6; }
+.vc-footer h4 { font-size: 9px; letter-spacing: 0.22em; color: #555; margin-bottom: 14px; font-weight: 600; }
+.vc-footer ul { list-style: none; }
+.vc-footer li { margin-bottom: 7px; }
+.vc-footer li a { font-size: 11px; color: #888; text-decoration: none; }
+.vc-footer li a:hover { color: #fff; }
+.vc-footer-bottom {
+  border-top: 1px solid #222; padding-top: 20px;
+  display: flex; justify-content: space-between;
+  font-size: 10px; color: #444; letter-spacing: 0.08em;
+}
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  #vc-nav { padding: 0 20px; }
+  .vc-hero-content { padding: 0 24px 28px; }
+  .vc-bar { padding: 14px 20px; }
+  .vc-grid { grid-template-columns: repeat(2, 1fr); }
+  .vc-card:nth-child(3n) { border-right: 1px solid #e8e8e8; }
+  .vc-card:nth-child(2n) { border-right: none; }
+  .vc-footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
+  .vc-footer { padding: 40px 24px 24px; }
+}
+</style>
+
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<div id="vc-root">
+
+<!-- Menu overlay -->
+<div id="vc-menu">
+  <button id="vc-menu-close">×</button>
+  <div class="vc-menu-links">
+    <a href="/collections/all">Shop All</a>
+    <a href="/collections/new-arrivals">New Arrivals</a>
+    <a href="/collections/sale" style="color:#ff4444;">Sale</a>
+    <a href="/pages/about">About Us</a>
+    <a href="/pages/contact">Contact</a>
+  </div>
+</div>
+
+<!-- Nav -->
+<nav id="vc-nav">
+  <a href="/" class="vc-nav-logo">VU</a>
+  <div class="vc-nav-right">
+    <a href="/collections/sale">SALE</a>
+    <a href="/cart">CART ({{ cart.item_count }})</a>
+    <button id="vc-menu-btn"><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- Collection hero -->
+<div class="vc-hero">
+  {% if collection.image %}
+    <img src="{{ collection.image | img_url: '1600x' }}" alt="{{ collection.title }}">
+  {% else %}
+    <img src="{{ 'hero-banner.png' | asset_url }}" alt="{{ collection.title }}">
+  {% endif %}
+  <div class="vc-hero-overlay"></div>
+  <div class="vc-hero-content">
+    <div class="vc-hero-eyebrow">VOLENU</div>
+    <div class="vc-hero-title">{{ collection.title | upcase }}</div>
+  </div>
+</div>
+
+<!-- Sort bar -->
+<div class="vc-bar">
+  <span class="vc-bar-count">{{ collection.products_count }} products</span>
+  <div class="vc-bar-right">
+    <span class="vc-sort-label">Sort by:</span>
+    <select class="vc-sort" onchange="window.location=this.value">
+      <option value="?sort_by=featured" {% if collection.sort_by == 'featured' %}selected{% endif %}>FEATURED</option>
+      <option value="?sort_by=best-selling" {% if collection.sort_by == 'best-selling' %}selected{% endif %}>BEST SELLING</option>
+      <option value="?sort_by=price-ascending" {% if collection.sort_by == 'price-ascending' %}selected{% endif %}>PRICE: LOW TO HIGH</option>
+      <option value="?sort_by=price-descending" {% if collection.sort_by == 'price-descending' %}selected{% endif %}>PRICE: HIGH TO LOW</option>
+      <option value="?sort_by=created-descending" {% if collection.sort_by == 'created-descending' %}selected{% endif %}>NEWEST</option>
+    </select>
+  </div>
+</div>
+
+<!-- Product grid -->
+<div class="vc-grid">
+  {% for product in collection.products %}
+    {% assign savings = product.compare_at_price_max | minus: product.price %}
+    <div class="vc-card" onclick="window.location='{{ product.url }}'">
+      <div class="vc-card-img">
+        {% if product.featured_image %}
+          <img class="vc-img-main" src="{{ product.featured_image | img_url: '800x' }}" alt="{{ product.title }}" loading="lazy">
+        {% else %}
+          <div style="width:100%;height:100%;background:#f0f0f0;"></div>
+        {% endif %}
+        {% if product.images.size > 1 %}
+          <img class="vc-img-hover" src="{{ product.images[1] | img_url: '800x' }}" alt="{{ product.title }}" loading="lazy">
+        {% endif %}
+        {% if product.available == false %}
+          <div class="vc-sold-badge">SOLD OUT</div>
+        {% elsif savings > 0 %}
+          <div class="vc-save-badge">SAVE {{ savings | money }}</div>
+        {% endif %}
+        {% if product.available %}
+          <button class="vc-quick" onclick="event.stopPropagation();vcAddToCart('{{ product.variants.first.id }}')">+ QUICK ADD</button>
+        {% endif %}
+      </div>
+      <div class="vc-card-info">
+        <div class="vc-card-name">{{ product.title | upcase }}</div>
+        <div class="vc-card-price-col">
+          {% if product.compare_at_price_max > product.price %}
+            <span class="vc-price-orig">{{ product.compare_at_price_max | money }}</span>
+            <span class="vc-price-sale">{{ product.price | money }}</span>
+          {% else %}
+            <span class="vc-price-reg">{{ product.price | money }}</span>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+</div>
+
+{% if collection.products_count == 0 %}
+  <div style="padding:80px 40px;text-align:center;font-size:12px;letter-spacing:0.1em;color:#999;">
+    NO PRODUCTS FOUND
+  </div>
+{% endif %}
+
+<!-- Load more -->
+{% if paginate.pages > 1 %}
+<div class="vc-load-more">
+  {% if paginate.next %}
+    <a href="{{ paginate.next.url }}" class="vc-load-btn">LOAD MORE</a>
+  {% endif %}
+</div>
+{% endif %}
+
+<!-- Footer -->
+<footer class="vc-footer">
+  <div class="vc-footer-grid">
+    <div>
+      <div class="vc-footer-brand">VOLENU</div>
+      <div class="vc-footer-tag">Premium watch winders and cases for the serious collector.</div>
+    </div>
+    <div>
+      <h4>SHOP</h4>
+      <ul>
+        <li><a href="/collections/all">All Products</a></li>
+        <li><a href="/collections/new-arrivals">New Arrivals</a></li>
+        <li><a href="/collections/sale">Sale</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>INFO</h4>
+      <ul>
+        <li><a href="/pages/about">About Us</a></li>
+        <li><a href="/pages/faq">FAQ</a></li>
+        <li><a href="/pages/contact">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>POLICIES</h4>
+      <ul>
+        <li><a href="/policies/shipping-policy">Shipping</a></li>
+        <li><a href="/policies/refund-policy">Returns</a></li>
+        <li><a href="/policies/privacy-policy">Privacy</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="vc-footer-bottom">
+    <span>© 2025 VOLENU. ALL RIGHTS RESERVED.</span>
+    <span>PREMIUM WATCH CASES & WINDERS</span>
+  </div>
+</footer>
+
+</div>
+
+<script>
+  document.getElementById('vc-menu-btn').addEventListener('click', function() {
+    document.getElementById('vc-menu').classList.add('open');
+  });
+  document.getElementById('vc-menu-close').addEventListener('click', function() {
+    document.getElementById('vc-menu').classList.remove('open');
+  });
+
+  function vcAddToCart(id) {
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: id, quantity: 1 })
+    }).then(function() { window.location.href = '/cart'; });
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Volenu Collection",
+  "settings": [],
+  "presets": [{ "name": "Volenu Collection" }]
+}
+{% endschema %}
