@@ -1,11 +1,9 @@
 {
   "sections": {
-    "volenu_parijan_home": {
-      "type": "volenu-parijan-home",
+    "volenu_oddritual_home": {
+      "type": "volenu-oddritual-home",
       "settings": {}
     }
   },
-  "order": [
-    "volenu_parijan_home"
-  ]
+  "order": ["volenu_oddritual_home"]
 }
