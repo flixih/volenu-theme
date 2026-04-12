@@ -279,6 +279,9 @@
   <!-- Big brand watermark like mellow -->
   <div class="footer__brand-watermark">
     <span class="footer__brand-watermark-text">volenu</span>
+    <div class="footer__brand-logo-wrap">
+      <img src="{{ 'volenu-logo.png' | asset_url }}" alt="Volenu" class="footer__brand-logo-img">
+    </div>
   </div>
 
   <style>
@@ -297,6 +300,19 @@
       line-height: 0.85;
       user-select: none;
       text-transform: lowercase;
+    }
+    .footer__brand-logo-wrap {
+      padding: 40px 20px 0;
+      text-align: center;
+    }
+    .footer__brand-logo-img {
+      width: 70%;
+      max-width: 900px;
+      height: auto;
+      display: block;
+      margin: 0 auto;
+      filter: brightness(0) invert(1);
+      opacity: 0.6;
     }
     .footer__content-bottom {
       background: #000 !important;
