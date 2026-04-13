@@ -19,19 +19,46 @@ body { overflow-x: hidden; }
 }
 
 /* ─── LOADER ─── */
+/* ─── INTRO ANIMATION (Odd Ritual style) ─── */
 #vr-loader {
   position: fixed; inset: 0; z-index: 9999;
-  background: #fff;
-  display: flex; align-items: center; justify-content: center;
-  transition: opacity 0.6s ease, visibility 0.6s ease;
+  pointer-events: none;
 }
-#vr-loader.hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+/* Two panels — top and bottom split apart */
+.vr-loader-panel {
+  position: absolute; left: 0; right: 0;
+  background: #111;
+  transition: transform 0.9s cubic-bezier(.87,0,.13,1);
+}
+.vr-loader-top {
+  top: 0; height: 50%;
+  transform: translateY(0);
+}
+.vr-loader-bot {
+  bottom: 0; height: 50%;
+  transform: translateY(0);
+}
+/* Center logo */
 #vr-loader-logo {
-  font-size: 13px; letter-spacing: 0.3em; font-weight: 500;
-  color: #111; opacity: 0;
-  animation: vrFadeIn 0.8s ease 0.3s forwards;
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 2;
 }
-@keyframes vrFadeIn { to { opacity: 1; } }
+#vr-loader-logo img {
+  height: 36px; width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0;
+  transform: translateY(8px);
+  animation: vrLogoIn 0.6s ease 0.3s forwards;
+}
+@keyframes vrLogoIn {
+  to { opacity: 1; transform: translateY(0); }
+}
+/* Split out */
+#vr-loader.out .vr-loader-top { transform: translateY(-100%); }
+#vr-loader.out .vr-loader-bot { transform: translateY(100%); }
+#vr-loader.out #vr-loader-logo { opacity: 0; transition: opacity 0.2s ease; }
+#vr-loader.done { display: none; }
 
 /* ─── NAV ─── */
 #vr-nav {
@@ -470,7 +497,11 @@ html {
 
 <!-- Loader -->
 <div id="vr-loader">
-  <span id="vr-loader-logo">VOLENU</span>
+  <div class="vr-loader-panel vr-loader-top"></div>
+  <div class="vr-loader-panel vr-loader-bot"></div>
+  <div id="vr-loader-logo">
+    <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU">
+  </div>
 </div>
 
 <!-- Menu overlay -->
@@ -693,15 +724,17 @@ html {
 <script>
 (function() {
 
-  // ── Loader ──
+  // ── Intro animation — split panels ──
+  var vrLoader = document.getElementById('vr-loader');
+  function vrHideLoader() {
+    vrLoader.classList.add('out');
+    setTimeout(function() { vrLoader.classList.add('done'); }, 1000);
+  }
+  // Logo shows for 1s, then panels split apart
+  setTimeout(vrHideLoader, 1400);
   window.addEventListener('load', function() {
-    setTimeout(function() {
-      document.getElementById('vr-loader').classList.add('hidden');
-    }, 900);
+    setTimeout(vrHideLoader, 800);
   });
-  setTimeout(function() {
-    document.getElementById('vr-loader').classList.add('hidden');
-  }, 2200);
 
   // ── Menu ──
   document.getElementById('vr-menu-btn').addEventListener('click', function() {
