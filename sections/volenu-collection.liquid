@@ -24,8 +24,9 @@ body { overflow-x: hidden; background: #fff; }
 }
 .vc-nav-logo {
   text-decoration: none;
+  font-size: 17px; font-weight: 800; letter-spacing: -0.02em;
+  color: #111;
 }
-.vc-nav-logo img { height: 26px; width: auto; display: block; }
 .vc-nav-right { display: flex; align-items: center; gap: 24px; }
 .vc-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
@@ -246,9 +247,7 @@ body { overflow-x: hidden; background: #fff; }
 
 <!-- Nav -->
 <nav id="vc-nav">
-  <a href="/" class="vc-nav-logo">
-    <img src="{{ 'volenu-logo.png' | asset_url }}" alt="Volenu">
-  </a>
+  <a href="/" class="vc-nav-logo">volenu</a>
   <div class="vc-nav-right">
     <a href="/collections/sale">SALE</a>
     <a href="/cart">CART ({{ cart.item_count }})</a>

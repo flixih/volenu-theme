@@ -42,14 +42,11 @@ body { overflow-x: hidden; }
 }
 .vr-nav-logo {
   text-decoration: none;
-  transition: opacity 0.3s ease;
+  font-size: 17px; font-weight: 800; letter-spacing: -0.02em;
+  color: #fff;
+  transition: color 0.4s ease;
 }
-.vr-nav-logo img {
-  height: 26px; width: auto; display: block;
-  filter: invert(1);
-  transition: filter 0.4s ease;
-}
-#vr-nav.scrolled .vr-nav-logo img { filter: invert(0); }
+#vr-nav.scrolled .vr-nav-logo { color: #111; }
 .vr-nav-right { display: flex; align-items: center; gap: 24px; }
 .vr-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
@@ -517,9 +514,7 @@ html {
 
 <!-- Nav -->
 <nav id="vr-nav">
-  <a href="/" class="vr-nav-logo">
-    <img src="{{ 'volenu-logo.png' | asset_url }}" alt="Volenu">
-  </a>
+  <a href="/" class="vr-nav-logo">volenu</a>
   <div class="vr-nav-right">
     <a href="/collections/sale">SALE</a>
     <a href="/cart">CART ({{ cart.item_count }})</a>
