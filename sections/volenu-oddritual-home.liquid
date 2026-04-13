@@ -19,46 +19,29 @@ body { overflow-x: hidden; }
 }
 
 /* ─── LOADER ─── */
-/* ─── INTRO ANIMATION (Odd Ritual style) ─── */
+/* ─── INTRO ANIMATION (Odd Ritual — single black screen slides up) ─── */
 #vr-loader {
   position: fixed; inset: 0; z-index: 9999;
-  pointer-events: none;
-}
-/* Two panels — top and bottom split apart */
-.vr-loader-panel {
-  position: absolute; left: 0; right: 0;
   background: #111;
-  transition: transform 0.9s cubic-bezier(.87,0,.13,1);
-}
-.vr-loader-top {
-  top: 0; height: 50%;
-  transform: translateY(0);
-}
-.vr-loader-bot {
-  bottom: 0; height: 50%;
-  transform: translateY(0);
-}
-/* Center logo */
-#vr-loader-logo {
-  position: absolute; inset: 0;
   display: flex; align-items: center; justify-content: center;
-  z-index: 2;
+  transform: translateY(0);
+  transition: transform 1s cubic-bezier(.87,0,.13,1);
+}
+#vr-loader.out { transform: translateY(-100%); }
+#vr-loader.done { display: none; }
+#vr-loader-logo {
+  display: flex; align-items: center; justify-content: center;
 }
 #vr-loader-logo img {
   height: 36px; width: auto;
   filter: brightness(0) invert(1);
   opacity: 0;
-  transform: translateY(8px);
-  animation: vrLogoIn 0.6s ease 0.3s forwards;
+  transform: translateY(10px);
+  animation: vrLogoIn 0.7s ease 0.2s forwards;
 }
 @keyframes vrLogoIn {
   to { opacity: 1; transform: translateY(0); }
 }
-/* Split out */
-#vr-loader.out .vr-loader-top { transform: translateY(-100%); }
-#vr-loader.out .vr-loader-bot { transform: translateY(100%); }
-#vr-loader.out #vr-loader-logo { opacity: 0; transition: opacity 0.2s ease; }
-#vr-loader.done { display: none; }
 
 /* ─── NAV ─── */
 #vr-nav {
@@ -497,8 +480,6 @@ html {
 
 <!-- Loader -->
 <div id="vr-loader">
-  <div class="vr-loader-panel vr-loader-top"></div>
-  <div class="vr-loader-panel vr-loader-bot"></div>
   <div id="vr-loader-logo">
     <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU">
   </div>
