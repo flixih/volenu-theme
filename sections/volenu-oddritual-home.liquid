@@ -266,15 +266,16 @@ html {
   letter-spacing: -0.01em; line-height: 1.1;
   transition: transform 0.55s cubic-bezier(.87,0,.13,1);
 }
-/* SHOP NOW (top) falls on proximity hover */
+/* SHOP NOW — always visible, no animation */
 .vr-sn-top .vr-sn-inner {
-  transition: transform 0.55s cubic-bezier(.87,0,.13,1);
+  transition: none;
 }
-#vr-hero.sn-near .vr-sn-top .vr-sn-inner { transform: translateY(115%); }
-/* Subtitle stays, slightly muted */
+/* EXPLORE THE COLLECTION — falls on proximity */
 .vr-sn-sub .vr-sn-inner {
   color: rgba(255,255,255,0.45);
+  transition: transform 0.55s cubic-bezier(.87,0,.13,1);
 }
+#vr-hero.sn-near .vr-sn-sub .vr-sn-inner { transform: translateY(115%); }
 
 /* ─── FEATURED PRODUCTS ─── */
 #vr-products { padding: 0 0 64px; }
