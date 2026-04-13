@@ -46,12 +46,11 @@ body { overflow-x: hidden; }
 }
 .vr-nav-logo img {
   height: 32px; width: auto; display: block;
-  transition: opacity 0.3s ease;
+  transition: filter 0.3s ease;
 }
-.vr-logo-white { opacity: 1; position: absolute; }
-.vr-logo-black { opacity: 0; }
-#vr-nav.scrolled .vr-logo-white { opacity: 0; }
-#vr-nav.scrolled .vr-logo-black { opacity: 1; }
+.vr-logo-white { filter: none; }
+.vr-logo-black { display: none; }
+#vr-nav.scrolled .vr-logo-white { filter: brightness(0); }
 /* All nav items switch together */
 .vr-nav-right a { transition: color 0.3s ease; }
 #vr-nav.scrolled .vr-nav-right a { color: #111; }
