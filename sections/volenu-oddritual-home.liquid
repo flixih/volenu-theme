@@ -798,8 +798,10 @@ html {
     vrGoPanel((vrPanel + 1) % vrPanels.length);
   }, 5000);
 
-  // Hide scroll hint on scroll
+  // ── Nav black on scroll ──
+  var vrNav = document.getElementById('vr-nav');
   window.addEventListener('scroll', function() {
+    vrNav.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.85);
     var hint = document.getElementById('vr-scroll-hint');
     if (hint) hint.style.opacity = window.scrollY > 60 ? '0' : '1';
   }, { passive: true });
