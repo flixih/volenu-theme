@@ -42,11 +42,14 @@ body { overflow-x: hidden; }
 }
 .vr-nav-logo {
   text-decoration: none;
-  font-size: 18px; font-weight: 800; letter-spacing: -0.02em;
-  color: #fff;
-  transition: color 0.4s ease;
+  transition: opacity 0.3s ease;
 }
-#vr-nav.scrolled .vr-nav-logo { color: #111; }
+.vr-nav-logo img {
+  height: 26px; width: auto; display: block;
+  filter: invert(1);
+  transition: filter 0.4s ease;
+}
+#vr-nav.scrolled .vr-nav-logo img { filter: invert(0); }
 .vr-nav-right { display: flex; align-items: center; gap: 24px; }
 .vr-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
@@ -514,7 +517,9 @@ html {
 
 <!-- Nav -->
 <nav id="vr-nav">
-  <a href="/" class="vr-nav-logo">VU</a>
+  <a href="/" class="vr-nav-logo">
+    <img src="{{ 'volenu-logo.png' | asset_url }}" alt="Volenu">
+  </a>
   <div class="vr-nav-right">
     <a href="/collections/sale">SALE</a>
     <a href="/cart">CART ({{ cart.item_count }})</a>
@@ -552,9 +557,9 @@ html {
   </div>
 </div>
 
-<!-- Manifesto — logo left, text right (Odd Ritual style) -->
+<!-- Manifesto — VOLENU left, text right -->
 <section id="vr-manifesto">
-  <img class="vr-manifesto-logo" src="{{ 'volenu-wordmark.png' | asset_url }}" alt="Volenu">
+  <div style="font-size:clamp(28px,4vw,48px);font-weight:800;letter-spacing:-0.02em;color:#111;line-height:1;">volenu</div>
   <div>
     <span class="vr-manifesto-label">( Our Philosophy )</span>
     <p>Born from a shared love of <strong>precision craftsmanship</strong>, rooted in a vision of quality and elegance expressed through what you wear on your wrist. For us, it's about the good times, the <strong>details that matter</strong>, and an appreciation for the culture of horology wherever you go.</p>
