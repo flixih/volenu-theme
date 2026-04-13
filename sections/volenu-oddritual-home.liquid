@@ -46,12 +46,12 @@ body { overflow-x: hidden; }
 }
 .vr-nav-logo img {
   height: 32px; width: auto; display: block;
-  filter: invert(1); /* white on hero */
-  transition: filter 0.3s ease;
+  transition: opacity 0.3s ease;
 }
-#vr-nav.scrolled .vr-nav-logo img {
-  filter: invert(0); /* pure black when scrolled */
-}
+.vr-logo-white { opacity: 1; position: absolute; }
+.vr-logo-black { opacity: 0; }
+#vr-nav.scrolled .vr-logo-white { opacity: 0; }
+#vr-nav.scrolled .vr-logo-black { opacity: 1; }
 /* All nav items switch together */
 .vr-nav-right a { transition: color 0.3s ease; }
 #vr-nav.scrolled .vr-nav-right a { color: #111; }
@@ -521,8 +521,9 @@ html {
 
 <!-- Nav -->
 <nav id="vr-nav">
-  <a href="/" class="vr-nav-logo">
-    <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="Volenu">
+  <a href="/" class="vr-nav-logo" style="position:relative;display:flex;align-items:center;">
+    <img class="vr-logo-white" src="{{ 'volenu-wordmark-white.png' | asset_url }}" alt="VOLENU">
+    <img class="vr-logo-black" src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU">
   </a>
   <div class="vr-nav-right">
     <a href="/collections/sale">SALE</a>
