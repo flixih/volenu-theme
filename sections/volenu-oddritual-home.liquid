@@ -38,12 +38,9 @@ body { overflow-x: hidden; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 32px; height: 60px;
-  mix-blend-mode: difference;
+  transition: background 0.3s ease;
 }
-.vr-nav-logo {
-  font-size: 11px; letter-spacing: 0.28em; font-weight: 600;
-  color: #fff; text-decoration: none;
-}
+.vr-nav-logo { text-decoration: none; }
 .vr-nav-logo img {
   height: 32px; width: auto; display: block;
   transition: filter 0.3s ease;
@@ -51,27 +48,22 @@ body { overflow-x: hidden; }
 .vr-logo-white { filter: none; }
 .vr-logo-black { display: none; }
 #vr-nav.scrolled .vr-logo-white { filter: brightness(0); }
-/* All nav items switch together */
-.vr-nav-right a { transition: color 0.3s ease; }
-#vr-nav.scrolled .vr-nav-right a { color: #111; }
-#vr-menu-btn span { transition: background 0.3s ease; }
-#vr-nav.scrolled #vr-menu-btn span { background: #111; }
 .vr-nav-right { display: flex; align-items: center; gap: 24px; }
 .vr-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
   color: #fff; text-decoration: none;
+  transition: color 0.3s ease;
 }
-.vr-cart-count {
-  font-size: 10px; letter-spacing: 0.1em; color: #fff;
-}
+#vr-nav.scrolled .vr-nav-right a { color: #111; }
 #vr-menu-btn {
   background: none; border: none; cursor: pointer;
   display: flex; flex-direction: column; gap: 5px; padding: 4px;
 }
 #vr-menu-btn span {
   display: block; width: 22px; height: 1px; background: #fff;
-  transition: all 0.3s ease;
+  transition: background 0.3s ease;
 }
+#vr-nav.scrolled #vr-menu-btn span { background: #111; }
 
 /* ─── MOBILE MENU ─── */
 #vr-menu {
