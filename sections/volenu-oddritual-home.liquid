@@ -286,9 +286,8 @@ html {
   transition: transform 0.5s cubic-bezier(.87,0,.13,1) 0.05s,
               color 0.4s ease;
 }
-#vr-shopnow:hover .vr-sn-sub .vr-sn-inner {
-  transform: translateY(110%);
-}
+#vr-hero:hover .vr-sn-sub .vr-sn-inner { transform: translateY(110%); }
+#vr-hero:hover .vr-sn-dashes { opacity: 1; }
 /* Underline dashes like Odd Ritual */
 .vr-sn-dashes {
   display: flex; gap: 3px; margin-bottom: 10px;
@@ -527,18 +526,9 @@ html {
 <section id="vr-hero">
   <img class="vr-panel-img" src="{{ 'hero-banner.png' | asset_url }}" alt="Volenu">
   <div class="vr-panel-overlay"></div>
-  <div id="vr-scroll-hint">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-      <path d="M12 5v14M5 12l7 7 7-7"/>
-    </svg>
-    <span>SCROLL</span>
-  </div>
-</section>
 
-<!-- SHOP NOW — hover falling text -->
-<section id="vr-shopnow" onclick="window.location='/collections/all'">
-  <img id="vr-shopnow-img" src="{{ 'hero-banner.png' | asset_url }}" alt="Shop Now">
-  <div class="vr-sn-content">
+  <!-- SHOP NOW overlay — bottom left -->
+  <div class="vr-sn-content" onclick="window.location='/collections/all'" style="cursor:pointer;position:absolute;bottom:0;left:0;right:0;z-index:3;">
     <div class="vr-sn-dashes">
       <span></span><span></span><span></span><span></span>
       <span></span><span></span><span></span><span></span>
@@ -549,6 +539,13 @@ html {
     <div class="vr-sn-line vr-sn-sub">
       <span class="vr-sn-inner">EXPLORE THE COLLECTION</span>
     </div>
+  </div>
+
+  <div id="vr-scroll-hint">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+    <span>SCROLL</span>
   </div>
 </section>
 
