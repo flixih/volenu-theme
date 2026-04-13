@@ -257,28 +257,23 @@ html {
   display: block;
   overflow: hidden;
   line-height: 1;
-  margin-bottom: -4px;
+  margin-bottom: 2px;
 }
 .vr-sn-inner {
   display: block;
-  font-size: clamp(40px, 6vw, 80px);
+  font-size: clamp(22px, 3vw, 42px);
   font-weight: 800; color: #fff;
-  letter-spacing: -0.02em; line-height: 1;
+  letter-spacing: -0.01em; line-height: 1.1;
   transition: transform 0.55s cubic-bezier(.87,0,.13,1);
 }
+/* SHOP NOW (top) falls on proximity hover */
+.vr-sn-top .vr-sn-inner {
+  transition: transform 0.55s cubic-bezier(.87,0,.13,1);
+}
+#vr-hero.sn-near .vr-sn-top .vr-sn-inner { transform: translateY(115%); }
+/* Subtitle stays, slightly muted */
 .vr-sn-sub .vr-sn-inner {
-  color: rgba(255,255,255,0.4);
-  transition: transform 0.5s cubic-bezier(.87,0,.13,1) 0.04s;
-}
-#vr-hero:hover .vr-sn-sub .vr-sn-inner { transform: translateY(115%); }
-#vr-hero:hover .vr-sn-dashes { opacity: 1; }
-.vr-sn-dashes {
-  display: flex; gap: 4px; margin-bottom: 12px;
-  opacity: 0; transition: opacity 0.25s ease;
-}
-.vr-sn-dashes span {
-  width: 18px; height: 1.5px; background: rgba(255,255,255,0.55);
-  display: block;
+  color: rgba(255,255,255,0.45);
 }
 
 /* ─── FEATURED PRODUCTS ─── */
@@ -511,12 +506,8 @@ html {
 
   <!-- SHOP NOW overlay — bottom left -->
   <div style="position:absolute;top:32px;left:40px;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.1em;font-style:italic;z-index:3;">01</div>
-  <div class="vr-sn-content" onclick="window.location='/collections/all'" style="cursor:pointer;position:absolute;bottom:0;left:0;right:0;z-index:3;">
-    <div class="vr-sn-dashes">
-      <span></span><span></span><span></span><span></span>
-      <span></span><span></span><span></span><span></span>
-    </div>
-    <div class="vr-sn-line">
+  <div class="vr-sn-content" id="vr-sn" onclick="window.location='/collections/all'" style="cursor:pointer;position:absolute;bottom:0;left:0;right:0;z-index:3;">
+    <div class="vr-sn-line vr-sn-top">
       <span class="vr-sn-inner">SHOP NOW</span>
     </div>
     <div class="vr-sn-line vr-sn-sub">
@@ -736,6 +727,22 @@ html {
   setInterval(function() {
     vrGoPanel((vrPanel + 1) % vrPanels.length);
   }, 5000);
+
+  // ── SHOP NOW proximity trigger ──
+  var vrSn = document.getElementById('vr-sn');
+  var vrHero = document.getElementById('vr-hero');
+  if (vrSn && vrHero) {
+    vrHero.addEventListener('mousemove', function(e) {
+      var rect = vrSn.getBoundingClientRect();
+      var centerX = rect.left + rect.width / 2;
+      var centerY = rect.top + rect.height / 2;
+      var dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+      vrHero.classList.toggle('sn-near', dist < 260);
+    });
+    vrHero.addEventListener('mouseleave', function() {
+      vrHero.classList.remove('sn-near');
+    });
+  }
 
   // ── Nav black on scroll ──
   var vrNav = document.getElementById('vr-nav');
