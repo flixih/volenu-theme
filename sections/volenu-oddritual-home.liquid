@@ -44,7 +44,8 @@ body { overflow-x: hidden; }
   font-size: 11px; letter-spacing: 0.28em; font-weight: 600;
   color: #fff; text-decoration: none;
 }
-.vr-nav-logo img { height: 22px; width: auto; filter: invert(1); display: block; }
+.vr-nav-logo img { height: 34px; width: auto; filter: invert(1) brightness(10); display: block; transition: filter 0.4s ease; }
+#vr-nav.scrolled .vr-nav-logo img { filter: invert(0) brightness(1); }
 .vr-nav-right { display: flex; align-items: center; gap: 24px; }
 .vr-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
