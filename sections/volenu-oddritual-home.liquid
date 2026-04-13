@@ -44,8 +44,19 @@ body { overflow-x: hidden; }
   font-size: 11px; letter-spacing: 0.28em; font-weight: 600;
   color: #fff; text-decoration: none;
 }
-.vr-nav-logo img { height: 34px; width: auto; filter: invert(1) brightness(10); display: block; transition: filter 0.4s ease; }
-#vr-nav.scrolled .vr-nav-logo img { filter: invert(0) brightness(1); }
+.vr-nav-logo img {
+  height: 32px; width: auto; display: block;
+  filter: brightness(0) invert(1); /* pure white */
+  transition: filter 0.3s ease;
+}
+#vr-nav.scrolled .vr-nav-logo img {
+  filter: brightness(0) invert(0); /* pure black */
+}
+/* All nav items switch together */
+.vr-nav-right a { transition: color 0.3s ease; }
+#vr-nav.scrolled .vr-nav-right a { color: #111; }
+#vr-menu-btn span { transition: background 0.3s ease; }
+#vr-nav.scrolled #vr-menu-btn span { background: #111; }
 .vr-nav-right { display: flex; align-items: center; gap: 24px; }
 .vr-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
