@@ -728,16 +728,17 @@ html {
     vrGoPanel((vrPanel + 1) % vrPanels.length);
   }, 5000);
 
-  // ── SHOP NOW proximity trigger ──
+  // ── SHOP NOW proximity trigger — bottom-left corner ──
   var vrSn = document.getElementById('vr-sn');
   var vrHero = document.getElementById('vr-hero');
   if (vrSn && vrHero) {
     vrHero.addEventListener('mousemove', function(e) {
-      var rect = vrSn.getBoundingClientRect();
-      var centerX = rect.left + rect.width / 2;
-      var centerY = rect.top + rect.height / 2;
-      var dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
-      vrHero.classList.toggle('sn-near', dist < 260);
+      var rect = vrHero.getBoundingClientRect();
+      // Proximity zone: bottom-left corner of hero
+      var distX = e.clientX - rect.left;
+      var distY = rect.bottom - e.clientY;
+      var near = distX < 400 && distY < 200;
+      vrHero.classList.toggle('sn-near', near);
     });
     vrHero.addEventListener('mouseleave', function() {
       vrHero.classList.remove('sn-near');
