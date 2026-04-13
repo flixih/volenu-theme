@@ -249,53 +249,35 @@ html {
 }
 #vr-manifesto strong { color: #111; }
 
-/* ─── SHOP NOW HOVER FALL ─── */
-#vr-shopnow {
-  position: relative;
-  background: #5c5650;
-  overflow: hidden;
-  cursor: pointer;
-  height: 220px;
-  display: flex; align-items: flex-end;
-}
-#vr-shopnow-img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover;
-  opacity: 0.55;
-}
+/* ─── SHOP NOW HOVER FALL (Odd Ritual exact) ─── */
 .vr-sn-content {
-  position: relative; z-index: 2;
-  padding: 0 40px 32px;
+  padding: 0 40px 40px;
 }
 .vr-sn-line {
   display: block;
-  font-size: clamp(28px, 4.5vw, 52px);
-  font-weight: 800; color: #fff;
-  letter-spacing: -0.02em; line-height: 1;
   overflow: hidden;
+  line-height: 1;
+  margin-bottom: -4px;
 }
 .vr-sn-inner {
   display: block;
+  font-size: clamp(40px, 6vw, 80px);
+  font-weight: 800; color: #fff;
+  letter-spacing: -0.02em; line-height: 1;
   transition: transform 0.55s cubic-bezier(.87,0,.13,1);
-  transform: translateY(0);
 }
-/* "SHOP NOW" stays, subtitle falls down on hover */
 .vr-sn-sub .vr-sn-inner {
-  color: rgba(255,255,255,0.55);
-  transform: translateY(0);
-  transition: transform 0.5s cubic-bezier(.87,0,.13,1) 0.05s,
-              color 0.4s ease;
+  color: rgba(255,255,255,0.4);
+  transition: transform 0.5s cubic-bezier(.87,0,.13,1) 0.04s;
 }
-#vr-hero:hover .vr-sn-sub .vr-sn-inner { transform: translateY(110%); }
+#vr-hero:hover .vr-sn-sub .vr-sn-inner { transform: translateY(115%); }
 #vr-hero:hover .vr-sn-dashes { opacity: 1; }
-/* Underline dashes like Odd Ritual */
 .vr-sn-dashes {
-  display: flex; gap: 3px; margin-bottom: 10px;
-  opacity: 0; transition: opacity 0.3s ease;
+  display: flex; gap: 4px; margin-bottom: 12px;
+  opacity: 0; transition: opacity 0.25s ease;
 }
-#vr-shopnow:hover .vr-sn-dashes { opacity: 1; }
 .vr-sn-dashes span {
-  width: 14px; height: 1px; background: rgba(255,255,255,0.5);
+  width: 18px; height: 1.5px; background: rgba(255,255,255,0.55);
   display: block;
 }
 
@@ -528,6 +510,7 @@ html {
   <div class="vr-panel-overlay"></div>
 
   <!-- SHOP NOW overlay — bottom left -->
+  <div style="position:absolute;top:32px;left:40px;font-size:11px;color:rgba(255,255,255,0.5);letter-spacing:0.1em;font-style:italic;z-index:3;">01</div>
   <div class="vr-sn-content" onclick="window.location='/collections/all'" style="cursor:pointer;position:absolute;bottom:0;left:0;right:0;z-index:3;">
     <div class="vr-sn-dashes">
       <span></span><span></span><span></span><span></span>
