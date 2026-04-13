@@ -46,11 +46,11 @@ body { overflow-x: hidden; }
 }
 .vr-nav-logo img {
   height: 32px; width: auto; display: block;
-  filter: brightness(0) invert(1); /* pure white */
+  filter: invert(1); /* white on hero */
   transition: filter 0.3s ease;
 }
 #vr-nav.scrolled .vr-nav-logo img {
-  filter: brightness(0) invert(0); /* pure black */
+  filter: invert(0); /* pure black when scrolled */
 }
 /* All nav items switch together */
 .vr-nav-right a { transition: color 0.3s ease; }
