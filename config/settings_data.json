@@ -11,7 +11,7 @@
   "current": {
     "logo": "shopify://shop_images/volenu.png",
     "logo_width": 140,
-    "favicon": "shopify://shop_images/volenu-v-logo.png",
+    "favicon": "shopify://shop_images/VOLENU_LOGO_V_U.jpg",
     "colors_solid_button_labels": "#ffffff",
     "colors_accent_1": "#111111",
     "colors_accent_2": "#000000",
@@ -206,11 +206,6 @@
     "blocks": {
       "776302416715791028": {
         "type": "shopify://apps/bucks/blocks/app-embed/4f0a9b06-9da4-4a49-b378-2de9d23a3af3",
-        "disabled": false,
-        "settings": {}
-      },
-      "15557474716127144420": {
-        "type": "shopify://apps/kaching-bundles/blocks/app-embed-block/6c637362-a106-4a32-94ac-94dcfd68cdb8",
         "disabled": false,
         "settings": {}
       }
