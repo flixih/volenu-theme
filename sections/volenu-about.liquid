@@ -1,0 +1,391 @@
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ── HERO ── */
+.vab-hero {
+  position: relative;
+  width: 100%; height: 100vh; min-height: 600px;
+  overflow: hidden;
+  display: flex; align-items: flex-end;
+}
+.vab-hero-img {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  object-position: center 20%;
+}
+.vab-hero-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
+}
+.vab-hero-content {
+  position: relative; z-index: 2;
+  padding: 0 56px 72px;
+  color: #fff;
+}
+.vab-hero-eyebrow {
+  font-size: 10px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: rgba(255,255,255,0.5);
+  margin-bottom: 16px;
+}
+.vab-hero-title {
+  font-size: clamp(48px, 7vw, 96px);
+  font-weight: 700; line-height: 1;
+  letter-spacing: -0.02em;
+}
+.vab-hero-sub {
+  margin-top: 20px;
+  font-size: 14px; color: rgba(255,255,255,0.6);
+  letter-spacing: 0.06em; max-width: 420px;
+  line-height: 1.7;
+}
+
+/* ── MANIFESTO ── */
+.vab-manifesto {
+  padding: 96px 56px;
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 80px; align-items: center;
+  border-bottom: 1px solid #ececec;
+}
+.vab-manifesto-num {
+  font-size: 120px; font-weight: 800;
+  color: #f0f0f0; line-height: 1;
+  letter-spacing: -0.04em; user-select: none;
+}
+.vab-manifesto-right {}
+.vab-manifesto-label {
+  font-size: 9px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: #aaa;
+  margin-bottom: 24px;
+}
+.vab-manifesto-text {
+  font-size: clamp(22px, 2.6vw, 36px);
+  line-height: 1.4; font-weight: 600;
+  letter-spacing: -0.01em; color: #111;
+}
+
+/* ── STORY SPLIT ── */
+.vab-story {
+  display: grid; grid-template-columns: 1fr 1fr;
+  min-height: 720px;
+}
+.vab-story-img-wrap {
+  position: relative; overflow: hidden;
+}
+.vab-story-img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: center top;
+  display: block;
+}
+.vab-story-text {
+  padding: 80px 64px;
+  display: flex; flex-direction: column; justify-content: center;
+  background: #fff;
+}
+.vab-story-label {
+  font-size: 9px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: #aaa;
+  margin-bottom: 28px;
+}
+.vab-story-title {
+  font-size: clamp(28px, 3vw, 44px);
+  font-weight: 700; line-height: 1.15;
+  letter-spacing: -0.02em; color: #111;
+  margin-bottom: 28px;
+}
+.vab-story-body {
+  font-size: 14px; color: #555;
+  line-height: 1.85; letter-spacing: 0.02em;
+}
+.vab-story-body p + p { margin-top: 18px; }
+.vab-story-sig {
+  margin-top: 40px;
+  font-size: 13px; color: #111;
+  letter-spacing: 0.06em; font-weight: 600;
+}
+.vab-story-sig span {
+  display: block; font-size: 11px;
+  color: #999; font-weight: 400;
+  letter-spacing: 0.1em; margin-top: 4px;
+}
+
+/* ── VALUES ── */
+.vab-values {
+  padding: 96px 56px;
+  background: #f8f8f6;
+}
+.vab-values-head {
+  text-align: center; margin-bottom: 64px;
+}
+.vab-values-label {
+  font-size: 9px; letter-spacing: 0.3em;
+  text-transform: uppercase; color: #aaa;
+  margin-bottom: 16px;
+}
+.vab-values-title {
+  font-size: clamp(28px, 3.5vw, 48px);
+  font-weight: 700; letter-spacing: -0.02em; color: #111;
+}
+.vab-values-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.vab-value-card {
+  background: #fff;
+  padding: 48px 40px;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+.vab-value-card.visible { opacity: 1; transform: translateY(0); }
+.vab-value-card:nth-child(2) { transition-delay: 0.1s; }
+.vab-value-card:nth-child(3) { transition-delay: 0.2s; }
+.vab-value-num {
+  font-size: 11px; letter-spacing: 0.2em;
+  color: #ccc; margin-bottom: 20px;
+}
+.vab-value-title {
+  font-size: 18px; font-weight: 700;
+  letter-spacing: -0.01em; color: #111;
+  margin-bottom: 14px;
+}
+.vab-value-body {
+  font-size: 13px; color: #777;
+  line-height: 1.8; letter-spacing: 0.02em;
+}
+
+/* ── FULL WIDTH QUOTE ── */
+.vab-quote {
+  padding: 120px 56px;
+  text-align: center; background: #111; color: #fff;
+}
+.vab-quote-mark {
+  font-size: 80px; line-height: 0.5;
+  color: rgba(255,255,255,0.1); margin-bottom: 40px;
+  font-family: Georgia, serif;
+}
+.vab-quote-text {
+  font-size: clamp(22px, 3vw, 40px);
+  font-weight: 600; line-height: 1.3;
+  letter-spacing: -0.01em; max-width: 820px;
+  margin: 0 auto 36px;
+}
+.vab-quote-attr {
+  font-size: 11px; letter-spacing: 0.2em;
+  color: rgba(255,255,255,0.4); text-transform: uppercase;
+}
+
+/* ── SECOND STORY SPLIT (reversed) ── */
+.vab-story--reverse {
+  direction: rtl;
+}
+.vab-story--reverse > * { direction: ltr; }
+.vab-story--reverse .vab-story-text {
+  background: #f8f8f6;
+}
+
+/* ── STATS ── */
+.vab-stats {
+  padding: 96px 56px;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 2px; border-top: 1px solid #ececec;
+}
+.vab-stat {
+  text-align: center; padding: 48px 24px;
+  opacity: 0; transform: translateY(16px);
+  transition: opacity 0.5s ease, transform 0.5s ease;
+}
+.vab-stat.visible { opacity: 1; transform: translateY(0); }
+.vab-stat:nth-child(2) { transition-delay: 0.08s; }
+.vab-stat:nth-child(3) { transition-delay: 0.16s; }
+.vab-stat:nth-child(4) { transition-delay: 0.24s; }
+.vab-stat-num {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 800; letter-spacing: -0.03em; color: #111;
+  line-height: 1;
+}
+.vab-stat-label {
+  font-size: 10px; letter-spacing: 0.2em;
+  color: #aaa; text-transform: uppercase;
+  margin-top: 10px;
+}
+
+/* ── CTA ── */
+.vab-cta {
+  padding: 96px 56px;
+  text-align: center;
+  border-top: 1px solid #ececec;
+}
+.vab-cta-label {
+  font-size: 9px; letter-spacing: 0.3em;
+  color: #aaa; text-transform: uppercase;
+  margin-bottom: 20px;
+}
+.vab-cta-title {
+  font-size: clamp(32px, 4vw, 56px);
+  font-weight: 700; letter-spacing: -0.02em;
+  color: #111; margin-bottom: 40px;
+}
+.vab-cta-btn {
+  display: inline-block;
+  padding: 16px 48px;
+  background: #111; color: #fff;
+  font-size: 11px; letter-spacing: 0.2em;
+  text-transform: uppercase; text-decoration: none;
+  transition: background 0.2s;
+}
+.vab-cta-btn:hover { background: #333; }
+
+/* ── MOBILE ── */
+@media (max-width: 768px) {
+  .vab-hero-content { padding: 0 24px 48px; }
+  .vab-manifesto { padding: 56px 24px; grid-template-columns: 1fr; gap: 24px; }
+  .vab-manifesto-num { font-size: 72px; }
+  .vab-story { grid-template-columns: 1fr; }
+  .vab-story-img-wrap { height: 60vw; }
+  .vab-story-text { padding: 48px 24px; }
+  .vab-story--reverse { direction: ltr; }
+  .vab-values { padding: 56px 24px; }
+  .vab-values-grid { grid-template-columns: 1fr; gap: 2px; }
+  .vab-value-card { padding: 36px 28px; }
+  .vab-quote { padding: 72px 24px; }
+  .vab-stats { grid-template-columns: 1fr 1fr; padding: 48px 24px; }
+  .vab-cta { padding: 56px 24px; }
+}
+</style>
+
+<!-- HERO -->
+<section class="vab-hero">
+  <img class="vab-hero-img" src="{{ 'about-hero.jpg' | asset_url }}" alt="Volenu — Our Story">
+  <div class="vab-hero-overlay"></div>
+  <div class="vab-hero-content">
+    <div class="vab-hero-eyebrow">Est. 2024 · Puerto Rico</div>
+    <h1 class="vab-hero-title">Our<br>Story.</h1>
+    <p class="vab-hero-sub">Built for the man who dresses with intention. Luxury menswear without the luxury price.</p>
+  </div>
+</section>
+
+<!-- MANIFESTO -->
+<section class="vab-manifesto vab-reveal">
+  <div class="vab-manifesto-num">01</div>
+  <div class="vab-manifesto-right">
+    <div class="vab-manifesto-label">The Vision</div>
+    <p class="vab-manifesto-text">We believe every man deserves to dress like the best version of himself — without emptying his wallet to do it.</p>
+  </div>
+</section>
+
+<!-- STORY SPLIT — Founder -->
+<section class="vab-story">
+  <div class="vab-story-img-wrap">
+    <img class="vab-story-img" src="{{ 'about-founder.jpg' | asset_url }}" alt="Volenu Founder">
+  </div>
+  <div class="vab-story-text">
+    <div class="vab-story-label">The Beginning</div>
+    <h2 class="vab-story-title">Born from a standard no one was meeting.</h2>
+    <div class="vab-story-body">
+      <p>Volenu started with a simple frustration — premium menswear was either overpriced or underwhelming. There was no middle ground for the man who valued quality, fit, and style but wasn't willing to pay designer prices for basic pieces.</p>
+      <p>We set out to change that. Sourcing the finest fabrics — Italian linens, cashmere knitwear, breathable cotton blends — and cutting them to silhouettes that actually flatter a man's frame. No shortcuts. No compromises.</p>
+      <p>Every piece in the Volenu collection is designed to be worn with confidence, from the deck of a yacht to a dinner in the city.</p>
+    </div>
+    <div class="vab-story-sig">
+      Alexandre Moreau
+      <span>Founder & Creative Director, VOLENU</span>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<section class="vab-quote">
+  <div class="vab-quote-mark">"</div>
+  <p class="vab-quote-text">Style is not about what you wear. It's about the discipline to wear it well, every single day.</p>
+  <div class="vab-quote-attr">— The Volenu Philosophy</div>
+</section>
+
+<!-- STORY SPLIT REVERSED — Craft -->
+<section class="vab-story vab-story--reverse">
+  <div class="vab-story-img-wrap">
+    <img class="vab-story-img" src="{{ 'about-craft.jpg' | asset_url }}" alt="Volenu Craftsmanship">
+  </div>
+  <div class="vab-story-text">
+    <div class="vab-story-label">The Craft</div>
+    <h2 class="vab-story-title">Every thread chosen with purpose.</h2>
+    <div class="vab-story-body">
+      <p>We don't cut corners. Each Volenu garment is the result of careful material selection, precise construction, and an obsessive attention to how fabric moves, drapes, and ages on the body.</p>
+      <p>Our linen breathes. Our knitwear holds its shape. Our shirts carry a structured softness that you feel the moment you put them on — and that others notice the moment you walk in.</p>
+      <p>This is menswear built to last, designed to elevate, and priced so you can actually build a wardrobe worth having.</p>
+    </div>
+  </div>
+</section>
+
+<!-- VALUES -->
+<section class="vab-values">
+  <div class="vab-values-head">
+    <div class="vab-values-label">What We Stand For</div>
+    <h2 class="vab-values-title">The Volenu Standard</h2>
+  </div>
+  <div class="vab-values-grid">
+    <div class="vab-value-card">
+      <div class="vab-value-num">01</div>
+      <div class="vab-value-title">Quality First</div>
+      <p class="vab-value-body">We source premium fabrics — Italian linen, fine cashmere, breathable cotton blends — and never compromise on construction. If it isn't exceptional, it doesn't carry the VOLENU name.</p>
+    </div>
+    <div class="vab-value-card">
+      <div class="vab-value-num">02</div>
+      <div class="vab-value-title">Accessible Luxury</div>
+      <p class="vab-value-body">Designer quality at real prices. We cut out the middlemen and the markups so the man who values his wardrobe doesn't have to choose between style and budget.</p>
+    </div>
+    <div class="vab-value-card">
+      <div class="vab-value-num">03</div>
+      <div class="vab-value-title">Timeless Style</div>
+      <p class="vab-value-body">No fast fashion. No trend chasing. Our pieces are built around silhouettes and fabrics that work this season and the next — the kind of wardrobe investments that age well.</p>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="vab-stats">
+  <div class="vab-stat">
+    <div class="vab-stat-num">28+</div>
+    <div class="vab-stat-label">Products</div>
+  </div>
+  <div class="vab-stat">
+    <div class="vab-stat-num">300+</div>
+    <div class="vab-stat-label">Variants</div>
+  </div>
+  <div class="vab-stat">
+    <div class="vab-stat-num">30</div>
+    <div class="vab-stat-label">Day Returns</div>
+  </div>
+  <div class="vab-stat">
+    <div class="vab-stat-num">∞</div>
+    <div class="vab-stat-label">Style</div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="vab-cta">
+  <div class="vab-cta-label">Ready to Elevate?</div>
+  <h2 class="vab-cta-title">Dress with intention.</h2>
+  <a href="/collections/all" class="vab-cta-btn">Shop the Collection</a>
+</section>
+
+<script>
+(function() {
+  var els = document.querySelectorAll('.vab-value-card, .vab-stat, .vab-manifesto');
+  var obs = new IntersectionObserver(function(entries) {
+    entries.forEach(function(e) {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        obs.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.15 });
+  els.forEach(function(el) { obs.observe(el); });
+})();
+</script>
+
+{% schema %}
+{
+  "name": "Volenu About",
+  "settings": [],
+  "presets": [{ "name": "Volenu About" }]
+}
+{% endschema %}
