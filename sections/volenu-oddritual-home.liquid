@@ -425,7 +425,15 @@ html {
   opacity: 0; transform: translateY(24px);
   transition: opacity 0.8s ease, transform 0.8s ease;
 }
-.vr-tile.visible { opacity: 1; transform: translateY(0); }
+.vr-tile--link {
+  display: block; text-decoration: none;
+  cursor: pointer;
+}
+.vr-tile--link:hover img { transform: scale(1.03); }
+/* Draggable product scroll */
+.vr-products-scroll { cursor: grab; }
+.vr-products-scroll.is-dragging { cursor: grabbing; animation-play-state: paused; }
+.vr-products-scroll.is-dragging .vr-products-track { animation-play-state: paused; }
 .vr-tile:nth-child(2) { transition-delay: 0.12s; }
 .vr-tile:nth-child(3) { transition-delay: 0.24s; }
 .vr-tile img {
@@ -782,33 +790,41 @@ html {
 </section>
 
 <section id="vr-tiles">
-  <div class="vr-tile">
-    <img src="{{ 'hero-banner.png' | asset_url }}" alt="Our Products" style="width:100%;height:100%;object-fit:cover;object-position:left center;">
+  <!-- Our Products tile — shows first product image, fully clickable -->
+  <a href="/collections/all" class="vr-tile vr-tile--link">
+    {% assign first_product = collections.all.products.first %}
+    {% if first_product and first_product.featured_image %}
+      <img src="{{ first_product.featured_image | img_url: '800x' }}" alt="Our Products" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+    {% else %}
+      <img src="{{ 'hero-banner.png' | asset_url }}" alt="Our Products" style="width:100%;height:100%;object-fit:cover;object-position:left center;">
+    {% endif %}
     <div class="vr-tile-overlay"></div>
     <div class="vr-tile-content">
       <div class="vr-tile-eyebrow">COLLECTION 2025</div>
       <div class="vr-tile-title">Our Products</div>
-      <a href="/collections/all" class="vr-tile-cta">Shop now →</a>
+      <span class="vr-tile-cta">Shop now →</span>
     </div>
-  </div>
-  <div class="vr-tile">
-    <img src="{{ 'hero-banner.png' | asset_url }}" alt="Our Story" style="width:100%;height:100%;object-fit:cover;object-position:center;filter:grayscale(0.5);">
+  </a>
+  <!-- Our Story tile — founder image, fully draggable + clickable to about -->
+  <a href="/pages/about" class="vr-tile vr-tile--link" id="vr-tile-story">
+    <img src="{{ 'about-founder.jpg' | asset_url }}" alt="Our Story" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
     <div class="vr-tile-overlay"></div>
     <div class="vr-tile-content">
       <div class="vr-tile-eyebrow">ABOUT US</div>
       <div class="vr-tile-title">Our Story</div>
-      <a href="/pages/about" class="vr-tile-cta">Read more →</a>
+      <span class="vr-tile-cta">Read more →</span>
     </div>
-  </div>
-  <div class="vr-tile">
+  </a>
+  <!-- Community tile -->
+  <a href="https://instagram.com/volenuofficial" target="_blank" class="vr-tile vr-tile--link">
     <img src="{{ 'hero-banner.png' | asset_url }}" alt="Our Community" style="width:100%;height:100%;object-fit:cover;object-position:right center;filter:brightness(0.75);">
     <div class="vr-tile-overlay"></div>
     <div class="vr-tile-content">
       <div class="vr-tile-eyebrow">SOCIAL</div>
       <div class="vr-tile-title">Our Community</div>
-      <a href="https://instagram.com/volenuofficial" class="vr-tile-cta">Instagram →</a>
+      <span class="vr-tile-cta">Instagram →</span>
     </div>
-  </div>
+  </a>
 </section>
 
 <!-- Brand statement -->
@@ -1026,7 +1042,37 @@ html {
     if (el) vrObserver.observe(el);
   });
 
-  // ── Quick add ──
+  // ── Product scroll — mouse drag ──
+  (function() {
+    var ps = document.querySelector('.vr-products-scroll');
+    var track = document.getElementById('vr-prod-track');
+    if (!ps || !track) return;
+    var isDragging = false, startX = 0, savedOffset = 0;
+    ps.addEventListener('mousedown', function(e) {
+      isDragging = true; ps.classList.add('is-dragging');
+      startX = e.pageX;
+      var mat = new DOMMatrix(window.getComputedStyle(track).transform);
+      savedOffset = mat.m41 || 0;
+    });
+    document.addEventListener('mouseup', function() {
+      if (!isDragging) return;
+      isDragging = false; ps.classList.remove('is-dragging');
+      track.style.animation = ''; track.style.transform = '';
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      var dx = e.pageX - startX;
+      track.style.animation = 'none';
+      track.style.transform = 'translateX(' + (savedOffset + dx) + 'px)';
+    });
+    // Touch
+    ps.addEventListener('touchstart', function(e) { isDragging = true; startX = e.touches[0].pageX; var mat = new DOMMatrix(window.getComputedStyle(track).transform); savedOffset = mat.m41 || 0; }, { passive: true });
+    ps.addEventListener('touchmove', function(e) { if (!isDragging) return; var dx = e.touches[0].pageX - startX; track.style.animation = 'none'; track.style.transform = 'translateX(' + (savedOffset + dx) + 'px)'; }, { passive: true });
+    ps.addEventListener('touchend', function() { isDragging = false; track.style.animation = ''; track.style.transform = ''; });
+  })();
+
+
   window.vrQuickAdd = function(variantId) {
     fetch('/cart/add.js', {
       method: 'POST',
