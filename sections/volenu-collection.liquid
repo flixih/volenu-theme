@@ -24,6 +24,13 @@ body { overflow-x: hidden; background: #fff; }
 }
 .vc-nav-logo { text-decoration: none; }
 .vc-nav-logo img { height: 24px; width: auto; display: block; }
+.vc-nav-back {
+  display: flex; align-items: center;
+  color: #111; text-decoration: none;
+  padding: 8px; margin-left: -8px;
+  transition: opacity 0.2s;
+}
+.vc-nav-back:hover { opacity: 0.4; }
 .vc-nav-right { display: flex; align-items: center; gap: 24px; }
 .vc-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
@@ -244,10 +251,14 @@ body { overflow-x: hidden; background: #fff; }
 
 <!-- Nav -->
 <nav id="vc-nav">
+  <a href="javascript:history.back()" class="vc-nav-back" title="Go back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+  </a>
   <a href="/" class="vc-nav-logo">
     <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="volenu">
   </a>
   <div class="vc-nav-right">
+    <a href="/pages/about">ABOUT</a>
     <a href="/collections/sale">SALE</a>
     <a href="/cart">CART ({{ cart.item_count }})</a>
     <button id="vc-menu-btn"><span></span><span></span></button>

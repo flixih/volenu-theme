@@ -450,6 +450,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
 <div class="vpp-root">
+
+<!-- Product Nav -->
+<style>
+.vpp-nav {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 32px; height: 56px;
+  border-bottom: 1px solid #ececec;
+  background: #fff; position: sticky; top: 0; z-index: 100;
+}
+.vpp-nav-back {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  color: #111; text-decoration: none; transition: opacity 0.2s;
+}
+.vpp-nav-back:hover { opacity: 0.45; }
+.vpp-nav-back svg { display: block; flex-shrink: 0; }
+.vpp-nav-logo {
+  font-size: 14px; letter-spacing: 0.28em; font-weight: 700;
+  color: #111; text-decoration: none;
+}
+.vpp-nav-cart {
+  font-size: 11px; letter-spacing: 0.15em;
+  color: #111; text-decoration: none;
+}
+</style>
+
+<nav class="vpp-nav">
+  <a href="javascript:history.back()" class="vpp-nav-back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+    Back
+  </a>
+  <a href="/" class="vpp-nav-logo">VOLENU</a>
+  <a href="/cart" class="vpp-nav-cart">CART ({{ cart.item_count }})</a>
+</nav>
+
 <div class="vpp-main">
 
   <!-- Gallery -->

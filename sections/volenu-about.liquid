@@ -252,7 +252,71 @@
 }
 </style>
 
-<!-- HERO -->
+<!-- About Nav -->
+<style>
+.vab-nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 999;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 40px; height: 60px;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+.vab-nav--hero { background: transparent; }
+.vab-nav--scrolled { background: #fff; border-bottom: 1px solid #ececec; }
+.vab-nav-back {
+  display: flex; align-items: center; gap: 8px;
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  text-decoration: none; cursor: pointer;
+  transition: color 0.2s;
+}
+.vab-nav--hero .vab-nav-back { color: rgba(255,255,255,0.75); }
+.vab-nav--scrolled .vab-nav-back { color: #111; }
+.vab-nav-back:hover { opacity: 0.7; }
+.vab-nav-back svg { transition: transform 0.2s; }
+.vab-nav-back:hover svg { transform: translateX(-3px); }
+.vab-nav-logo {
+  font-size: 15px; letter-spacing: 0.28em; font-weight: 700;
+  text-decoration: none; position: absolute; left: 50%; transform: translateX(-50%);
+  transition: color 0.35s;
+}
+.vab-nav--hero .vab-nav-logo { color: #fff; }
+.vab-nav--scrolled .vab-nav-logo { color: #111; }
+.vab-nav-shop {
+  font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+  text-decoration: none; transition: color 0.2s;
+}
+.vab-nav--hero .vab-nav-shop { color: rgba(255,255,255,0.75); }
+.vab-nav--scrolled .vab-nav-shop { color: #111; }
+.vab-nav-shop:hover { opacity: 0.7; }
+@media (max-width: 768px) {
+  .vab-nav { padding: 0 20px; }
+}
+</style>
+
+<nav class="vab-nav vab-nav--hero" id="vab-nav">
+  <a href="/" class="vab-nav-back">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
+    Back
+  </a>
+  <a href="/" class="vab-nav-logo">VOLENU</a>
+  <a href="/collections/all" class="vab-nav-shop">Shop</a>
+</nav>
+
+<script>
+(function(){
+  var nav = document.getElementById('vab-nav');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 80) {
+      nav.classList.remove('vab-nav--hero');
+      nav.classList.add('vab-nav--scrolled');
+    } else {
+      nav.classList.add('vab-nav--hero');
+      nav.classList.remove('vab-nav--scrolled');
+    }
+  }, { passive: true });
+})();
+</script>
+
+
 <section class="vab-hero">
   <img class="vab-hero-img" src="{{ 'about-hero.jpg' | asset_url }}" alt="Volenu — Our Story">
   <div class="vab-hero-overlay"></div>
