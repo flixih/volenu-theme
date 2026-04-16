@@ -274,12 +274,15 @@
 .vab-nav-back svg { transition: transform 0.2s; }
 .vab-nav-back:hover svg { transform: translateX(-3px); }
 .vab-nav-logo {
-  font-size: 15px; letter-spacing: 0.28em; font-weight: 700;
-  text-decoration: none; position: absolute; left: 50%; transform: translateX(-50%);
-  transition: color 0.35s;
+  text-decoration: none;
+  position: absolute; left: 50%; transform: translateX(-50%);
 }
-.vab-nav--hero .vab-nav-logo { color: #fff; }
-.vab-nav--scrolled .vab-nav-logo { color: #111; }
+.vab-nav-logo-img {
+  height: 22px; width: auto; display: block;
+  transition: filter 0.35s;
+}
+.vab-nav--hero .vab-nav-logo-img { filter: brightness(0) invert(1); }
+.vab-nav--scrolled .vab-nav-logo-img { filter: brightness(0) invert(0); }
 .vab-nav-shop {
   font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
   text-decoration: none; transition: color 0.2s;
@@ -297,7 +300,9 @@
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
     Back
   </a>
-  <a href="/" class="vab-nav-logo">VOLENU</a>
+  <a href="/" class="vab-nav-logo">
+    <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU" class="vab-nav-logo-img">
+  </a>
   <a href="/collections/all" class="vab-nav-shop">Shop</a>
 </nav>
 
@@ -318,7 +323,7 @@
 
 
 <section class="vab-hero">
-  <img class="vab-hero-img" src="{{ 'about-hero.jpg' | asset_url }}" alt="Volenu — Our Story">
+  <img class="vab-hero-img" src="{{ 'about-hero.jpg' | asset_url }}" alt="Volenu Our Story">
   <div class="vab-hero-overlay"></div>
   <div class="vab-hero-content">
     <div class="vab-hero-eyebrow">Est. 2024 · Puerto Rico</div>
@@ -332,11 +337,11 @@
   <div class="vab-manifesto-num">01</div>
   <div class="vab-manifesto-right">
     <div class="vab-manifesto-label">The Vision</div>
-    <p class="vab-manifesto-text">We believe every man deserves to dress like the best version of himself — without emptying his wallet to do it.</p>
+    <p class="vab-manifesto-text">We believe every man deserves to dress like the best version of himself without emptying his wallet to do it.</p>
   </div>
 </section>
 
-<!-- STORY SPLIT — Founder -->
+<!-- STORY SPLIT Founder -->
 <section class="vab-story">
   <div class="vab-story-img-wrap">
     <img class="vab-story-img" src="{{ 'about-founder.jpg' | asset_url }}" alt="Volenu Founder">
@@ -345,12 +350,12 @@
     <div class="vab-story-label">The Beginning</div>
     <h2 class="vab-story-title">Born from a standard no one was meeting.</h2>
     <div class="vab-story-body">
-      <p>Volenu started with a simple frustration — premium menswear was either overpriced or underwhelming. There was no middle ground for the man who valued quality, fit, and style but wasn't willing to pay designer prices for basic pieces.</p>
-      <p>We set out to change that. Sourcing the finest fabrics — Italian linens, cashmere knitwear, breathable cotton blends — and cutting them to silhouettes that actually flatter a man's frame. No shortcuts. No compromises.</p>
+      <p>Volenu started with a simple frustration premium menswear was either overpriced or underwhelming. There was no middle ground for the man who valued quality, fit, and style but wasn't willing to pay designer prices for basic pieces.</p>
+      <p>We set out to change that. Sourcing the finest fabrics Italian linens, cashmere knitwear, breathable cotton blends and cutting them to silhouettes that actually flatter a man's frame. No shortcuts. No compromises.</p>
       <p>Every piece in the Volenu collection is designed to be worn with confidence, from the deck of a yacht to a dinner in the city.</p>
     </div>
     <div class="vab-story-sig">
-      Alexandre Moreau
+      Roy Lorenzo
       <span>Founder & Creative Director, VOLENU</span>
     </div>
   </div>
@@ -360,10 +365,10 @@
 <section class="vab-quote">
   <div class="vab-quote-mark">"</div>
   <p class="vab-quote-text">Style is not about what you wear. It's about the discipline to wear it well, every single day.</p>
-  <div class="vab-quote-attr">— The Volenu Philosophy</div>
+  <div class="vab-quote-attr"> The Volenu Philosophy</div>
 </section>
 
-<!-- STORY SPLIT REVERSED — Craft -->
+<!-- STORY SPLIT REVERSED Craft -->
 <section class="vab-story vab-story--reverse">
   <div class="vab-story-img-wrap">
     <img class="vab-story-img" src="{{ 'about-craft.jpg' | asset_url }}" alt="Volenu Craftsmanship">
@@ -373,7 +378,7 @@
     <h2 class="vab-story-title">Every thread chosen with purpose.</h2>
     <div class="vab-story-body">
       <p>We don't cut corners. Each Volenu garment is the result of careful material selection, precise construction, and an obsessive attention to how fabric moves, drapes, and ages on the body.</p>
-      <p>Our linen breathes. Our knitwear holds its shape. Our shirts carry a structured softness that you feel the moment you put them on — and that others notice the moment you walk in.</p>
+      <p>Our linen breathes. Our knitwear holds its shape. Our shirts carry a structured softness that you feel the moment you put them on and that others notice the moment you walk in.</p>
       <p>This is menswear built to last, designed to elevate, and priced so you can actually build a wardrobe worth having.</p>
     </div>
   </div>
@@ -389,7 +394,7 @@
     <div class="vab-value-card">
       <div class="vab-value-num">01</div>
       <div class="vab-value-title">Quality First</div>
-      <p class="vab-value-body">We source premium fabrics — Italian linen, fine cashmere, breathable cotton blends — and never compromise on construction. If it isn't exceptional, it doesn't carry the VOLENU name.</p>
+      <p class="vab-value-body">We source premium fabrics Italian linen, fine cashmere, breathable cotton blends and never compromise on construction. If it isn't exceptional, it doesn't carry the VOLENU name.</p>
     </div>
     <div class="vab-value-card">
       <div class="vab-value-num">02</div>
@@ -399,7 +404,7 @@
     <div class="vab-value-card">
       <div class="vab-value-num">03</div>
       <div class="vab-value-title">Timeless Style</div>
-      <p class="vab-value-body">No fast fashion. No trend chasing. Our pieces are built around silhouettes and fabrics that work this season and the next — the kind of wardrobe investments that age well.</p>
+      <p class="vab-value-body">No fast fashion. No trend chasing. Our pieces are built around silhouettes and fabrics that work this season and the next the kind of wardrobe investments that age well.</p>
     </div>
   </div>
 </section>
