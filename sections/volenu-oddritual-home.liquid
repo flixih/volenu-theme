@@ -84,6 +84,19 @@ body { overflow-x: hidden; }
   transition: filter 0.3s ease;
 }
 #vr-nav.scrolled .vr-nav-logo img { filter: brightness(0) invert(0); }
+.vr-nav-links {
+  display: flex; align-items: center; gap: 28px;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
+.vr-nav-links a {
+  font-size: 10px; letter-spacing: 0.16em; font-weight: 500;
+  text-decoration: none; color: #fff;
+  transition: color 0.3s, opacity 0.2s;
+}
+.vr-nav-links a:hover { opacity: 0.6; }
+#vr-nav.scrolled .vr-nav-links a { color: #111; }
+.vr-nav-sale { color: #ff4444 !important; }
+@media (max-width: 900px) { .vr-nav-links { display: none; } }
 .vr-nav-right { display: flex; align-items: center; gap: 24px; }
 .vr-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
@@ -578,7 +591,6 @@ html {
   <button id="vr-menu-close">×</button>
   <div class="vr-menu-links">
     <a href="/collections/all">Shop All</a>
-    <a href="/collections/new-arrivals">New Arrivals</a>
     <a href="/collections/sale" style="color:#ff4444;">Sale</a>
     <a href="/pages/about">About Us</a>
     <a href="/pages/contact">Contact</a>
@@ -622,8 +634,14 @@ html {
   <a href="/" class="vr-nav-logo">
     <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU">
   </a>
+  <div class="vr-nav-links">
+    <a href="/collections/all">SHOP ALL</a>
+    <a href="/collections/sale" class="vr-nav-sale">SALE</a>
+    <a href="/pages/about">ABOUT US</a>
+    <a href="/pages/contact">CONTACT</a>
+    <a href="/pages/track-order">TRACK ORDER</a>
+  </div>
   <div class="vr-nav-right">
-    <a href="/collections/sale">SALE</a>
     <a href="/cart">CART ({{ cart.item_count }})</a>
     <button id="vr-menu-btn" aria-label="Menu">
       <span></span><span></span>
