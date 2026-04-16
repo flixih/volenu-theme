@@ -43,6 +43,33 @@ body { overflow-x: hidden; }
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ── Draggable header strip ── */
+#vr-header-strip {
+  background: #111; color: #fff;
+  height: 36px; overflow: hidden;
+  cursor: grab; user-select: none;
+  position: relative; z-index: 600;
+}
+#vr-header-strip:active { cursor: grabbing; }
+#vr-header-track {
+  display: flex; align-items: center; gap: 28px;
+  height: 100%; padding: 0 28px;
+  white-space: nowrap;
+  animation: vrHeaderScroll 30s linear infinite;
+  will-change: transform;
+}
+#vr-header-strip:hover #vr-header-track,
+#vr-header-strip.is-dragging #vr-header-track { animation-play-state: paused; }
+#vr-header-track span {
+  font-size: 10px; letter-spacing: 0.18em;
+  font-weight: 500; flex-shrink: 0;
+}
+.vr-hs-dot { opacity: 0.35 !important; }
+@keyframes vrHeaderScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
 /* ─── NAV ─── */
 #vr-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
@@ -300,12 +327,22 @@ html {
   padding-bottom: 2px;
 }
 .vr-products-scroll {
-  display: flex; gap: 2px;
-  padding: 0 40px;
-  overflow-x: auto; scrollbar-width: none;
-  scroll-snap-type: x mandatory;
+  display: flex; gap: 0;
+  padding: 0;
+  overflow: hidden;
+  position: relative;
 }
 .vr-products-scroll::-webkit-scrollbar { display: none; }
+.vr-products-track {
+  display: flex; gap: 2px;
+  animation: vrProdScroll 40s linear infinite;
+  will-change: transform;
+}
+.vr-products-track:hover { animation-play-state: paused; }
+@keyframes vrProdScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
 .vr-prod-card {
   flex-shrink: 0; width: 280px;
   scroll-snap-align: start;
@@ -434,24 +471,75 @@ html {
 /* ─── FOOTER ─── */
 #vr-footer {
   background: #111; color: #fff;
-  padding: 64px 40px 32px;
+  padding: 72px 40px 32px;
 }
 .vr-footer-top {
-  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
-  gap: 40px; margin-bottom: 56px;
+  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 48px; margin-bottom: 56px;
 }
-.vr-footer-brand { font-size: 13px; letter-spacing: 0.28em; font-weight: 600; margin-bottom: 12px; }
-.vr-footer-tagline { font-size: 11px; color: #666; line-height: 1.7; letter-spacing: 0.04em; }
-.vr-footer h4 { font-size: 9px; letter-spacing: 0.24em; color: #555; margin-bottom: 16px; font-weight: 600; }
-.vr-footer ul { list-style: none; }
-.vr-footer li { margin-bottom: 8px; }
-.vr-footer li a { font-size: 12px; color: #999; text-decoration: none; letter-spacing: 0.04em; }
+.vr-footer-col--brand { padding-right: 16px; }
+.vr-footer-brand {
+  font-size: 18px; letter-spacing: 0.28em; font-weight: 700;
+  margin-bottom: 16px; color: #fff;
+}
+.vr-footer-tagline {
+  font-size: 12px; color: #666; line-height: 1.8;
+  letter-spacing: 0.04em; margin-bottom: 28px;
+}
+.vr-footer-email-label {
+  font-size: 12px; color: #777; line-height: 1.6;
+  letter-spacing: 0.03em; margin-bottom: 14px;
+}
+.vr-footer-form {
+  display: flex; align-items: stretch;
+  border: 1px solid #333; background: transparent;
+  max-width: 320px;
+}
+.vr-footer-input {
+  flex: 1; padding: 12px 14px;
+  background: transparent; border: none; outline: none;
+  color: #fff; font-size: 12px; letter-spacing: 0.04em;
+}
+.vr-footer-input::placeholder { color: #555; }
+.vr-footer-submit {
+  padding: 0 16px; background: transparent;
+  border: none; border-left: 1px solid #333;
+  color: #fff; cursor: pointer; font-size: 18px;
+  display: flex; align-items: center; justify-content: center;
+}
+.vr-footer-submit:hover { background: #222; }
+.vr-footer-socials {
+  display: flex; gap: 18px; margin-top: 28px;
+}
+.vr-footer-socials a {
+  color: #666; transition: color 0.2s;
+  display: flex; align-items: center;
+}
+.vr-footer-socials a:hover { color: #fff; }
+.vr-footer h4 {
+  font-size: 9px; letter-spacing: 0.24em; color: #555;
+  margin-bottom: 20px; font-weight: 600; text-transform: uppercase;
+}
+.vr-footer ul { list-style: none; padding: 0; margin: 0; }
+.vr-footer li { margin-bottom: 12px; }
+.vr-footer li a {
+  font-size: 13px; color: #999; text-decoration: none;
+  letter-spacing: 0.03em; transition: color 0.2s;
+}
 .vr-footer li a:hover { color: #fff; }
 .vr-footer-bottom {
-  border-top: 1px solid #222; padding-top: 24px;
+  border-top: 1px solid #222; padding-top: 28px;
   display: flex; justify-content: space-between; align-items: center;
+  flex-wrap: wrap; gap: 16px;
 }
-.vr-footer-copy { font-size: 10px; color: #555; letter-spacing: 0.08em; }
+.vr-footer-copy { font-size: 11px; color: #444; letter-spacing: 0.08em; }
+.vr-footer-payments {
+  display: flex; align-items: center; gap: 8px;
+}
+.vr-footer-payments svg {
+  height: 24px; width: auto; opacity: 0.6;
+  border-radius: 3px;
+}
 
 /* ─── MOBILE ─── */
 @media (max-width: 768px) {
@@ -462,7 +550,6 @@ html {
   .vr-manifesto-logo { max-width: 100px; }
   .vr-sn-content { padding: 0 24px 28px; }
   .vr-products-head { padding: 0 24px 20px; }
-  .vr-products-scroll { padding: 0 24px; }
   .vr-prod-card { width: 220px; }
   #vr-tiles { grid-template-columns: 1fr; }
   .vr-tile { aspect-ratio: 4/3; }
@@ -470,7 +557,8 @@ html {
   #vr-gallery { padding: 0 24px 48px; }
   .vr-gallery-item { width: 200px; height: 260px; }
   #vr-footer { padding: 48px 24px 24px; }
-  .vr-footer-top { grid-template-columns: 1fr 1fr; gap: 32px; }
+  .vr-footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .vr-footer-col--brand { padding-right: 0; }
 }
 </style>
 
@@ -496,6 +584,36 @@ html {
     <a href="/pages/contact">Contact</a>
   </div>
   <div class="vr-menu-foot">VOLENU © 2025</div>
+</div>
+
+<!-- Draggable Header Strip -->
+<div id="vr-header-strip">
+  <div id="vr-header-track">
+    <span>FREE SHIPPING OVER $100</span>
+    <span class="vr-hs-dot">·</span>
+    <span>30-DAY FREE RETURNS</span>
+    <span class="vr-hs-dot">·</span>
+    <span>SITEWIDE SALE — UP TO 60% OFF</span>
+    <span class="vr-hs-dot">·</span>
+    <span>NEW ARRIVALS IN STORE</span>
+    <span class="vr-hs-dot">·</span>
+    <span>WORLDWIDE DELIVERY</span>
+    <span class="vr-hs-dot">·</span>
+    <span>PREMIUM QUALITY MENSWEAR</span>
+    <span class="vr-hs-dot">·</span>
+    <span>FREE SHIPPING OVER $100</span>
+    <span class="vr-hs-dot">·</span>
+    <span>30-DAY FREE RETURNS</span>
+    <span class="vr-hs-dot">·</span>
+    <span>SITEWIDE SALE — UP TO 60% OFF</span>
+    <span class="vr-hs-dot">·</span>
+    <span>NEW ARRIVALS IN STORE</span>
+    <span class="vr-hs-dot">·</span>
+    <span>WORLDWIDE DELIVERY</span>
+    <span class="vr-hs-dot">·</span>
+    <span>PREMIUM QUALITY MENSWEAR</span>
+    <span class="vr-hs-dot">·</span>
+  </div>
 </div>
 
 <!-- Nav -->
@@ -567,34 +685,65 @@ html {
     <a href="/collections/all" class="vr-products-all">View All</a>
   </div>
   <div class="vr-products-scroll">
-    {% for product in collections.all.products limit: 8 %}
-      {% assign savings = product.compare_at_price_max | minus: product.price %}
-      <div class="vr-prod-card" onclick="window.location='{{ product.url }}'">
-        <div class="vr-prod-img">
-          {% if product.images.size > 0 %}
-            <img class="main-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
-          {% endif %}
-          {% if product.images.size > 1 %}
-            <img class="hover-img" src="{{ product.images[1] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
-          {% else %}
-            <img class="hover-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
-          {% endif %}
-          {% if savings > 0 %}
-            <div class="vr-prod-save">SAVE {{ savings | money }}</div>
-          {% endif %}
-          <button class="vr-prod-quick" onclick="event.stopPropagation();vrQuickAdd('{{ product.variants.first.id }}')">+ QUICK ADD</button>
+    <div class="vr-products-track" id="vr-prod-track">
+      {% for product in collections.all.products limit: 10 %}
+        {% assign savings = product.compare_at_price_max | minus: product.price %}
+        <div class="vr-prod-card visible" onclick="window.location='{{ product.url }}'">
+          <div class="vr-prod-img">
+            {% if product.images.size > 0 %}
+              <img class="main-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
+            {% endif %}
+            {% if product.images.size > 1 %}
+              <img class="hover-img" src="{{ product.images[1] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
+            {% else %}
+              <img class="hover-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
+            {% endif %}
+            {% if savings > 0 %}
+              <div class="vr-prod-save">SAVE {{ savings | money }}</div>
+            {% endif %}
+            <button class="vr-prod-quick" onclick="event.stopPropagation();vrQuickAdd('{{ product.variants.first.id }}')">+ QUICK ADD</button>
+          </div>
+          <div class="vr-prod-name">{{ product.title | upcase }}</div>
+          <div class="vr-prod-prices">
+            {% if product.compare_at_price_max > product.price %}
+              <span class="vr-prod-orig">{{ product.compare_at_price_max | money }}</span>
+              <span class="vr-prod-sale">{{ product.price | money }}</span>
+            {% else %}
+              <span class="vr-prod-price">{{ product.price | money }}</span>
+            {% endif %}
+          </div>
         </div>
-        <div class="vr-prod-name">{{ product.title | upcase }}</div>
-        <div class="vr-prod-prices">
-          {% if product.compare_at_price_max > product.price %}
-            <span class="vr-prod-orig">{{ product.compare_at_price_max | money }}</span>
-            <span class="vr-prod-sale">{{ product.price | money }}</span>
-          {% else %}
-            <span class="vr-prod-price">{{ product.price | money }}</span>
-          {% endif %}
+      {% endfor %}
+      <!-- Duplicate set for seamless loop -->
+      {% for product in collections.all.products limit: 10 %}
+        {% assign savings = product.compare_at_price_max | minus: product.price %}
+        <div class="vr-prod-card visible" aria-hidden="true" onclick="window.location='{{ product.url }}'">
+          <div class="vr-prod-img">
+            {% if product.images.size > 0 %}
+              <img class="main-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
+            {% endif %}
+            {% if product.images.size > 1 %}
+              <img class="hover-img" src="{{ product.images[1] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
+            {% else %}
+              <img class="hover-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
+            {% endif %}
+            {% if savings > 0 %}
+              <div class="vr-prod-save">SAVE {{ savings | money }}</div>
+            {% endif %}
+            <button class="vr-prod-quick" onclick="event.stopPropagation();vrQuickAdd('{{ product.variants.first.id }}')">+ QUICK ADD</button>
+          </div>
+          <div class="vr-prod-name">{{ product.title | upcase }}</div>
+          <div class="vr-prod-prices">
+            {% if product.compare_at_price_max > product.price %}
+              <span class="vr-prod-orig">{{ product.compare_at_price_max | money }}</span>
+              <span class="vr-prod-sale">{{ product.price | money }}</span>
+            {% else %}
+              <span class="vr-prod-price">{{ product.price | money }}</span>
+            {% endif %}
+          </div>
         </div>
-      </div>
-    {% endfor %}
+      {% endfor %}
+    </div>
   </div>
 </section>
 
@@ -661,42 +810,62 @@ html {
 <!-- Footer -->
 <footer id="vr-footer">
   <div class="vr-footer-top">
-    <div>
+    <div class="vr-footer-col vr-footer-col--brand">
       <div class="vr-footer-brand">VOLENU</div>
-      <div class="vr-footer-tagline">Premium watch winders and cases for the serious collector. Engineered for the exceptional.</div>
+      <p class="vr-footer-tagline">Born from the vision of premium menswear, VOLENU blends timeless luxury with modern sophistication — where high-quality craftsmanship meets effortless elegance.</p>
+      <div class="vr-footer-email-wrap">
+        <p class="vr-footer-email-label">Sign up for exclusive discounts &amp; free product giveaways.</p>
+        <form class="vr-footer-form" onsubmit="return false;">
+          <input type="email" placeholder="E-mail" class="vr-footer-input">
+          <button type="submit" class="vr-footer-submit">›</button>
+        </form>
+      </div>
+      <div class="vr-footer-socials">
+        <a href="https://www.instagram.com/volenuofficial" target="_blank" aria-label="Instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.8" fill="currentColor" stroke="none"/></svg>
+        </a>
+        <a href="https://www.tiktok.com/@volenushop" target="_blank" aria-label="TikTok">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.18 8.18 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/></svg>
+        </a>
+      </div>
     </div>
-    <div>
+    <div class="vr-footer-col">
       <h4>SHOP</h4>
       <ul>
         <li><a href="/collections/all">All Products</a></li>
         <li><a href="/collections/new-arrivals">New Arrivals</a></li>
-        <li><a href="/collections/watch-winders">Watch Winders</a></li>
-        <li><a href="/collections/watch-cases">Watch Cases</a></li>
-        <li><a href="/collections/sale">Sale</a></li>
+        <li><a href="/collections/shirts">Shirts</a></li>
+        <li><a href="/collections/pants">Pants</a></li>
+        <li><a href="/collections/polos">Polos</a></li>
+        <li><a href="/collections/sale" style="color:#ff5555;">Sale</a></li>
       </ul>
     </div>
-    <div>
-      <h4>INFORMATION</h4>
+    <div class="vr-footer-col">
+      <h4>SUPPORT</h4>
       <ul>
         <li><a href="/pages/about">About Us</a></li>
+        <li><a href="/pages/contact">Contact Us</a></li>
+        <li><a href="/pages/track-order">Track Your Order</a></li>
         <li><a href="/pages/faq">FAQ</a></li>
-        <li><a href="/pages/track-order">Track Order</a></li>
-        <li><a href="/pages/contact">Contact</a></li>
       </ul>
     </div>
-    <div>
+    <div class="vr-footer-col">
       <h4>POLICIES</h4>
       <ul>
-        <li><a href="/policies/shipping-policy">Shipping</a></li>
-        <li><a href="/policies/refund-policy">Returns</a></li>
-        <li><a href="/policies/privacy-policy">Privacy</a></li>
-        <li><a href="/policies/terms-of-service">Terms</a></li>
+        <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
+        <li><a href="/policies/refund-policy">Refund Policy</a></li>
+        <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/policies/terms-of-service">Terms &amp; Conditions</a></li>
       </ul>
     </div>
   </div>
   <div class="vr-footer-bottom">
-    <span class="vr-footer-copy">© 2025 VOLENU. ALL RIGHTS RESERVED.</span>
-    <span class="vr-footer-copy">PREMIUM WATCH CASES & WINDERS</span>
+    <span class="vr-footer-copy">© 2026, VOLENU.</span>
+    <div class="vr-footer-payments">
+      <svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24"><title>Visa</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><path d="M28.3 10.1H28c-.4 1-.7 1.5-1 3h1.9c-.3-1.5-.3-2.2-.6-3zm2.9 5.9h-1.7c-.1 0-.1 0-.2-.1l-.2-.9-.1-.2h-2.4c-.1 0-.2 0-.2.2l-.3.9c0 .1-.1.1-.1.1h-2.1l.2-.5L27 8.7c0-.5.3-.7.8-.7h1.5c.1 0 .2 0 .2.2l1.4 6.5c.1.4.2.7.2 1.1.1.1.1.1.1.2zm-13.4-.3l.4-1.8c.1 0 .2.1.2.1.7.3 1.4.5 2.1.4.2 0 .5-.1.7-.2.5-.2.5-.7.1-1.1-.2-.2-.5-.3-.8-.5-.4-.2-.8-.4-1.1-.7-1.2-1-.8-2.4-.1-3.1.6-.4.9-.8 1.7-.8 1.2 0 2.5 0 3.1.2h.1c-.1.6-.2 1.1-.4 1.7-.5-.2-1-.4-1.5-.4-.3 0-.6 0-.9.1-.2 0-.3.1-.4.2-.2.2-.2.5 0 .7l.5.4c.4.2.8.4 1.1.6.5.3 1 .8 1.1 1.4.2.9-.1 1.7-.9 2.3-.5.4-.7.6-1.4.6-1.4 0-2.5.1-3.4-.2-.1.2-.1.2-.2.1zm-3.5.3c.1-.7.1-.7.2-1 .5-2.2 1-4.5 1.4-6.7.1-.2.1-.3.3-.3H18c-.2 1.2-.4 2.1-.7 3.2-.3 1.5-.6 3-1 4.5 0 .2-.1.2-.3.2M5 8.2c0-.1.2-.2.3-.2h3.4c.5 0 .9.3 1 .8l.9 4.4c0 .1 0 .1.1.2 0-.1.1-.1.1-.1l2.1-5.1c-.1-.1 0-.2.1-.2h2.1c0 .1 0 .1-.1.2l-3.1 7.3c-.1.2-.1.3-.2.4-.1.1-.3 0-.5 0H9.7c-.1 0-.2 0-.2-.2L7.9 9.5c-.2-.2-.5-.5-.9-.6-.6-.3-1.7-.5-1.9-.5L5 8.2z" fill="#142688"/></svg>
+      <svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24"><title>Mastercard</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><circle fill="#EB001B" cx="15" cy="12" r="7"/><circle fill="#F79E1B" cx="23" cy="12" r="7"/><path fill="#FF5F00" d="M22 12c0-2.4-1.2-4.5-3-5.7-1.8 1.3-3 3.4-3 5.7s1.2 4.5 3 5.7c1.8-1.2 3-3.3 3-5.7z"/></svg>
+      <svg viewBox="0 0 38 24" xmlns="http://www.w3.org/2000/svg" role="img" width="38" height="24"><title>PayPal</title><path opacity=".07" d="M35 0H3C1.3 0 0 1.3 0 3v18c0 1.7 1.4 3 3 3h32c1.7 0 3-1.3 3-3V3c0-1.7-1.4-3-3-3z"/><path fill="#fff" d="M35 1c1.1 0 2 .9 2 2v18c0 1.1-.9 2-2 2H3c-1.1 0-2-.9-2-2V3c0-1.1.9-2 2-2h32"/><path fill="#003087" d="M23.9 8.3c.2-1 0-1.7-.6-2.3-.6-.7-1.7-1-3.1-1h-4.1c-.3 0-.5.2-.6.5L14 15.6c0 .2.1.4.3.4H17l.4-3.4 1.8-2.2 4.7-2.1z"/><path fill="#3086C8" d="M23.9 8.3l-.2.2c-.5 2.8-2.2 3.8-4.6 3.8H18c-.3 0-.5.2-.6.5l-.6 3.9-.2 1c0 .2.1.4.3.4H19c.3 0 .5-.2.5-.4v-.1l.4-2.4v-.1c0-.2.3-.4.5-.4h.3c2.1 0 3.7-.8 4.1-3.2.2-1 .1-1.8-.4-2.4-.1-.5-.3-.7-.5-.8z"/></svg>
+    </div>
   </div>
 </footer>
 
@@ -801,6 +970,42 @@ html {
       window.location.href = '/cart';
     });
   };
+
+  // ── Header strip — draggable ──
+  (function() {
+    var strip = document.getElementById('vr-header-strip');
+    var track = document.getElementById('vr-header-track');
+    if (!strip || !track) return;
+    var isDragging = false, startX = 0, savedOffset = 0;
+    strip.addEventListener('mousedown', function(e) {
+      isDragging = true;
+      strip.classList.add('is-dragging');
+      startX = e.pageX;
+      // Capture current translate position
+      var style = window.getComputedStyle(track);
+      var mat = new DOMMatrix(style.transform);
+      savedOffset = mat.m41 || 0;
+    });
+    document.addEventListener('mouseup', function() {
+      if (!isDragging) return;
+      isDragging = false;
+      strip.classList.remove('is-dragging');
+      // Resume scroll from current offset
+      track.style.animation = '';
+      track.style.transform = '';
+    });
+    document.addEventListener('mousemove', function(e) {
+      if (!isDragging) return;
+      e.preventDefault();
+      var dx = e.pageX - startX;
+      track.style.animation = 'none';
+      track.style.transform = 'translateX(' + (savedOffset + dx) + 'px)';
+    });
+    // Touch support
+    strip.addEventListener('touchstart', function(e) { startX = e.touches[0].pageX; isDragging = true; strip.classList.add('is-dragging'); var style = window.getComputedStyle(track); var mat = new DOMMatrix(style.transform); savedOffset = mat.m41 || 0; }, { passive: true });
+    strip.addEventListener('touchmove', function(e) { if (!isDragging) return; var dx = e.touches[0].pageX - startX; track.style.animation = 'none'; track.style.transform = 'translateX(' + (savedOffset + dx) + 'px)'; }, { passive: true });
+    strip.addEventListener('touchend', function() { isDragging = false; strip.classList.remove('is-dragging'); track.style.animation = ''; track.style.transform = ''; });
+  })();
 
   // ── Lenis smooth scroll — lerp 0.03 (Odd Ritual speed) ──
   (function() {
