@@ -464,17 +464,22 @@ html {
 
 /* ─── GALLERY ─── */
 #vr-gallery {
-  padding: 0 40px 64px;
-  opacity: 0; transform: translateY(24px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+  padding: 0 0 64px;
+  background: #fff;
 }
-#vr-gallery.visible { opacity: 1; transform: translateY(0); }
 .vr-gallery-head {
-  display: flex; justify-content: space-between; align-items: flex-end;
-  margin-bottom: 20px;
+  display: flex; flex-direction: column; align-items: center;
+  text-align: center; padding: 64px 40px 40px;
 }
-.vr-gallery-label { font-size: 9px; letter-spacing: 0.3em; color: #999; }
-.vr-gallery-hint { font-size: 9px; letter-spacing: 0.16em; color: #bbb; }
+.vr-gallery-label {
+  font-size: 22px; letter-spacing: -0.01em; font-weight: 700;
+  color: #111; margin-bottom: 12px;
+}
+.vr-gallery-sub {
+  font-size: 13px; color: #777; letter-spacing: 0.03em;
+  max-width: 480px; line-height: 1.6;
+}
+.vr-gallery-hint { display: none; }
 .vr-gallery-scroll {
   display: flex; gap: 2px;
   overflow-x: auto; scrollbar-width: none;
@@ -829,11 +834,11 @@ html {
 <!-- Gallery -->
 <section id="vr-gallery">
   <div class="vr-gallery-head">
-    <span class="vr-gallery-label">( Gallery )</span>
-    <span class="vr-gallery-hint">Swipe →</span>
+    <div class="vr-gallery-label">THE VOLENU COMMUNITY</div>
+    <p class="vr-gallery-sub">With over <strong>10,000+ global customers</strong>, the VOLENU community is growing every day. Dressed with intention, everywhere.</p>
   </div>
   <div class="vr-gallery-scroll" id="vr-gallery-scroll">
-    {% for product in collections.all.products limit: 7 %}
+    {% for product in collections.all.products limit: 10 %}
       {% if product.featured_image %}
       <div class="vr-gallery-item">
         <img src="{{ product.featured_image | img_url: '500x' }}" alt="{{ product.title }}" loading="lazy">
