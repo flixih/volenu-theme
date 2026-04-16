@@ -13,6 +13,12 @@
   width: 100%; height: 100%; object-fit: cover;
   object-position: center 20%;
 }
+.vab-hero-mobile { display: none; }
+.vab-hero-desktop { display: block; }
+@media (max-width: 768px) {
+  .vab-hero-desktop { display: none; }
+  .vab-hero-mobile { display: block; }
+}
 .vab-hero-overlay {
   position: absolute; inset: 0;
   background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.1) 50%, transparent 100%);
@@ -327,7 +333,8 @@
 
 
 <section class="vab-hero">
-  <img class="vab-hero-img" src="{{ 'about-hero.jpg' | asset_url }}" alt="Volenu Our Story">
+  <img class="vab-hero-img vab-hero-desktop" src="{{ 'about-hero-desktop.jpg' | asset_url }}" alt="Volenu Headquarters">
+  <img class="vab-hero-img vab-hero-mobile" src="{{ 'about-hero.jpg' | asset_url }}" alt="Volenu Our Story">
   <div class="vab-hero-overlay"></div>
   <div class="vab-hero-content">
     <div class="vab-hero-eyebrow">Est. 2024 · Puerto Rico</div>
