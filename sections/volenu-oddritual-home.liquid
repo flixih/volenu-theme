@@ -654,9 +654,6 @@ html {
 
 <!-- Nav -->
 <nav id="vr-nav">
-  <a href="/" class="vr-nav-logo">
-    <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU">
-  </a>
   <div class="vr-nav-links">
     <a href="/collections/all">SHOP ALL</a>
     <a href="/collections/sale" class="vr-nav-sale">SALE</a>
@@ -664,6 +661,9 @@ html {
     <a href="/pages/contact">CONTACT</a>
     <a href="/pages/track-order">TRACK ORDER</a>
   </div>
+  <a href="/" class="vr-nav-logo">
+    <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU">
+  </a>
   <div class="vr-nav-right">
     <a href="/cart">CART ({{ cart.item_count }})</a>
     <button id="vr-menu-btn" aria-label="Menu">
