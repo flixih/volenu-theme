@@ -86,19 +86,8 @@ body { overflow-x: hidden; }
   height: 48px; z-index: 499;
   pointer-events: all;
 }
-.vr-nav-logo {
-  text-decoration: none;
-  position: absolute; left: 50%; transform: translateX(-50%);
-}
-.vr-nav-logo img {
-  height: 32px; width: auto; display: block;
-  filter: brightness(0) invert(1);
-  transition: filter 0.3s ease;
-}
-#vr-nav.scrolled .vr-nav-logo img { filter: brightness(0) invert(0); }
 .vr-nav-links {
-  display: flex; align-items: center; gap: 28px;
-  position: absolute; left: 50%; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 24px;
 }
 .vr-nav-links a {
   font-size: 10px; letter-spacing: 0.16em; font-weight: 500;
@@ -109,6 +98,17 @@ body { overflow-x: hidden; }
 #vr-nav.scrolled .vr-nav-links a { color: #111; }
 .vr-nav-sale { color: #ff4444 !important; }
 @media (max-width: 900px) { .vr-nav-links { display: none; } }
+.vr-nav-logo {
+  text-decoration: none;
+  position: absolute; left: 50%; transform: translateX(-50%);
+  pointer-events: auto;
+}
+.vr-nav-logo img {
+  height: 28px; width: auto; display: block;
+  filter: brightness(0) invert(1);
+  transition: filter 0.3s ease;
+}
+#vr-nav.scrolled .vr-nav-logo img { filter: brightness(0) invert(0); }
 .vr-nav-right { display: flex; align-items: center; gap: 24px; }
 .vr-nav-right a {
   font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
@@ -716,7 +716,7 @@ html {
   </div>
   <div>
     <span class="vr-manifesto-label">( Our Philosophy )</span>
-    <p>Born from a shared love of <strong>precision craftsmanship</strong>, rooted in a vision of quality and elegance expressed through what you wear on your wrist. For us, it's about the good times, the <strong>details that matter</strong>, and an appreciation for the culture of horology wherever you go.</p>
+    <p>Born from a belief that <strong>every man deserves to dress exceptionally</strong>. We build menswear with the quality of luxury brands at prices that actually make sense. For us, it's about the confidence you feel, the <strong>details that others notice</strong>, and a wardrobe built to last.</p>
   </div>
 </section>
 
