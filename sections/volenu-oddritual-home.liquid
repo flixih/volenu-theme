@@ -808,72 +808,90 @@ html {
   </div>
 </section>
 
-<!-- Featured Products -->
-<section id="vr-products">
-  <div class="vr-products-head">
-    <span class="vr-products-label">( Featured Products )</span>
-    <a href="/collections/all" class="vr-products-all">View All</a>
+<!-- BEST SELLERS -->
+<section class="vr-coll-row">
+  <div class="vr-coll-head">
+    <div class="vr-coll-title">Best Sellers</div>
+    <a href="/collections/best-sellers" class="vr-coll-viewall">VIEW ALL →</a>
   </div>
-  <div class="vr-products-scroll">
-    <div class="vr-products-track" id="vr-prod-track">
-      {% for product in collections.all.products limit: 10 %}
+  <div class="vr-coll-grid">
+    {% assign bs_col = collections['best-sellers'] %}
+    {% if bs_col and bs_col.products.size > 0 %}
+      {% for product in bs_col.products limit: 4 %}
         {% assign savings = product.compare_at_price_max | minus: product.price %}
-        <div class="vr-prod-card visible" onclick="window.location='{{ product.url }}'">
-          <div class="vr-prod-img">
+        <div class="vr-coll-card" onclick="window.location='{{ product.url }}'">
+          <div class="vr-coll-img-wrap">
             {% if product.images.size > 0 %}
-              <img class="main-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
-            {% endif %}
-            {% if product.images.size > 1 %}
-              <img class="hover-img" src="{{ product.images[1] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
-            {% else %}
-              <img class="hover-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
+              <img class="vr-coll-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
             {% endif %}
             {% if savings > 0 %}
-              <div class="vr-prod-save">SAVE {{ savings | money }}</div>
+              <div class="vr-coll-save">SAVE {{ savings | money }}</div>
             {% endif %}
-            <button class="vr-prod-quick" onclick="event.stopPropagation();vrQuickAdd('{{ product.variants.first.id }}')">+ QUICK ADD</button>
           </div>
-          <div class="vr-prod-name">{{ product.title | upcase }}</div>
-          <div class="vr-prod-prices">
-            {% if product.compare_at_price_max > product.price %}
-              <span class="vr-prod-orig">{{ product.compare_at_price_max | money }}</span>
-              <span class="vr-prod-sale">{{ product.price | money }}</span>
-            {% else %}
-              <span class="vr-prod-price">{{ product.price | money }}</span>
-            {% endif %}
+          <div class="vr-coll-info">
+            <div class="vr-coll-name">{{ product.title }}</div>
+            <div class="vr-coll-prices">
+              {% if product.compare_at_price_max > product.price %}
+                <span class="vr-coll-orig">{{ product.compare_at_price_max | money }}</span>
+                <span class="vr-coll-sale">{{ product.price | money }}</span>
+              {% else %}
+                <span class="vr-coll-price">{{ product.price | money }}</span>
+              {% endif %}
+            </div>
           </div>
         </div>
       {% endfor %}
-      <!-- Duplicate set for seamless loop -->
-      {% for product in collections.all.products limit: 10 %}
+    {% else %}
+      {% for product in collections.all.products limit: 4 %}
         {% assign savings = product.compare_at_price_max | minus: product.price %}
-        <div class="vr-prod-card visible" aria-hidden="true" onclick="window.location='{{ product.url }}'">
-          <div class="vr-prod-img">
+        <div class="vr-coll-card" onclick="window.location='{{ product.url }}'">
+          <div class="vr-coll-img-wrap">
             {% if product.images.size > 0 %}
-              <img class="main-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
-            {% endif %}
-            {% if product.images.size > 1 %}
-              <img class="hover-img" src="{{ product.images[1] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
-            {% else %}
-              <img class="hover-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
+              <img class="vr-coll-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
             {% endif %}
             {% if savings > 0 %}
-              <div class="vr-prod-save">SAVE {{ savings | money }}</div>
+              <div class="vr-coll-save">SAVE {{ savings | money }}</div>
             {% endif %}
-            <button class="vr-prod-quick" onclick="event.stopPropagation();vrQuickAdd('{{ product.variants.first.id }}')">+ QUICK ADD</button>
           </div>
-          <div class="vr-prod-name">{{ product.title | upcase }}</div>
-          <div class="vr-prod-prices">
-            {% if product.compare_at_price_max > product.price %}
-              <span class="vr-prod-orig">{{ product.compare_at_price_max | money }}</span>
-              <span class="vr-prod-sale">{{ product.price | money }}</span>
-            {% else %}
-              <span class="vr-prod-price">{{ product.price | money }}</span>
-            {% endif %}
+          <div class="vr-coll-info">
+            <div class="vr-coll-name">{{ product.title }}</div>
+            <div class="vr-coll-prices">
+              {% if product.compare_at_price_max > product.price %}
+                <span class="vr-coll-orig">{{ product.compare_at_price_max | money }}</span>
+                <span class="vr-coll-sale">{{ product.price | money }}</span>
+              {% else %}
+                <span class="vr-coll-price">{{ product.price | money }}</span>
+              {% endif %}
+            </div>
           </div>
         </div>
       {% endfor %}
-    </div>
+    {% endif %}
+  </div>
+</section>
+
+
+<!-- SHOP BY CATEGORY -->
+<section class="vr-cat-row">
+  <div class="vr-cat-title">Shop By Category</div>
+  <div class="vr-cat-grid">
+    {% assign cat_collections = "knitwear,polos,pants,shoes" | split: "," %}
+    {% assign cat_labels = "Knitwear,Polos,Pants,Shoes" | split: "," %}
+    {% for cat_handle in cat_collections %}
+      {% assign cat_col = collections[cat_handle] %}
+      {% assign cat_label = cat_labels[forloop.index0] %}
+      <a href="/collections/{{ cat_handle }}" class="vr-cat-item">
+        {% if cat_col and cat_col.image %}
+          <img src="{{ cat_col.image | img_url: '600x' }}" alt="{{ cat_label }}" loading="lazy">
+        {% elsif cat_col and cat_col.products.first and cat_col.products.first.featured_image %}
+          <img src="{{ cat_col.products.first.featured_image | img_url: '600x' }}" alt="{{ cat_label }}" loading="lazy">
+        {% else %}
+          <img src="{{ 'hero-banner.png' | asset_url }}" alt="{{ cat_label }}" loading="lazy">
+        {% endif %}
+        <div class="vr-cat-item-overlay"></div>
+        <div class="vr-cat-label">{{ cat_label }}</div>
+      </a>
+    {% endfor %}
   </div>
 </section>
 
@@ -1175,67 +1193,6 @@ html {
 }
 </style>
 
-<!-- BEST SELLERS -->
-<section class="vr-coll-row">
-  <div class="vr-coll-head">
-    <div class="vr-coll-title">Best Sellers</div>
-    <a href="/collections/best-sellers" class="vr-coll-viewall">VIEW ALL →</a>
-  </div>
-  <div class="vr-coll-grid">
-    {% assign bs_col = collections['best-sellers'] %}
-    {% if bs_col and bs_col.products.size > 0 %}
-      {% for product in bs_col.products limit: 4 %}
-        {% assign savings = product.compare_at_price_max | minus: product.price %}
-        <div class="vr-coll-card" onclick="window.location='{{ product.url }}'">
-          <div class="vr-coll-img-wrap">
-            {% if product.images.size > 0 %}
-              <img class="vr-coll-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
-            {% endif %}
-            {% if savings > 0 %}
-              <div class="vr-coll-save">SAVE {{ savings | money }}</div>
-            {% endif %}
-          </div>
-          <div class="vr-coll-info">
-            <div class="vr-coll-name">{{ product.title }}</div>
-            <div class="vr-coll-prices">
-              {% if product.compare_at_price_max > product.price %}
-                <span class="vr-coll-orig">{{ product.compare_at_price_max | money }}</span>
-                <span class="vr-coll-sale">{{ product.price | money }}</span>
-              {% else %}
-                <span class="vr-coll-price">{{ product.price | money }}</span>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    {% else %}
-      {% for product in collections.all.products limit: 4 %}
-        {% assign savings = product.compare_at_price_max | minus: product.price %}
-        <div class="vr-coll-card" onclick="window.location='{{ product.url }}'">
-          <div class="vr-coll-img-wrap">
-            {% if product.images.size > 0 %}
-              <img class="vr-coll-img" src="{{ product.images[0] | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy">
-            {% endif %}
-            {% if savings > 0 %}
-              <div class="vr-coll-save">SAVE {{ savings | money }}</div>
-            {% endif %}
-          </div>
-          <div class="vr-coll-info">
-            <div class="vr-coll-name">{{ product.title }}</div>
-            <div class="vr-coll-prices">
-              {% if product.compare_at_price_max > product.price %}
-                <span class="vr-coll-orig">{{ product.compare_at_price_max | money }}</span>
-                <span class="vr-coll-sale">{{ product.price | money }}</span>
-              {% else %}
-                <span class="vr-coll-price">{{ product.price | money }}</span>
-              {% endif %}
-            </div>
-          </div>
-        </div>
-      {% endfor %}
-    {% endif %}
-  </div>
-</section>
 
 <!-- SHOP THE LOOK -->
 <section class="vr-coll-row">
