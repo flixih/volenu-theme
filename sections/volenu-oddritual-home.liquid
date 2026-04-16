@@ -495,6 +495,103 @@ html {
 .vr-gallery-item img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
 .vr-gallery-item:hover img { transform: scale(1.04); }
 
+/* ─── MISSION / CATEGORY SECTIONS ─── */
+.vr-mission {
+  padding: 56px 40px; text-align: center;
+  border-top: 1px solid #ececec; border-bottom: 1px solid #ececec;
+  background: #fff;
+}
+.vr-mission-title {
+  font-size: clamp(18px, 2.5vw, 28px); letter-spacing: 0.06em;
+  margin-bottom: 12px; color: #111;
+}
+.vr-mission-sub {
+  font-size: 14px; color: #666; max-width: 520px;
+  margin: 0 auto; line-height: 1.7;
+}
+.vr-section-grid {
+  padding: 56px 40px; background: #fff;
+  border-bottom: 1px solid #ececec;
+}
+.vr-section-head {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-bottom: 28px;
+}
+.vr-section-title {
+  font-size: 20px; font-weight: 800;
+  letter-spacing: -0.01em; color: #111;
+  font-family: 'Times New Roman', serif;
+}
+.vr-section-view {
+  display: inline-flex; align-items: center;
+  background: #111; color: #fff;
+  font-size: 10px; letter-spacing: 0.16em;
+  padding: 10px 20px; text-decoration: none;
+  font-weight: 600; white-space: nowrap;
+}
+.vr-section-view:hover { background: #333; }
+.vr-cat-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+}
+.vr-cat-card {
+  position: relative; text-decoration: none; color: #111;
+  display: block;
+}
+.vr-cat-save {
+  position: absolute; top: 10px; left: 10px; z-index: 2;
+  background: #cc0000; color: #fff;
+  font-size: 9px; font-weight: 700; letter-spacing: 0.06em;
+  padding: 3px 8px;
+}
+.vr-cat-img {
+  aspect-ratio: 3/4; overflow: hidden; background: #f4f4f4;
+  margin-bottom: 12px;
+}
+.vr-cat-img img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease; display: block;
+}
+.vr-cat-card:hover .vr-cat-img img { transform: scale(1.04); }
+.vr-cat-name {
+  font-size: 10px; letter-spacing: 0.1em; font-weight: 600;
+  margin-bottom: 4px;
+}
+.vr-cat-prices { display: flex; gap: 8px; align-items: center; }
+.vr-cat-orig { font-size: 11px; color: #bbb; text-decoration: line-through; }
+.vr-cat-sale { font-size: 11px; color: #cc0000; font-weight: 600; }
+
+/* Shop by category tiles */
+.vr-by-cat { padding: 56px 0; background: #fff; border-bottom: 1px solid #ececec; }
+.vr-bycat-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+  padding: 0 40px;
+}
+.vr-bycat-tile {
+  position: relative; overflow: hidden;
+  aspect-ratio: 3/4; display: block; text-decoration: none;
+  cursor: pointer;
+}
+.vr-bycat-tile img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.5s ease; display: block;
+  filter: brightness(0.75);
+}
+.vr-bycat-tile:hover img { transform: scale(1.04); filter: brightness(0.65); }
+.vr-bycat-tile span {
+  position: absolute; bottom: 20px; left: 20px;
+  color: #fff; font-size: 12px; font-weight: 700;
+  letter-spacing: 0.16em;
+}
+
+@media (max-width: 768px) {
+  .vr-cat-grid { grid-template-columns: repeat(2, 1fr); }
+  .vr-bycat-grid { grid-template-columns: repeat(2, 1fr); }
+  .vr-section-grid { padding: 40px 20px; }
+  .vr-mission { padding: 40px 20px; }
+  .vr-by-cat { padding: 40px 0; }
+  .vr-bycat-grid { padding: 0 20px; }
+}
+
 /* ─── FOOTER ─── */
 #vr-footer {
   background: #111; color: #fff;
@@ -844,6 +941,135 @@ html {
         <img src="{{ product.featured_image | img_url: '500x' }}" alt="{{ product.title }}" loading="lazy">
       </div>
       {% endif %}
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Mission -->
+<section class="vr-mission">
+  <div class="vr-mission-title">VOLENU'S <strong>MISSION</strong></div>
+  <p class="vr-mission-sub">Everyone deserves to dress with class. We elevate your style with premium menswear, without overpaying.</p>
+</section>
+
+<!-- Best Sellers -->
+<section class="vr-section-grid">
+  <div class="vr-section-head">
+    <span class="vr-section-title">BEST SELLERS</span>
+    <a href="/collections/best-sellers" class="vr-section-view">VIEW ALL ›</a>
+  </div>
+  <div class="vr-cat-grid">
+    {% assign bs = collections['best-sellers'] %}
+    {% if bs %}
+      {% for product in bs.products limit: 4 %}
+        {% assign savings = product.compare_at_price_max | minus: product.price %}
+        <a href="{{ product.url }}" class="vr-cat-card">
+          {% if savings > 0 %}<div class="vr-cat-save">SAVE {{ savings | money }}</div>{% endif %}
+          <div class="vr-cat-img"><img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy"></div>
+          <div class="vr-cat-name">{{ product.title | upcase }}</div>
+          <div class="vr-cat-prices">
+            {% if product.compare_at_price_max > product.price %}
+              <span class="vr-cat-orig">{{ product.compare_at_price_max | money }}</span>
+              <span class="vr-cat-sale">{{ product.price | money }}</span>
+            {% else %}
+              <span class="vr-cat-sale">{{ product.price | money }}</span>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    {% else %}
+      {% for product in collections.all.products limit: 4 %}
+        {% assign savings = product.compare_at_price_max | minus: product.price %}
+        <a href="{{ product.url }}" class="vr-cat-card">
+          {% if savings > 0 %}<div class="vr-cat-save">SAVE {{ savings | money }}</div>{% endif %}
+          <div class="vr-cat-img"><img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy"></div>
+          <div class="vr-cat-name">{{ product.title | upcase }}</div>
+          <div class="vr-cat-prices">
+            {% if product.compare_at_price_max > product.price %}
+              <span class="vr-cat-orig">{{ product.compare_at_price_max | money }}</span>
+              <span class="vr-cat-sale">{{ product.price | money }}</span>
+            {% else %}
+              <span class="vr-cat-sale">{{ product.price | money }}</span>
+            {% endif %}
+          </div>
+        </a>
+      {% endfor %}
+    {% endif %}
+  </div>
+</section>
+
+<!-- Shop by Category -->
+<section class="vr-by-cat">
+  <div class="vr-section-title" style="padding:0 40px 24px;">SHOP BY CATEGORY</div>
+  <div class="vr-bycat-grid">
+    <a href="/collections/knitwear" class="vr-bycat-tile">
+      <img src="{{ collections['knitwear'].products.first.featured_image | img_url: '600x' | default: 'hero-banner.png' | asset_url }}" loading="lazy">
+      <span>KNITWEAR</span>
+    </a>
+    <a href="/collections/polos" class="vr-bycat-tile">
+      <img src="{{ collections['polos'].products.first.featured_image | img_url: '600x' | default: 'hero-banner.png' | asset_url }}" loading="lazy">
+      <span>POLOS</span>
+    </a>
+    <a href="/collections/pants" class="vr-bycat-tile">
+      <img src="{{ collections['pants'].products.first.featured_image | img_url: '600x' | default: 'hero-banner.png' | asset_url }}" loading="lazy">
+      <span>PANTS</span>
+    </a>
+    <a href="/collections/shoes" class="vr-bycat-tile">
+      <img src="{{ collections['shoes'].products.first.featured_image | img_url: '600x' | default: 'hero-banner.png' | asset_url }}" loading="lazy">
+      <span>SHOES</span>
+    </a>
+  </div>
+</section>
+
+<!-- Shop the Look -->
+<section class="vr-section-grid">
+  <div class="vr-section-head">
+    <span class="vr-section-title">SHOP THE LOOK</span>
+    <a href="/collections/outfits" class="vr-section-view">VIEW ALL ›</a>
+  </div>
+  <div class="vr-cat-grid">
+    {% assign outfits = collections['outfits'] %}
+    {% assign src = outfits | default: collections.all %}
+    {% for product in src.products limit: 4 %}
+      {% assign savings = product.compare_at_price_max | minus: product.price %}
+      <a href="{{ product.url }}" class="vr-cat-card">
+        {% if savings > 0 %}<div class="vr-cat-save">SAVE {{ savings | money }}</div>{% endif %}
+        <div class="vr-cat-img"><img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy"></div>
+        <div class="vr-cat-name">{{ product.title | upcase }}</div>
+        <div class="vr-cat-prices">
+          {% if product.compare_at_price_max > product.price %}
+            <span class="vr-cat-orig">{{ product.compare_at_price_max | money }}</span>
+            <span class="vr-cat-sale">{{ product.price | money }}</span>
+          {% else %}
+            <span class="vr-cat-sale">{{ product.price | money }}</span>
+          {% endif %}
+        </div>
+      </a>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- Shop Shoes -->
+<section class="vr-section-grid">
+  <div class="vr-section-head">
+    <span class="vr-section-title">SHOP SHOES</span>
+    <a href="/collections/shoes" class="vr-section-view">VIEW ALL ›</a>
+  </div>
+  <div class="vr-cat-grid">
+    {% for product in collections['shoes'].products limit: 4 %}
+      {% assign savings = product.compare_at_price_max | minus: product.price %}
+      <a href="{{ product.url }}" class="vr-cat-card">
+        {% if savings > 0 %}<div class="vr-cat-save">SAVE {{ savings | money }}</div>{% endif %}
+        <div class="vr-cat-img" style="background:#f0f0f0;"><img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}" loading="lazy"></div>
+        <div class="vr-cat-name">{{ product.title | upcase }}</div>
+        <div class="vr-cat-prices">
+          {% if product.compare_at_price_max > product.price %}
+            <span class="vr-cat-orig">{{ product.compare_at_price_max | money }}</span>
+            <span class="vr-cat-sale">{{ product.price | money }}</span>
+          {% else %}
+            <span class="vr-cat-sale">{{ product.price | money }}</span>
+          {% endif %}
+        </div>
+      </a>
     {% endfor %}
   </div>
 </section>
