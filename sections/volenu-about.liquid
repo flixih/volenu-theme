@@ -45,11 +45,12 @@
   display: grid; grid-template-columns: 1fr 1fr;
   gap: 80px; align-items: center;
   border-bottom: 1px solid #ececec;
+  background: #fff;
 }
-.vab-manifesto-num {
-  font-size: 120px; font-weight: 800;
-  color: #f0f0f0; line-height: 1;
-  letter-spacing: -0.04em; user-select: none;
+.vab-manifesto-img {
+  width: 100%; aspect-ratio: 4/3;
+  object-fit: cover; border-radius: 4px;
+  display: block;
 }
 .vab-manifesto-right {}
 .vab-manifesto-label {
@@ -337,7 +338,7 @@
 
 <!-- MANIFESTO -->
 <section class="vab-manifesto vab-reveal">
-  <div class="vab-manifesto-num">01</div>
+  <img class="vab-manifesto-img" src="{{ 'about-shoes.jpg' | asset_url }}" alt="Volenu Shoes Collection">
   <div class="vab-manifesto-right">
     <div class="vab-manifesto-label">The Vision</div>
     <p class="vab-manifesto-text">We believe every man deserves to dress like the best version of himself without emptying his wallet to do it.</p>
