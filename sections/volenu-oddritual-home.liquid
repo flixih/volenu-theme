@@ -1013,7 +1013,7 @@ html {
     var s = document.createElement('script');
     s.src = 'https://cdn.jsdelivr.net/npm/@studio-freight/lenis@1.0.42/dist/lenis.min.js';
     s.onload = function() {
-      var lenis = new Lenis({ lerp: 0.03, smoothWheel: true, wheelMultiplier: 0.8 });
+      var lenis = new Lenis({ lerp: 0.08, smoothWheel: true, wheelMultiplier: 1.0 });
       function raf(t) { lenis.raf(t); requestAnimationFrame(raf); }
       requestAnimationFrame(raf);
     };
