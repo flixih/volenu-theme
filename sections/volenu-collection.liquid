@@ -22,7 +22,10 @@ body { overflow-x: hidden; background: #fff; }
   background: #fff;
   border-bottom: 1px solid #e8e8e8;
 }
-.vc-nav-logo { text-decoration: none; }
+.vc-nav-logo {
+  text-decoration: none;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
 .vc-nav-logo img { height: 24px; width: auto; display: block; }
 .vc-nav-back {
   display: flex; align-items: center;
@@ -275,7 +278,7 @@ body { overflow-x: hidden; background: #fff; }
   <div class="vc-hero-overlay"></div>
   <div class="vc-hero-content">
     <div class="vc-hero-eyebrow">VOLENU</div>
-    <div class="vc-hero-title">{{ collection.title | upcase }}</div>
+    <div class="vc-hero-title">VOLENU COLLECTION</div>
   </div>
 </div>
 

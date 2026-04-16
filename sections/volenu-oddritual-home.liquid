@@ -72,12 +72,24 @@ body { overflow-x: hidden; }
 
 /* ─── NAV ─── */
 #vr-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 500;
+  position: fixed; top: -70px; left: 0; right: 0; z-index: 500;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 32px; height: 60px;
-  transition: background 0.3s ease;
+  transition: top 0.4s cubic-bezier(0.16,1,0.3,1), background 0.3s ease;
 }
-.vr-nav-logo { text-decoration: none; }
+#vr-nav.nav-visible, #vr-nav.scrolled {
+  top: 0;
+}
+/* Invisible proximity trigger zone at top of page */
+#vr-nav-trigger {
+  position: fixed; top: 0; left: 0; right: 0;
+  height: 48px; z-index: 499;
+  pointer-events: all;
+}
+.vr-nav-logo {
+  text-decoration: none;
+  position: absolute; left: 50%; transform: translateX(-50%);
+}
 .vr-nav-logo img {
   height: 32px; width: auto; display: block;
   filter: brightness(0) invert(1);
@@ -629,6 +641,9 @@ html {
   </div>
 </div>
 
+<!-- Proximity trigger for nav -->
+<div id="vr-nav-trigger"></div>
+
 <!-- Nav -->
 <nav id="vr-nav">
   <a href="/" class="vr-nav-logo">
@@ -948,10 +963,42 @@ html {
     });
   }
 
-  // ── Nav black on scroll ──
+  // ── Nav scroll + proximity pull-down ──
   var vrNav = document.getElementById('vr-nav');
+  var vrTrigger = document.getElementById('vr-nav-trigger');
+  var navHideTimer = null;
+
+  function showNav() {
+    clearTimeout(navHideTimer);
+    vrNav.classList.add('nav-visible');
+  }
+  function hideNav() {
+    if (!vrNav.classList.contains('scrolled')) {
+      navHideTimer = setTimeout(function() {
+        vrNav.classList.remove('nav-visible');
+      }, 800);
+    }
+  }
+
+  // Show on mouse near top (within 80px)
+  document.addEventListener('mousemove', function(e) {
+    if (e.clientY < 80) {
+      showNav();
+    } else if (e.clientY > 120) {
+      hideNav();
+    }
+  }, { passive: true });
+
+  // Keep visible on hover
+  vrNav.addEventListener('mouseenter', showNav);
+  vrNav.addEventListener('mouseleave', hideNav);
+
   window.addEventListener('scroll', function() {
-    vrNav.classList.toggle('scrolled', window.scrollY > window.innerHeight * 0.85);
+    var scrolled = window.scrollY > window.innerHeight * 0.85;
+    vrNav.classList.toggle('scrolled', scrolled);
+    if (scrolled) {
+      vrNav.classList.add('nav-visible');
+    }
     var hint = document.getElementById('vr-scroll-hint');
     if (hint) hint.style.opacity = window.scrollY > 60 ? '0' : '1';
   }, { passive: true });
