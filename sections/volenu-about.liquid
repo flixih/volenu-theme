@@ -70,6 +70,12 @@
   letter-spacing: -0.01em; color: #111;
 }
 
+.vab-story-mobile { display: none; }
+.vab-story-desktop { display: block; }
+@media (max-width: 768px) {
+  .vab-story-desktop { display: none; }
+  .vab-story-mobile { display: block; }
+}
 /* ── STORY SPLIT ── */
 .vab-story {
   display: grid; grid-template-columns: 1fr 1fr;
@@ -355,7 +361,8 @@
 <!-- STORY SPLIT Founder -->
 <section class="vab-story">
   <div class="vab-story-img-wrap">
-    <img class="vab-story-img" src="{{ 'about-founder.jpg' | asset_url }}" alt="Volenu Founder">
+    <img class="vab-story-img vab-story-desktop" src="{{ 'about-founder.jpg' | asset_url }}" alt="Volenu Founder">
+    <img class="vab-story-img vab-story-mobile" src="{{ 'about-hq2.jpg' | asset_url }}" alt="Volenu Headquarters">
   </div>
   <div class="vab-story-text">
     <div class="vab-story-label">The Beginning</div>
