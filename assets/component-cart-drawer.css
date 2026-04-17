@@ -1321,3 +1321,55 @@ button[name="checkout"]:hover { background: #2d2d2d !important; }
 .additional-checkout-buttons { display: none !important; }
 
 .gradient { background: #fff !important; }
+
+/* ── Force black checkout button — override ALL Dawn color schemes ── */
+#CartDrawer-Checkout,
+#CartDrawer-Checkout.button,
+.cart__checkout-button,
+.cart__checkout-button.button,
+button[name="checkout"],
+.cart__ctas button {
+  background: #111111 !important;
+  background-color: #111111 !important;
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+  border: none !important;
+  border-radius: 0 !important;
+  width: 100% !important;
+  padding: 16px !important;
+  font-size: 11px !important;
+  letter-spacing: 0.2em !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  margin-top: 14px !important;
+}
+#CartDrawer-Checkout:hover,
+.cart__checkout-button:hover,
+button[name="checkout"]:hover {
+  background: #333333 !important;
+  background-color: #333333 !important;
+}
+
+/* ── Fix shipping bar fill ── */
+.vr-shipping-bar__fill {
+  display: block !important;
+  height: 3px !important;
+  background: #111 !important;
+  background-color: #111 !important;
+  border-radius: 2px !important;
+  min-width: 2px !important;
+  transition: width 0.4s ease !important;
+}
+.vr-shipping-bar__track {
+  display: block !important;
+  height: 3px !important;
+  background: #e0e0e0 !important;
+  border-radius: 2px !important;
+  overflow: hidden !important;
+  width: 100% !important;
+}
