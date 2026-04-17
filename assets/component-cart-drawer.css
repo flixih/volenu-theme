@@ -1464,3 +1464,40 @@ s.cart-item__old-price {
   color: #fff !important; -webkit-text-fill-color: #fff !important;
   border-radius: 0 !important; border: none !important;
 }
+
+/* ── Wider drawer + scrollable items ── */
+.drawer__inner {
+  width: 480px !important;
+  max-width: 95vw !important;
+}
+@media (max-width: 600px) {
+  .drawer__inner { width: 100vw !important; max-width: 100vw !important; }
+}
+
+/* Make the items area scrollable */
+#CartDrawer-CartItems,
+.drawer__contents,
+.js-contents {
+  overflow-y: auto !important;
+  overflow-x: hidden !important;
+  -webkit-overflow-scrolling: touch !important;
+  overscroll-behavior: contain !important;
+}
+
+/* Smaller item rows so more fit */
+.cart-item {
+  padding: 12px 20px !important;
+}
+.cart-item__image-container {
+  width: 65px !important;
+  height: 80px !important;
+}
+.cart-item__image {
+  width: 65px !important;
+  height: 80px !important;
+  object-fit: cover !important;
+}
+
+/* Hide upsell */
+.cart-primary-upsell, .cart-secondary-upsell,
+[class*="upsell"] { display: none !important; }
