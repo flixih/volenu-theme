@@ -1444,3 +1444,23 @@ cart-remove-button button {
 /* Red sale price */
 .cart-drawer__final-item-price { color: #c0392b !important; -webkit-text-fill-color: #c0392b !important; font-weight: 600 !important; }
 .cart-item__old-price { color: #aaa !important; -webkit-text-fill-color: #aaa !important; text-decoration: line-through !important; }
+
+/* Red sale price - safe selectors only */
+.cart-drawer__final-item-price {
+  color: #c0392b !important;
+  -webkit-text-fill-color: #c0392b !important;
+  font-weight: 600 !important;
+}
+s.cart-item__old-price {
+  color: #aaa !important;
+  -webkit-text-fill-color: #aaa !important;
+  text-decoration: line-through !important;
+}
+/* Hide upsell */
+.cart-primary-upsell, .cart-secondary-upsell { display: none !important; }
+/* Black checkout */
+#CartDrawer-Checkout, .cart__checkout-button {
+  background: #111 !important; background-color: #111 !important;
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+  border-radius: 0 !important; border: none !important;
+}

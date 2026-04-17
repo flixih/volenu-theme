@@ -569,22 +569,24 @@
             {%- endif -%}
           </div>
 
-          <div class="totals" role="status">
+          <div class="totals" role="status" style="display:block !important;">
             {%- assign orig = 0 -%}
             {%- for item in cart.items -%}{%- assign orig = orig | plus: item.original_line_price -%}{%- endfor -%}
             {%- assign saved = orig | minus: cart.total_price -%}
-            <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
-              <span style="color:#666;">Subtotal</span>
+            <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;border-bottom:1px solid #f0f0f0;margin-bottom:5px;">
+              <span style="color:#666;letter-spacing:0.06em;">Subtotal</span>
               <span style="color:#111;font-weight:500;">{{ orig | money }}</span>
             </div>
             {%- if saved > 0 -%}
-            <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
+            <div style="display:flex;justify-content:space-between;padding:5px 0;font-size:13px;">
               <span style="color:#c0392b;">Discount (You saved)</span>
-              <span style="color:#c0392b;font-weight:500;">-{{ saved | money }}</span>
+              <span style="color:#c0392b;font-weight:600;">-{{ saved | money }}</span>
             </div>
             {%- endif -%}
-            <h2 class="totals__total">Total</h2>
-            <p class="totals__total-value">{{ cart.total_price | money }}</p>
+            <div style="display:flex;justify-content:space-between;align-items:center;padding:10px 0 5px;border-top:1px solid #e8e8e8;margin-top:5px;">
+              <span style="font-size:14px;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;color:#111;">Total</span>
+              <span style="font-size:16px;font-weight:700;color:#111;">{{ cart.total_price | money }}</span>
+            </div>
           </div>
 
         </div>
