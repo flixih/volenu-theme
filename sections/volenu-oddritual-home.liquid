@@ -1038,14 +1038,17 @@ html {
 .vr-cat-item:hover img { transform: scale(1.04); }
 .vr-cat-item-overlay {
   position: absolute; inset: 0;
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.42);
   transition: background 0.3s;
 }
-.vr-cat-item:hover .vr-cat-item-overlay { background: rgba(0,0,0,0.45); }
+.vr-cat-item:hover .vr-cat-item-overlay { background: rgba(0,0,0,0.58); }
 .vr-cat-label {
-  position: absolute; bottom: 20px; left: 20px;
-  font-size: 12px; letter-spacing: 0.2em; font-weight: 700;
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 13px; letter-spacing: 0.22em; font-weight: 600;
   color: #fff; text-transform: uppercase;
+  white-space: nowrap;
 }
 
 @media (max-width: 768px) {
