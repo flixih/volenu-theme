@@ -1322,19 +1322,22 @@ html {
 
   // ── Cart drawer trigger ──
   var vrCartBtn = document.getElementById('vr-cart-btn');
+  function vrOpenCartDrawer() {
+    var cartDrawer = document.querySelector('cart-drawer');
+    if (cartDrawer && typeof cartDrawer.open === 'function') {
+      cartDrawer.open(vrCartBtn);
+    }
+  }
   if (vrCartBtn) {
     vrCartBtn.addEventListener('click', function(e) {
       e.preventDefault();
-      var cartDrawer = document.querySelector('cart-drawer');
-      if (cartDrawer && typeof cartDrawer.open === 'function') {
-        cartDrawer.open(vrCartBtn);
-      } else {
-        // fallback: trigger Dawn's cart-icon-bubble
-        var dawndBtn = document.getElementById('cart-icon-bubble');
-        if (dawndBtn) dawndBtn.click();
-        else window.location = '/cart';
-      }
+      vrOpenCartDrawer();
     });
+  }
+  // Auto-open if redirected from /cart
+  if (window.location.search.indexOf('open_cart=1') !== -1) {
+    window.history.replaceState({}, '', '/');
+    setTimeout(vrOpenCartDrawer, 600);
   }
 
   // ── Nav Dropdowns ──
