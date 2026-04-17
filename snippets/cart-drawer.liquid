@@ -95,24 +95,22 @@
       </div>
 
       <!-- Free Shipping Progress Bar -->
-      {%- assign free_shipping_threshold = 10000 -%}<!-- $100.00 in cents -->
+      {%- assign free_shipping_threshold = 10000 -%}
       {%- assign cart_total = cart.total_price -%}
       {%- assign remaining = free_shipping_threshold | minus: cart_total -%}
+      {%- assign pct = cart_total | times: 100.0 | divided_by: free_shipping_threshold | round -%}
+      {%- if pct > 100 -%}{%- assign pct = 100 -%}{%- endif -%}
       <div class="vr-shipping-bar">
         {%- if cart_total >= free_shipping_threshold -%}
-          <p class="vr-shipping-bar__msg vr-shipping-bar__msg--eligible">🎉 You are eligible for free shipping.</p>
+          <p class="vr-shipping-bar__msg vr-shipping-bar__msg--eligible">🎉 Congrats! You get <strong>FREE shipping!</strong></p>
         {%- else -%}
           <p class="vr-shipping-bar__msg">Spend <strong>{{ remaining | money }}</strong> more to get free shipping!</p>
         {%- endif -%}
         <div class="vr-shipping-bar__track">
-          {%- assign pct = cart_total | times: 100 | divided_by: free_shipping_threshold -%}
-          {%- if pct > 100 -%}{%- assign pct = 100 -%}{%- endif -%}
-          <div class="vr-shipping-bar__fill" style="width:{{ pct }}%"></div>
+          <div class="vr-shipping-bar__fill" style="width:{{ pct }}% !important"></div>
         </div>
       </div>
-      {% if settings.enable_cart_progress_bar and cart != empty %}
-        {% render 'cart-progress-bar' %}
-      {% endif %}
+
       <div class="cart-drawer-items-and-upsell">
         <cart-drawer-items
           {% if cart == empty %}
@@ -526,17 +524,10 @@
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
       </cart-drawer-items>
-      {% if settings.enable_cart_upsell_1 %}
-        {% render 'ds-cart-primary-upsell' %}
-      {% endif %}
-      {% if settings.enable_cart_upsell_2 and settings.cart_upsell_2_position == 'body' %}
-        {% render 'ds-cart-secondary-upsell' %}
-      {% endif %}
+      {% comment %} Upsells removed {% endcomment %}
       </div>
       <div class="drawer__footer">
-        {% if settings.enable_cart_upsell_2 and settings.cart_upsell_2_position == 'footer' %}
-          {% render 'ds-cart-secondary-upsell' %}
-        {% endif %}
+        {% comment %} Footer upsell removed {% endcomment %}
         {% if settings.enable_cart_discount %}
           {% render 'ds-cart-discount-field' %}
         {% endif %}
@@ -579,53 +570,13 @@
           </div>
 
           <div class="totals" role="status">
-            <h2 class="totals__total">{{ 'sections.cart.estimated_total' | t }}</h2>
-            <p class="totals__total-value">{{ cart.total_price | money_with_currency }}</p>
+            <h2 class="totals__total">Total</h2>
+            <p class="totals__total-value">{{ cart.total_price | money }}</p>
           </div>
 
-          <small class="tax-note caption-large rte">
-            {%- if cart.duties_included and cart.taxes_included -%}
-              {%- if shop.shipping_policy.body == blank -%}
-                {{ 'sections.cart.duties_and_taxes_included_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
-              {%- endif -%}
-            {%- elsif cart.duties_included == false and cart.taxes_included -%}
-              {%- if shop.shipping_policy.body == blank -%}
-                {{ 'sections.cart.taxes_included_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.taxes_included_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
-              {%- endif -%}
-            {%- elsif cart.duties_included and cart.taxes_included == false -%}
-              {%- if shop.shipping_policy.body == blank -%}
-                {{ 'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
-              {%- endif -%}
-            {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
-              {%- if shop.shipping_policy.body == blank -%}
-                {{ 'sections.cart.taxes_at_checkout_shipping_at_checkout_without_policy' | t }}
-              {%- else -%}
-                {{
-                  'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                  | t: link: shop.shipping_policy.url
-                }}
-              {%- endif -%}
-            {%- endif -%}
-          </small>
         </div>
 
         <!-- CTAs -->
-
         <div class="cart__ctas" {{ block.shopify_attributes }}>
           <button
             type="submit"
@@ -633,31 +584,12 @@
             class="cart__checkout-button button"
             name="checkout"
             form="CartDrawer-Form"
-            {% if cart == empty %}
-              disabled
-            {% endif %}
+            {% if cart == empty %}disabled{% endif %}
           >
-            {{ 'sections.cart.checkout' | t }}
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:6px"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
+            CHECKOUT SECURELY
           </button>
         </div>
-
-        {% if settings.show_cart_payment_badges %}
-          <div class="cart__badges">
-            <ul class="payment-badges" role="list">
-              {% assign enabled_payment_types = shop.enabled_payment_types %}
-              {% if settings.enabled_cart_payment_types != blank %}
-                {% assign enabled_payment_types = settings.enabled_cart_payment_types | remove: ' ' | split: ',' %}
-              {% endif %}
-        
-              {%- for type in enabled_payment_types -%}
-                {% assign payment_type = type | strip %}
-                <li class="list-payment__item">
-                  {{ payment_type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-                </li>
-              {%- endfor -%}
-            </ul>
-          </div>
-        {% endif %}
         {% if settings.cart_trust_badges %}
           <div class="cart__badges cart__trust-badges">
             <img
