@@ -555,23 +555,25 @@
         <!-- Subtotals -->
 
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
-          {%- assign orig = 0 -%}
-          {%- for item in cart.items -%}{%- assign orig = orig | plus: item.original_line_price -%}{%- endfor -%}
-          {%- assign saved = orig | minus: cart.total_price -%}
-          <style>
-            .vr-tot { display:flex; justify-content:space-between; padding:5px 0; font-size:13px; }
-            .vr-tot-label { color:#666; letter-spacing:0.06em; }
-            .vr-tot-val { color:#111; font-weight:500; }
-            .vr-tot-disc .vr-tot-label, .vr-tot-disc .vr-tot-val { color:#c0392b !important; -webkit-text-fill-color:#c0392b !important; }
-            .vr-tot-final { border-top:1px solid #e8e8e8; margin-top:8px; padding-top:10px; }
-            .vr-tot-final .vr-tot-label { font-size:14px; font-weight:700; color:#111; text-transform:uppercase; letter-spacing:0.12em; }
-            .vr-tot-final .vr-tot-val { font-size:16px; font-weight:700; color:#111; }
-          </style>
-          <div class="vr-tot"><span class="vr-tot-label">Subtotal</span><span class="vr-tot-val">{{ orig | money }}</span></div>
-          {%- if saved > 0 -%}
-          <div class="vr-tot vr-tot-disc"><span class="vr-tot-label">Discount (You saved)</span><span class="vr-tot-val">-{{ saved | money }}</span></div>
-          {%- endif -%}
-          <div class="vr-tot vr-tot-final"><span class="vr-tot-label">Total</span><span class="vr-tot-val">{{ cart.total_price | money }}</span></div>
+          <div>
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                {%- for discount in cart.cart_level_discount_applications -%}
+                  <li class="discounts__discount discounts__discount--end">
+                    {{- 'icon-discount.svg' | inline_asset_content -}}
+                    {{ discount.title | escape }}
+                    (-{{ discount.total_allocated_amount | money }})
+                  </li>
+                {%- endfor -%}
+              </ul>
+            {%- endif -%}
+          </div>
+
+          <div class="totals" role="status">
+            <h2 class="totals__total">Total</h2>
+            <p class="totals__total-value">{{ cart.total_price | money }}</p>
+          </div>
+
         </div>
 
         <!-- CTAs -->
