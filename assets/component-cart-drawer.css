@@ -1551,3 +1551,30 @@ cart-remove-button button {
   font-weight: 700 !important;
   color: #111 !important;
 }
+
+/* ── Fix: ensure items section is visible and takes up space ── */
+.drawer__inner {
+  display: flex !important;
+  flex-direction: column !important;
+  overflow: hidden !important;
+}
+#CartDrawer-CartItems,
+.drawer__contents {
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  min-height: 0 !important;
+  display: block !important;
+}
+cart-drawer-items {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+}
+.cart__contents {
+  display: flex !important;
+  flex-direction: column !important;
+  flex: 1 1 auto !important;
+  min-height: 0 !important;
+}
