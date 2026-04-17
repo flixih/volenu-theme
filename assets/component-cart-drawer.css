@@ -1440,3 +1440,74 @@ cart-remove-button button {
   padding: 0 !important;
   white-space: nowrap !important;
 }
+
+/* ── Cart tweaks: wider, qty left of price, red discount ── */
+
+/* Shift drawer 10% wider / left */
+.drawer__inner {
+  width: 44vw !important;
+  max-width: 520px !important;
+}
+@media (max-width: 900px) {
+  .drawer__inner { width: 100vw !important; max-width: 100vw !important; }
+}
+
+/* Cart item: image | details+qty | price */
+.cart-item {
+  grid-template-columns: 80px 1fr auto !important;
+  gap: 14px !important;
+  padding: 18px 24px !important;
+  align-items: start !important;
+}
+
+/* Put qty controls inline with name/details */
+.cart-item__details {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 6px !important;
+}
+.cart-item__quantity-wrapper,
+.cart-item__quantity {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  margin-top: 8px !important;
+}
+
+/* Red discounted price */
+.cart-item__discounted-prices .price--end:not(s) {
+  color: #c0392b !important;
+  -webkit-text-fill-color: #c0392b !important;
+  font-weight: 600 !important;
+}
+.cart-item__discounted-prices s.price--end {
+  color: #aaa !important;
+  -webkit-text-fill-color: #aaa !important;
+  text-decoration: line-through !important;
+  font-size: 11px !important;
+}
+
+/* Totals footer: subtotal + discount + total */
+.drawer__footer .totals { display: none !important; }
+
+.vr-totals-block {
+  padding: 14px 0 0 !important;
+}
+.vr-totals-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 4px 0 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.06em !important;
+}
+.vr-totals-row span:first-child { color: #666 !important; }
+.vr-totals-row span:last-child { color: #111 !important; font-weight: 500 !important; }
+.vr-totals-discount span { color: #c0392b !important; -webkit-text-fill-color: #c0392b !important; }
+.vr-totals-total {
+  border-top: 1px solid #e8e8e8 !important;
+  margin-top: 8px !important;
+  padding-top: 10px !important;
+}
+.vr-totals-total span:first-child { font-size: 13px !important; font-weight: 700 !important; color: #111 !important; text-transform: uppercase !important; letter-spacing: 0.12em !important; }
+.vr-totals-total span:last-child { font-size: 16px !important; font-weight: 700 !important; color: #111 !important; }
