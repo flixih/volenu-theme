@@ -1321,3 +1321,11 @@ button[name="checkout"]:hover { background: #2d2d2d !important; }
 .additional-checkout-buttons { display: none !important; }
 
 .gradient { background: #fff !important; }
+
+/* Force black button */
+#CartDrawer-Checkout, .cart__checkout-button, button[name="checkout"] {
+  background: #111 !important; background-color: #111 !important;
+  color: #fff !important; -webkit-text-fill-color: #fff !important;
+  border-radius: 0 !important;
+}
+#CartDrawer-Checkout:hover, .cart__checkout-button:hover { background: #333 !important; background-color: #333 !important; }
