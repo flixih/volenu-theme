@@ -1511,3 +1511,39 @@ cart-remove-button button {
 }
 .vr-totals-total span:first-child { font-size: 13px !important; font-weight: 700 !important; color: #111 !important; text-transform: uppercase !important; letter-spacing: 0.12em !important; }
 .vr-totals-total span:last-child { font-size: 16px !important; font-weight: 700 !important; color: #111 !important; }
+
+/* ── Quantity next to price at top, red sale numbers ── */
+
+/* Reorder columns: image | details | qty | price */
+.cart-item {
+  display: grid !important;
+  grid-template-columns: 80px 1fr auto auto !important;
+  gap: 12px !important;
+  align-items: start !important;
+}
+/* image stays col 1 */
+.cart-item td:nth-child(1) { grid-column: 1 !important; }
+/* details col 2 */
+.cart-item__details { grid-column: 2 !important; }
+/* price col 3 — move before quantity visually */
+.cart-item__totals { grid-column: 3 !important; grid-row: 1 !important; text-align: right !important; }
+/* quantity col 4 */
+.cart-item__quantity { grid-column: 4 !important; grid-row: 1 !important; }
+
+/* Red sale price */
+.cart-drawer__final-item-price,
+.cart-item__discounted-prices .price--end:not(s),
+.price.price--end.cart-drawer__final-item-price {
+  color: #c0392b !important;
+  -webkit-text-fill-color: #c0392b !important;
+  font-weight: 600 !important;
+}
+/* Strikethrough original */
+.cart-item__old-price.price--end,
+s.cart-item__old-price {
+  color: #aaa !important;
+  -webkit-text-fill-color: #aaa !important;
+  text-decoration: line-through !important;
+  font-size: 11px !important;
+  font-weight: 400 !important;
+}
