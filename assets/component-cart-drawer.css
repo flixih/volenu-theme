@@ -1547,3 +1547,27 @@ s.cart-item__old-price {
   font-size: 11px !important;
   font-weight: 400 !important;
 }
+
+/* ── Hide upsell completely ── */
+.cart-primary-upsell, .cart-secondary-upsell,
+.cart-drawer-items-and-upsell > *:not(cart-drawer-items),
+[class*="upsell"], [class*="complete-your"] {
+  display: none !important;
+}
+
+/* ── Mobile: full width, proper layout ── */
+@media (max-width: 768px) {
+  .cart-item {
+    grid-template-columns: 70px 1fr !important;
+    grid-template-rows: auto auto !important;
+  }
+  .cart-item__details { grid-column: 2 !important; grid-row: 1 !important; }
+  .cart-item__totals { grid-column: 2 !important; grid-row: 2 !important; text-align: left !important; }
+  .cart-item__quantity { grid-column: 2 !important; grid-row: 3 !important; }
+}
+
+/* ── Quantity input fix — hide raw input, show buttons ── */
+.quantity-input { display: none !important; }
+.cart-item__quantity .quantity { display: flex !important; align-items: center !important; border: 1px solid #111 !important; }
+.cart-item__quantity .quantity__button { width: 28px !important; height: 28px !important; background: none !important; border: none !important; cursor: pointer !important; font-size: 14px !important; display: flex !important; align-items: center !important; justify-content: center !important; }
+.cart-item__quantity .quantity__input { width: 28px !important; height: 28px !important; text-align: center !important; border-left: 1px solid #ccc !important; border-right: 1px solid #ccc !important; border-top: none !important; border-bottom: none !important; font-size: 12px !important; -webkit-text-fill-color: #111 !important; display: block !important; }
