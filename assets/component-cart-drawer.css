@@ -1440,3 +1440,114 @@ cart-remove-button button {
   padding: 0 !important;
   white-space: nowrap !important;
 }
+
+/* ── Cart item: wider, quantity stacked vertically ── */
+.cart-item {
+  grid-template-columns: 80px 1fr 60px !important;
+  gap: 12px !important;
+  padding: 16px 20px !important;
+}
+.cart-item__quantity {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  gap: 6px !important;
+}
+.quantity {
+  flex-direction: column !important;
+  border: 1px solid #111 !important;
+  width: 36px !important;
+  height: auto !important;
+  display: flex !important;
+  align-items: center !important;
+}
+.quantity__button {
+  width: 36px !important;
+  height: 30px !important;
+  min-width: 36px !important;
+  border: none !important;
+  border-bottom: 1px solid #ddd !important;
+  background: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  color: #111 !important;
+}
+.quantity__button:last-child {
+  border-bottom: none !important;
+  border-top: 1px solid #ddd !important;
+}
+.quantity__input {
+  width: 36px !important;
+  height: 32px !important;
+  border: none !important;
+  border-top: none !important;
+  border-bottom: none !important;
+  text-align: center !important;
+  font-size: 12px !important;
+  color: #111 !important;
+  background: #fff !important;
+  -webkit-text-fill-color: #111 !important;
+  padding: 0 !important;
+}
+
+/* ── Discount savings line red ── */
+.cart-drawer__discount-savings,
+.discounts__discount,
+.cart-item__discounted-prices .price--end:not(s) {
+  color: #c0392b !important;
+  -webkit-text-fill-color: #c0392b !important;
+}
+.totals__savings,
+.cart__savings {
+  display: flex !important;
+  justify-content: space-between !important;
+  font-size: 11px !important;
+  letter-spacing: 0.08em !important;
+  color: #c0392b !important;
+  margin-bottom: 6px !important;
+}
+
+/* ── Hide upsell completely ── */
+.cart-primary-upsell,
+.cart-secondary-upsell,
+[class*="cart-upsell"],
+[class*="upsell"] {
+  display: none !important;
+}
+
+/* ── Cart totals rows ── */
+.vr-cart-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 5px 0 !important;
+  font-size: 12px !important;
+  letter-spacing: 0.06em !important;
+}
+.vr-cart-label { color: #666 !important; }
+.vr-cart-value { color: #111 !important; font-weight: 500 !important; }
+.vr-cart-savings .vr-cart-label,
+.vr-cart-savings .vr-cart-value {
+  color: #c0392b !important;
+  -webkit-text-fill-color: #c0392b !important;
+}
+.vr-cart-total {
+  border-top: 1px solid #e8e8e8 !important;
+  margin-top: 8px !important;
+  padding-top: 10px !important;
+}
+.vr-cart-total .vr-cart-label {
+  font-size: 13px !important;
+  font-weight: 600 !important;
+  color: #111 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.12em !important;
+}
+.vr-cart-total .vr-cart-value {
+  font-size: 16px !important;
+  font-weight: 700 !important;
+  color: #111 !important;
+}
