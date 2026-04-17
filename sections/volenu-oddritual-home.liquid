@@ -1033,15 +1033,16 @@ html {
 }
 .vr-cat-item img {
   width: 100%; height: 100%; object-fit: cover; display: block;
-  transition: transform 0.5s ease;
+  transition: transform 0.5s ease, filter 0.3s ease;
+  filter: brightness(0.6);
 }
-.vr-cat-item:hover img { transform: scale(1.04); }
+.vr-cat-item:hover img { transform: scale(1.04); filter: brightness(0.5); }
 .vr-cat-item-overlay {
   position: absolute; inset: 0;
-  background: rgba(0,0,0,0.42);
+  background: rgba(0,0,0,0.15);
   transition: background 0.3s;
 }
-.vr-cat-item:hover .vr-cat-item-overlay { background: rgba(0,0,0,0.58); }
+.vr-cat-item:hover .vr-cat-item-overlay { background: rgba(0,0,0,0.25); }
 .vr-cat-label {
   position: absolute;
   top: 50%; left: 50%;
