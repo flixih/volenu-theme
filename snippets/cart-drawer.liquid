@@ -524,17 +524,10 @@
           <div id="CartDrawer-CartErrors" role="alert"></div>
         </form>
       </cart-drawer-items>
-      {% if settings.enable_cart_upsell_1 %}
-        {% render 'ds-cart-primary-upsell' %}
-      {% endif %}
-      {% if settings.enable_cart_upsell_2 and settings.cart_upsell_2_position == 'body' %}
-        {% render 'ds-cart-secondary-upsell' %}
-      {% endif %}
+      {% comment %} Upsells removed {% endcomment %}
       </div>
       <div class="drawer__footer">
-        {% if settings.enable_cart_upsell_2 and settings.cart_upsell_2_position == 'footer' %}
-          {% render 'ds-cart-secondary-upsell' %}
-        {% endif %}
+        {% comment %} Footer upsell removed {% endcomment %}
         {% if settings.enable_cart_discount %}
           {% render 'ds-cart-discount-field' %}
         {% endif %}
