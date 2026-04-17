@@ -1440,3 +1440,7 @@ cart-remove-button button {
   padding: 0 !important;
   white-space: nowrap !important;
 }
+
+/* Red sale price */
+.cart-drawer__final-item-price { color: #c0392b !important; -webkit-text-fill-color: #c0392b !important; font-weight: 600 !important; }
+.cart-item__old-price { color: #aaa !important; -webkit-text-fill-color: #aaa !important; text-decoration: line-through !important; }

@@ -570,6 +570,19 @@
           </div>
 
           <div class="totals" role="status">
+            {%- assign orig = 0 -%}
+            {%- for item in cart.items -%}{%- assign orig = orig | plus: item.original_line_price -%}{%- endfor -%}
+            {%- assign saved = orig | minus: cart.total_price -%}
+            <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
+              <span style="color:#666;">Subtotal</span>
+              <span style="color:#111;font-weight:500;">{{ orig | money }}</span>
+            </div>
+            {%- if saved > 0 -%}
+            <div style="display:flex;justify-content:space-between;padding:4px 0;font-size:13px;">
+              <span style="color:#c0392b;">Discount (You saved)</span>
+              <span style="color:#c0392b;font-weight:500;">-{{ saved | money }}</span>
+            </div>
+            {%- endif -%}
             <h2 class="totals__total">Total</h2>
             <p class="totals__total-value">{{ cart.total_price | money }}</p>
           </div>
