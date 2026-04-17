@@ -869,7 +869,7 @@ html {
       <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
     </a>
     <!-- Cart icon — triggers Dawn cart drawer -->
-    <a href="/cart" class="header__icon header__icon--cart link focus-inset" id="cart-icon-bubble" aria-label="Cart" style="display:flex;align-items:center;gap:3px;position:relative;">
+    <a href="/cart" class="header__icon header__icon--cart link focus-inset" id="vr-cart-btn" aria-label="Cart" style="display:flex;align-items:center;gap:3px;position:relative;">
       <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
       {% if cart.item_count > 0 %}<span class="vr-nav-cart-count">({{ cart.item_count }})</span>{% endif %}
     </a>
@@ -1319,6 +1319,23 @@ html {
   window.addEventListener('load', function() {
     setTimeout(vrHideLoader, 800);
   });
+
+  // ── Cart drawer trigger ──
+  var vrCartBtn = document.getElementById('vr-cart-btn');
+  if (vrCartBtn) {
+    vrCartBtn.addEventListener('click', function(e) {
+      e.preventDefault();
+      var cartDrawer = document.querySelector('cart-drawer');
+      if (cartDrawer && typeof cartDrawer.open === 'function') {
+        cartDrawer.open(vrCartBtn);
+      } else {
+        // fallback: trigger Dawn's cart-icon-bubble
+        var dawndBtn = document.getElementById('cart-icon-bubble');
+        if (dawndBtn) dawndBtn.click();
+        else window.location = '/cart';
+      }
+    });
+  }
 
   // ── Nav Dropdowns ──
   window.vrToggleDrop = function(id) {
