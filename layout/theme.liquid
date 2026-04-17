@@ -400,5 +400,33 @@
     {%- if settings.cart_type == 'drawer' -%}
       <script src="{{ 'cart-drawer.js' | asset_url }}" defer="defer"></script>
     {%- endif -%}
+  <script>
+    // Global cart drawer intercept — works on every page
+    document.addEventListener('DOMContentLoaded', function() {
+      function openCartDrawer() {
+        var cartDrawer = document.querySelector('cart-drawer');
+        if (cartDrawer && typeof cartDrawer.open === 'function') {
+          cartDrawer.open();
+          return true;
+        }
+        return false;
+      }
+
+      // Intercept all links pointing to /cart
+      document.addEventListener('click', function(e) {
+        var link = e.target.closest('a[href="/cart"]');
+        if (link) {
+          e.preventDefault();
+          openCartDrawer();
+        }
+      });
+
+      // Auto-open if redirected from /cart with ?open_cart=1
+      if (window.location.search.indexOf('open_cart=1') !== -1) {
+        window.history.replaceState({}, '', window.location.pathname);
+        setTimeout(openCartDrawer, 600);
+      }
+    });
+  </script>
   </body>
 </html>
