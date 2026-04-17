@@ -75,7 +75,11 @@ body { overflow-x: hidden; }
   position: fixed; top: 0; left: 0; right: 0; z-index: 500;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 32px; height: 60px;
-  transition: background 0.3s ease;
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+#vr-nav.scrolled {
+  background: #fff;
+  box-shadow: 0 1px 0 rgba(0,0,0,0.08);
 }
 .vr-nav-links {
   display: flex; align-items: center; gap: 24px;
