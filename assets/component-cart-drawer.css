@@ -1459,25 +1459,3 @@ cart-remove-button button {
 
 /* Hide tax/payment junk */
 .cart__tax-note, .payment-badges, .shopify-payment-button, #payment-terms { display: none !important; }
-
-/* ── Hide duplicate bottom quantity row ── */
-.cart-item__quantity { display: none !important; }
-
-/* ── Red prices ── */
-.cart-drawer__final-item-price,
-.price.price--end,
-.cart-item__price-wrapper .price {
-  color: #c0392b !important;
-  -webkit-text-fill-color: #c0392b !important;
-  font-weight: 600 !important;
-}
-.cart-item__old-price, s.price--end, .cart-item__discounted-prices s {
-  color: #aaa !important;
-  -webkit-text-fill-color: #aaa !important;
-  text-decoration: line-through !important;
-  font-weight: 400 !important;
-}
-
-/* ── Hide upsell ── */
-.cart-primary-upsell, .cart-secondary-upsell,
-[class*="upsell"], .cart-drawer-items-and-upsell > div:not(cart-drawer-items) { display: none !important; }
