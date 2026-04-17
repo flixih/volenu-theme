@@ -555,28 +555,25 @@
         <!-- Subtotals -->
 
         <div class="cart-drawer__footer" {{ block.shopify_attributes }}>
-          {%- assign original_total = 0 -%}
-          {%- for item in cart.items -%}
-            {%- assign original_total = original_total | plus: item.original_line_price -%}
-          {%- endfor -%}
-          {%- assign savings = original_total | minus: cart.total_price -%}
-
-          <div class="vr-totals-block">
-            <div class="vr-totals-row">
-              <span>Subtotal</span>
-              <span>{{ original_total | money }}</span>
-            </div>
-            {%- if savings > 0 -%}
-            <div class="vr-totals-row vr-totals-discount">
-              <span>Discount (You saved)</span>
-              <span>-{{ savings | money }}</span>
-            </div>
+          <div>
+            {%- if cart.cart_level_discount_applications.size > 0 -%}
+              <ul class="discounts list-unstyled" role="list" aria-label="{{ 'customer.order.discount' | t }}">
+                {%- for discount in cart.cart_level_discount_applications -%}
+                  <li class="discounts__discount discounts__discount--end">
+                    {{- 'icon-discount.svg' | inline_asset_content -}}
+                    {{ discount.title | escape }}
+                    (-{{ discount.total_allocated_amount | money }})
+                  </li>
+                {%- endfor -%}
+              </ul>
             {%- endif -%}
-            <div class="vr-totals-row vr-totals-total">
-              <span>Total</span>
-              <span>{{ cart.total_price | money }}</span>
-            </div>
           </div>
+
+          <div class="totals" role="status">
+            <h2 class="totals__total">Total</h2>
+            <p class="totals__total-value">{{ cart.total_price | money }}</p>
+          </div>
+
         </div>
 
         <!-- CTAs -->
