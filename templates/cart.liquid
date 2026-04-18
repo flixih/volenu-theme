@@ -261,6 +261,39 @@
   {% endif %}
 </div>
 
+{% if cart.item_count > 0 %}
+<!-- You May Also Like -->
+{%- assign cart_product_ids = cart.items | map: 'product_id' -%}
+<div style="max-width:1100px;margin:60px auto 80px;padding:0 40px;">
+  <div style="font-size:11px;letter-spacing:0.2em;font-weight:700;text-transform:uppercase;color:#111;margin-bottom:32px;padding-bottom:14px;border-bottom:1px solid #e8e8e8;">You May Also Like</div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:24px;" id="vr-upsell-grid">
+    {% assign shown = 0 %}
+    {% for product in collections.all.products %}
+      {% unless cart_product_ids contains product.id %}
+        {% if shown < 4 %}
+          <div style="text-align:left;">
+            <a href="{{ product.url }}" style="text-decoration:none;display:block;">
+              <div style="aspect-ratio:3/4;overflow:hidden;background:#f5f5f5;margin-bottom:12px;">
+                <img src="{{ product.featured_image | img_url: '600x' }}" alt="{{ product.title }}" style="width:100%;height:100%;object-fit:cover;transition:transform 0.4s;" onmouseover="this.style.transform='scale(1.04)'" onmouseout="this.style.transform='scale(1)'">
+              </div>
+              <div style="font-size:11px;letter-spacing:0.1em;font-weight:600;color:#111;text-transform:uppercase;margin-bottom:4px;">{{ product.title }}</div>
+              <div style="font-size:13px;color:#c0392b;font-weight:600;">
+                {{ product.price | money }}
+                {% if product.compare_at_price > product.price %}
+                  <span style="color:#aaa;text-decoration:line-through;font-weight:400;margin-left:6px;">{{ product.compare_at_price | money }}</span>
+                {% endif %}
+              </div>
+            </a>
+            <button onclick="vrAddUpsell({{ product.variants.first.id }}, this)" style="width:100%;margin-top:10px;padding:10px;background:#111;color:#fff;border:none;font-size:10px;letter-spacing:0.16em;font-weight:600;text-transform:uppercase;cursor:pointer;transition:background 0.2s;" onmouseover="this.style.background='#333'" onmouseout="this.style.background='#111'">+ Add to Cart</button>
+          </div>
+          {% assign shown = shown | plus: 1 %}
+        {% endif %}
+      {% endunless %}
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
 <script>
 function vrUpdateQty(key, qty) {
   qty = parseInt(qty);
@@ -270,5 +303,19 @@ function vrUpdateQty(key, qty) {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ id: key, quantity: qty })
   }).then(() => location.reload());
+}
+
+function vrAddUpsell(variantId, btn) {
+  btn.textContent = 'Adding...';
+  btn.disabled = true;
+  fetch('/cart/add.js', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ id: variantId, quantity: 1 })
+  }).then(() => {
+    btn.textContent = '✓ Added!';
+    btn.style.background = '#2a7a2a';
+    setTimeout(() => location.reload(), 800);
+  });
 }
 </script>
