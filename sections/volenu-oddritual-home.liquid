@@ -22,10 +22,10 @@ body { overflow-x: hidden; }
 /* ─── INTRO ANIMATION (Odd Ritual — single black screen slides up) ─── */
 #vr-loader {
   position: fixed; inset: 0; z-index: 9999;
-  background: #111;
+  background: #fff;
   display: flex; align-items: center; justify-content: center;
   transform: translateY(0);
-  transition: transform 1s cubic-bezier(.87,0,.13,1);
+  transition: transform 0.8s cubic-bezier(.87,0,.13,1);
 }
 #vr-loader.out { transform: translateY(-100%); }
 #vr-loader.done { display: none; }
@@ -772,7 +772,7 @@ html {
 <!-- Loader -->
 <div id="vr-loader">
   <div id="vr-loader-logo">
-    <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU">
+    <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU" style="filter:brightness(0);">
   </div>
 </div>
 
@@ -1362,17 +1362,21 @@ document.addEventListener('DOMContentLoaded', function() {
 <script>
 (function() {
 
-  // ── Intro animation — split panels ──
+  // ── Intro animation — show only once per session ──
   var vrLoader = document.getElementById('vr-loader');
   function vrHideLoader() {
     vrLoader.classList.add('out');
-    setTimeout(function() { vrLoader.classList.add('done'); }, 1000);
+    setTimeout(function() { vrLoader.classList.add('done'); }, 900);
   }
-  // Logo shows for 1s, then panels split apart
-  setTimeout(vrHideLoader, 1400);
-  window.addEventListener('load', function() {
-    setTimeout(vrHideLoader, 800);
-  });
+  if (sessionStorage.getItem('vr-loaded')) {
+    vrLoader.classList.add('done');
+  } else {
+    sessionStorage.setItem('vr-loaded', '1');
+    setTimeout(vrHideLoader, 1400);
+    window.addEventListener('load', function() {
+      setTimeout(vrHideLoader, 800);
+    });
+  }
 
   // ── Cart drawer trigger ──
   var vrCartBtn = document.getElementById('vr-cart-btn');
