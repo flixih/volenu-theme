@@ -421,15 +421,7 @@
         }
       });
 
-      // Open cart drawer when item added to cart
-      document.addEventListener('click', function(e) {
-        var addBtn = e.target.closest('[name="add"], .product-form__submit, #ProductSubmitButton, button[data-add-to-cart]');
-        if (addBtn) {
-          setTimeout(function() {
-            openCartDrawer();
-          }, 800);
-        }
-      });
+      // Open cart drawer when item added to cart - DISABLED, using /cart page instead
 
       // Auto-open if redirected from /cart with ?open_cart=1
       if (window.location.search.indexOf('open_cart=1') !== -1) {

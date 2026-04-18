@@ -912,11 +912,6 @@
         toast.classList.add('show');
         setTimeout(function() { toast.classList.remove('show'); }, 2500);
       }
-      // Open cart drawer
-      var cartDrawer = document.querySelector('cart-drawer');
-      if (cartDrawer && typeof cartDrawer.open === 'function') {
-        setTimeout(function() { cartDrawer.open(); }, 300);
-      }
       // Update cart count
       fetch('/cart.js').then(r => r.json()).then(cart => {
         var badge = document.querySelector('.vr-nav-cart-count');
