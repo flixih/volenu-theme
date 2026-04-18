@@ -412,12 +412,12 @@
         return false;
       }
 
-      // Intercept all links pointing to /cart
+      // Cart icon goes to /cart page
       document.addEventListener('click', function(e) {
-        var link = e.target.closest('a[href="/cart"]');
-        if (link) {
+        var cartLink = e.target.closest('#vr-cart-btn, a[href="/cart"]');
+        if (cartLink) {
           e.preventDefault();
-          openCartDrawer();
+          window.location.href = '/cart';
         }
       });
 
