@@ -873,12 +873,64 @@ html {
       <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
       {% if cart.item_count > 0 %}<span class="vr-nav-cart-count">({{ cart.item_count }})</span>{% endif %}
     </a>
+    <!-- Currency selector -->
+    <div class="vr-currency-wrap" id="vr-currency-wrap"></div>
     <!-- Hamburger (mobile) -->
     <button id="vr-menu-btn" aria-label="Menu">
       <span></span><span></span>
     </button>
   </div>
 </nav>
+
+<style>
+/* Hide the floating BUCKS currency widget */
+[class*="bucks-currency"], [id*="bucks-currency"],
+[class*="currency-selector"]:not(.vr-currency-wrap),
+.boost-currency-switcher,
+iframe[src*="currency"] { display: none !important; }
+
+/* Style our nav currency wrap */
+.vr-currency-wrap {
+  display: flex;
+  align-items: center;
+}
+.vr-currency-wrap select {
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  font-family: inherit;
+  -webkit-appearance: none;
+}
+#vr-nav.scrolled .vr-currency-wrap select { color: #111; }
+@media (max-width: 900px) { .vr-currency-wrap { display: none; } }
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Move BUCKS currency widget into nav
+  var wrap = document.getElementById('vr-currency-wrap');
+  if (!wrap) return;
+  
+  function moveCurrency() {
+    // Try to find the BUCKS widget
+    var widget = document.querySelector('[class*="bucks-currency"], [id*="currency-switcher"], .boost-currency-switcher, [data-currency-selector]');
+    if (widget && !wrap.contains(widget)) {
+      wrap.appendChild(widget);
+      widget.style.display = 'block';
+    }
+  }
+  
+  // Try immediately and after a delay
+  moveCurrency();
+  setTimeout(moveCurrency, 1000);
+  setTimeout(moveCurrency, 2500);
+});
+</script>
 
 <!-- Hero panels -->
 <section id="vr-hero">
