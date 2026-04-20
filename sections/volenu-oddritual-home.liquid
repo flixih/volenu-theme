@@ -183,17 +183,27 @@ body { overflow-x: hidden; }
 
 @media (max-width: 900px) {
   .vr-nav-links { display: none; }
-  .vr-nav-search { display: none; }
+  /* search stays visible on mobile - right side */
+  .vr-ham-mobile { display: flex !important; }
+  /* Hide account icon on mobile */
+  .vr-nav-right a[href="/account"] { display: none; }
 }
-#vr-menu-btn {
+@media (min-width: 901px) {
+  .vr-ham-mobile { display: none !important; }
+}
+/* Mobile hamburger — LEFT side */
+.vr-ham-mobile {
   background: none; border: none; cursor: pointer;
-  display: flex; flex-direction: column; gap: 5px; padding: 4px;
+  display: none;
+  align-items: center; justify-content: center;
+  padding: 4px;
+  color: #fff;
+  z-index: 10;
 }
-#vr-menu-btn span {
-  display: block; width: 22px; height: 1px; background: #fff;
-  transition: background 0.3s ease;
-}
-#vr-nav.scrolled #vr-menu-btn span { background: #111; }
+#vr-nav.scrolled .vr-ham-mobile { color: #111; }
+.vr-ham-mobile svg { stroke: currentColor; }
+/* Old desktop menu btn — hide always (replaced by mobile one) */
+#vr-menu-btn { display: none !important; }
 
 /* ─── MOBILE MENU ─── */
 #vr-menu {
@@ -821,7 +831,16 @@ html {
 
 <!-- Nav -->
 <nav id="vr-nav">
-  <!-- Left: nav links with dropdowns -->
+  <!-- Mobile hamburger (LEFT, mobile only) -->
+  <button id="vr-menu-btn-mobile" aria-label="Menu" class="vr-ham-mobile">
+    <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
+      <line x1="0" y1="1" x2="20" y2="1"/>
+      <line x1="0" y1="7" x2="20" y2="7"/>
+      <line x1="0" y1="13" x2="20" y2="13"/>
+    </svg>
+  </button>
+
+  <!-- Left: nav links with dropdowns (desktop only) -->
   <div class="vr-nav-links">
     <!-- SHOP dropdown -->
     <div class="vr-nav-item" id="vr-drop-shop">
@@ -875,14 +894,6 @@ html {
     </a>
     <!-- Currency selector -->
     <div class="vr-currency-wrap" id="vr-currency-wrap"></div>
-    <!-- Hamburger (mobile) -->
-    <button id="vr-menu-btn" aria-label="Menu" style="background:none;border:none;cursor:pointer;padding:4px;display:flex;align-items:center;">
-      <svg width="20" height="14" viewBox="0 0 20 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">
-        <line x1="0" y1="1" x2="20" y2="1"/>
-        <line x1="0" y1="7" x2="20" y2="7"/>
-        <line x1="0" y1="13" x2="20" y2="13"/>
-      </svg>
-    </button>
   </div>
 </nav>
 
@@ -1432,9 +1443,19 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // ── Menu ──
-  document.getElementById('vr-menu-btn').addEventListener('click', function() {
-    document.getElementById('vr-menu').classList.add('open');
-  });
+  var menuBtnMobile = document.getElementById('vr-menu-btn-mobile');
+  if (menuBtnMobile) {
+    menuBtnMobile.addEventListener('click', function() {
+      document.getElementById('vr-menu').classList.add('open');
+    });
+  }
+  // legacy desktop btn (hidden but keep for safety)
+  var menuBtnOld = document.getElementById('vr-menu-btn');
+  if (menuBtnOld) {
+    menuBtnOld.addEventListener('click', function() {
+      document.getElementById('vr-menu').classList.add('open');
+    });
+  }
   document.getElementById('vr-menu-close').addEventListener('click', function() {
     document.getElementById('vr-menu').classList.remove('open');
   });
