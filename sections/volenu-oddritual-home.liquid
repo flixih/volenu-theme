@@ -44,31 +44,33 @@ body { overflow-x: hidden; }
 }
 
 /* ── Draggable header strip ── */
+/* ─── ANNOUNCEMENT BAR ─── */
 #vr-header-strip {
   background: #111; color: #fff;
   height: 36px; overflow: hidden;
-  cursor: grab; user-select: none;
   position: relative; z-index: 600;
+  display: flex; align-items: center;
 }
-#vr-header-strip:active { cursor: grabbing; }
-#vr-header-track {
-  display: flex; align-items: center; gap: 28px;
-  height: 100%; padding: 0 28px;
+.vr-hs-btn {
+  background: none; border: none; color: #fff;
+  font-size: 14px; cursor: pointer; padding: 0 16px;
+  height: 100%; display: flex; align-items: center;
+  opacity: 0.6; transition: opacity 0.2s; flex-shrink: 0;
+  z-index: 2;
+}
+.vr-hs-btn:hover { opacity: 1; }
+.vr-hs-messages {
+  flex: 1; overflow: hidden; position: relative; height: 100%;
+}
+.vr-hs-msg {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; letter-spacing: 0.2em; font-weight: 500;
   white-space: nowrap;
-  animation: vrHeaderScroll 30s linear infinite;
-  will-change: transform;
+  opacity: 0; transition: opacity 0.5s ease;
+  pointer-events: none;
 }
-#vr-header-strip:hover #vr-header-track,
-#vr-header-strip.is-dragging #vr-header-track { animation-play-state: paused; }
-#vr-header-track span {
-  font-size: 10px; letter-spacing: 0.18em;
-  font-weight: 500; flex-shrink: 0;
-}
-.vr-hs-dot { opacity: 0.35 !important; }
-@keyframes vrHeaderScroll {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
-}
+.vr-hs-msg.active { opacity: 1; pointer-events: auto; }
 
 /* ─── NAV ─── */
 /* ═══════════════════════════════
@@ -877,32 +879,17 @@ html {
 
 <!-- Draggable Header Strip -->
 <div id="vr-header-strip">
-  <div id="vr-header-track">
-    <span>FREE SHIPPING OVER $100</span>
-    <span class="vr-hs-dot">·</span>
-    <span>30-DAY FREE RETURNS</span>
-    <span class="vr-hs-dot">·</span>
-    <span>SITEWIDE SALE — UP TO 60% OFF</span>
-    <span class="vr-hs-dot">·</span>
-    <span>NEW ARRIVALS IN STORE</span>
-    <span class="vr-hs-dot">·</span>
-    <span>WORLDWIDE DELIVERY</span>
-    <span class="vr-hs-dot">·</span>
-    <span>PREMIUM QUALITY MENSWEAR</span>
-    <span class="vr-hs-dot">·</span>
-    <span>FREE SHIPPING OVER $100</span>
-    <span class="vr-hs-dot">·</span>
-    <span>30-DAY FREE RETURNS</span>
-    <span class="vr-hs-dot">·</span>
-    <span>SITEWIDE SALE — UP TO 60% OFF</span>
-    <span class="vr-hs-dot">·</span>
-    <span>NEW ARRIVALS IN STORE</span>
-    <span class="vr-hs-dot">·</span>
-    <span>WORLDWIDE DELIVERY</span>
-    <span class="vr-hs-dot">·</span>
-    <span>PREMIUM QUALITY MENSWEAR</span>
-    <span class="vr-hs-dot">·</span>
+  <button class="vr-hs-btn" id="vr-hs-prev">&#8249;</button>
+  <div class="vr-hs-messages" id="vr-hs-messages">
+    <div class="vr-hs-msg active">FREE WORLDWIDE SHIPPING OVER $100</div>
+    <div class="vr-hs-msg">30-DAY FREE RETURNS</div>
+    <div class="vr-hs-msg">SITEWIDE SALE — UP TO 60% OFF</div>
+    <div class="vr-hs-msg">NEW ARRIVALS IN STORE</div>
+    <div class="vr-hs-msg">2 YEAR WARRANTY</div>
+    <div class="vr-hs-msg">PREMIUM QUALITY MENSWEAR</div>
+    <div class="vr-hs-msg">50,000+ HAPPY CUSTOMERS</div>
   </div>
+  <button class="vr-hs-btn" id="vr-hs-next">&#8250;</button>
 </div>
 
 <!-- Nav -->
@@ -1650,40 +1637,32 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
 
-  // ── Header strip — draggable ──
+  // ── Announcement bar — auto-rotate + arrows ──
   (function() {
-    var strip = document.getElementById('vr-header-strip');
-    var track = document.getElementById('vr-header-track');
-    if (!strip || !track) return;
-    var isDragging = false, startX = 0, savedOffset = 0;
-    strip.addEventListener('mousedown', function(e) {
-      isDragging = true;
-      strip.classList.add('is-dragging');
-      startX = e.pageX;
-      // Capture current translate position
-      var style = window.getComputedStyle(track);
-      var mat = new DOMMatrix(style.transform);
-      savedOffset = mat.m41 || 0;
+    var msgs = document.querySelectorAll('.vr-hs-msg');
+    if (!msgs.length) return;
+    var current = 0;
+    var timer;
+
+    function show(idx) {
+      msgs[current].classList.remove('active');
+      current = (idx + msgs.length) % msgs.length;
+      msgs[current].classList.add('active');
+    }
+
+    function startTimer() {
+      clearInterval(timer);
+      timer = setInterval(function() { show(current + 1); }, 4000);
+    }
+
+    document.getElementById('vr-hs-next').addEventListener('click', function() {
+      show(current + 1); startTimer();
     });
-    document.addEventListener('mouseup', function() {
-      if (!isDragging) return;
-      isDragging = false;
-      strip.classList.remove('is-dragging');
-      // Resume scroll from current offset
-      track.style.animation = '';
-      track.style.transform = '';
+    document.getElementById('vr-hs-prev').addEventListener('click', function() {
+      show(current - 1); startTimer();
     });
-    document.addEventListener('mousemove', function(e) {
-      if (!isDragging) return;
-      e.preventDefault();
-      var dx = e.pageX - startX;
-      track.style.animation = 'none';
-      track.style.transform = 'translateX(' + (savedOffset + dx) + 'px)';
-    });
-    // Touch support
-    strip.addEventListener('touchstart', function(e) { startX = e.touches[0].pageX; isDragging = true; strip.classList.add('is-dragging'); var style = window.getComputedStyle(track); var mat = new DOMMatrix(style.transform); savedOffset = mat.m41 || 0; }, { passive: true });
-    strip.addEventListener('touchmove', function(e) { if (!isDragging) return; var dx = e.touches[0].pageX - startX; track.style.animation = 'none'; track.style.transform = 'translateX(' + (savedOffset + dx) + 'px)'; }, { passive: true });
-    strip.addEventListener('touchend', function() { isDragging = false; strip.classList.remove('is-dragging'); track.style.animation = ''; track.style.transform = ''; });
+
+    startTimer();
   })();
 
   // ── Lenis smooth scroll — lerp 0.03 (Odd Ritual speed) ──
