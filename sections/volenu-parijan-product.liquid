@@ -1,6 +1,11 @@
 {% comment %} Volenu — Parijan-style Product Page {% endcomment %}
 
 <style>
+/* Hide Dawn header + announcement bar */
+.shopify-section-header, .site-header, .header-section,
+[id*="shopify-section-header"], [id*="announcement"],
+.volenu-ticker-wrap { display: none !important; }
+
   .vpp-root *, .vpp-root *::before, .vpp-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
   .vpp-root { font-family: 'Outfit', sans-serif; color: #111; background: #fff; }
 
