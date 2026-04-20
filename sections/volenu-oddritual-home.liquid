@@ -819,6 +819,66 @@ html {
   border-radius: 3px;
 }
 
+/* ─── SALE BANNER ─── */
+#vr-sale-banner {
+  display: flex; align-items: stretch;
+  background: #fff; overflow: hidden;
+  height: 220px; position: relative;
+}
+.vr-sb-scroll {
+  width: 120px; flex-shrink: 0;
+  overflow: hidden; position: relative;
+  display: flex; align-items: center;
+}
+.vr-sb-track {
+  display: flex; flex-direction: column;
+  gap: 18px; white-space: nowrap;
+  animation: vrSbScrollDown 8s linear infinite;
+  will-change: transform;
+}
+.vr-sb-track--reverse {
+  animation: vrSbScrollUp 8s linear infinite;
+}
+.vr-sb-track span {
+  font-size: 9px; letter-spacing: 0.2em; font-weight: 600;
+  color: #111; writing-mode: vertical-rl;
+  text-orientation: mixed; transform: rotate(180deg);
+  flex-shrink: 0;
+}
+.vr-sb-dot { opacity: 0.3 !important; }
+@keyframes vrSbScrollDown {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
+@keyframes vrSbScrollUp {
+  0%   { transform: translateY(-50%); }
+  100% { transform: translateY(0); }
+}
+.vr-sb-center {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  text-align: center; padding: 32px 16px;
+  background: #fff;
+}
+.vr-sb-eyebrow {
+  font-size: 11px; letter-spacing: 0.22em; font-weight: 500;
+  color: #111; margin: 0 0 8px; text-transform: uppercase;
+}
+.vr-sb-percent {
+  font-size: clamp(52px, 10vw, 80px); font-weight: 800;
+  letter-spacing: -0.02em; color: #111; margin: 0 0 8px;
+  line-height: 1;
+}
+.vr-sb-sub {
+  font-size: 16px; font-weight: 400; color: #666;
+  margin: 0; font-style: italic;
+}
+@media (max-width: 768px) {
+  #vr-sale-banner { height: 180px; }
+  .vr-sb-scroll { width: 60px; }
+  .vr-sb-percent { font-size: 52px; }
+}
+
 /* ─── MOBILE ─── */
 @media (max-width: 768px) {
   #vr-nav { padding: 0 20px; }
@@ -1062,6 +1122,35 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- Manifesto — logo left, text right (Odd Ritual style) -->
+
+<!-- SALE BANNER -->
+<div id="vr-sale-banner">
+  <div class="vr-sb-scroll vr-sb-scroll--left">
+    <div class="vr-sb-track">
+      <span>DRESS WITH CLASS FOR LESS</span><span class="vr-sb-dot">·</span>
+      <span>60% OFF SITEWIDE</span><span class="vr-sb-dot">·</span>
+      <span>SALE ENDS THIS SUMMER</span><span class="vr-sb-dot">·</span>
+      <span>DRESS WITH CLASS FOR LESS</span><span class="vr-sb-dot">·</span>
+      <span>60% OFF SITEWIDE</span><span class="vr-sb-dot">·</span>
+      <span>SALE ENDS THIS SUMMER</span><span class="vr-sb-dot">·</span>
+    </div>
+  </div>
+  <div class="vr-sb-center">
+    <p class="vr-sb-eyebrow">DRESS WITH CLASS THIS SUMMER</p>
+    <p class="vr-sb-percent">60% OFF</p>
+    <p class="vr-sb-sub">Sale ends this summer</p>
+  </div>
+  <div class="vr-sb-scroll vr-sb-scroll--right">
+    <div class="vr-sb-track vr-sb-track--reverse">
+      <span>DRESS WITH CLASS FOR LESS</span><span class="vr-sb-dot">·</span>
+      <span>60% OFF SITEWIDE</span><span class="vr-sb-dot">·</span>
+      <span>SALE ENDS THIS SUMMER</span><span class="vr-sb-dot">·</span>
+      <span>DRESS WITH CLASS FOR LESS</span><span class="vr-sb-dot">·</span>
+      <span>60% OFF SITEWIDE</span><span class="vr-sb-dot">·</span>
+      <span>SALE ENDS THIS SUMMER</span><span class="vr-sb-dot">·</span>
+    </div>
+  </div>
+</div>
 
 <!-- BEST SELLERS -->
 <section class="vr-coll-row">
