@@ -272,15 +272,24 @@ body { overflow-x: hidden; }
   text-decoration: none; font-weight: 500;
 }
 .vr-menu-currency-slot { display: flex; align-items: center; }
-/* Contain BUCKS dropdown inside menu slot */
+/* Contain BUCKS dropdown inside menu slot - open upward */
 #vr-menu-currency-slot {
   position: relative;
 }
 #vr-menu-currency-slot * {
-  position: relative !important;
   box-shadow: none !important;
 }
-/* Keep desktop nav currency dropdown from breaking layout */
+/* Force BUCKS dropdown to open upward in menu footer */
+#vr-menu-currency-slot [class*="dropdown"],
+#vr-menu-currency-slot [class*="list"],
+#vr-menu-currency-slot [class*="options"],
+#vr-menu-currency-slot ul,
+#vr-menu-currency-slot .bucks-dropdown {
+  bottom: 100% !important;
+  top: auto !important;
+  transform: none !important;
+}
+/* Keep desktop nav currency contained */
 #vr-currency-wrap {
   position: relative;
 }
