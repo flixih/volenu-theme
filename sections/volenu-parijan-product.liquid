@@ -685,7 +685,7 @@
     <button class="vpp-atc" onclick="vppAddToCart()">ADD TO CART</button>
     <a href="/checkout" class="vpp-checkout-btn">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      GO TO CHECKOUT
+      BUY NOW
     </a>
 
     <!-- Sale banner -->
@@ -847,20 +847,7 @@
 </div>
 
 <!-- Sticky ATC -->
-<div class="vpp-sticky" id="vpp-sticky">
-  <div class="vpp-sticky-info">
-    {% if product.featured_image %}
-    <div class="vpp-sticky-img">
-      <img src="{{ product.featured_image | img_url: '120x' }}" alt="{{ product.title }}">
-    </div>
-    {% endif %}
-    <div>
-      <div class="vpp-sticky-name">{{ product.title | upcase | truncate: 40 }}</div>
-      <div class="vpp-sticky-price">{{ product.price | money }}</div>
-    </div>
-  </div>
-  <button class="vpp-sticky-btn" onclick="vppAddToCart()">ADD TO CART</button>
-</div>
+
 
 </div><!-- /vpp-root -->
 
