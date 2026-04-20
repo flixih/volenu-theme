@@ -936,8 +936,10 @@ html {
     <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU">
   </a>
 
-  <!-- Right: search, account, cart, hamburger -->
+  <!-- Right: currency, search, account, cart -->
   <div class="vr-nav-right">
+    <!-- Currency selector (before icons like Parijan) -->
+    <div class="vr-currency-wrap" id="vr-currency-wrap"></div>
     <!-- Search icon -->
     <a href="/search" class="vr-nav-search" aria-label="Search">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/></svg>
@@ -951,8 +953,6 @@ html {
       <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
       {% if cart.item_count > 0 %}<span class="vr-nav-cart-count">({{ cart.item_count }})</span>{% endif %}
     </a>
-    <!-- Currency selector -->
-    <div class="vr-currency-wrap" id="vr-currency-wrap"></div>
   </div>
 </nav>
 
