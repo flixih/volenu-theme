@@ -571,6 +571,7 @@
     <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU">
   </a>
   <div class="vpp-nav-right">
+    <div id="vpp-currency-wrap" style="display:flex;align-items:center;"></div>
     <a href="/account" aria-label="Account">
       <svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7"/></svg>
     </a>
@@ -580,6 +581,21 @@
     </a>
   </div>
 </nav>
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  var slot = document.getElementById("vpp-currency-wrap");
+  if (!slot) return;
+  var selectors = ["[class*='bucks-currency']","[id*='currency-switcher']","[id*='bucks']",".boost-currency-switcher","[data-currency-selector]","[class*='currency-selector']","[class*='currency-switcher']"];
+  function move() {
+    for (var i = 0; i < selectors.length; i++) {
+      var w = document.querySelector(selectors[i]);
+      if (w && !slot.contains(w)) { slot.appendChild(w); return true; }
+    }
+    return false;
+  }
+  move(); setTimeout(move, 500); setTimeout(move, 1500);
+});
+</script>
 
 <div class="vpp-main">
 
@@ -712,33 +728,6 @@
         <div class="vpp-buy-opt-price">
           <div class="main">{{ buy2_price | money }}</div>
           <div class="orig">{{ buy2_orig | money }}</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Buy quantity selector -->
-    <div class="vpp-buy-opts">
-      <div class="vpp-buy-opt active" onclick="vppSelectBuy(this, 1)">
-        <div class="vpp-buy-radio"><div class="vpp-buy-radio-dot"></div></div>
-        <div class="vpp-buy-info">
-          <span class="vpp-buy-label">BUY 1</span>
-          <span class="vpp-buy-desc">Standard price</span>
-        </div>
-        <div class="vpp-buy-price">
-          <span class="vpp-buy-current">{{ product.price | money }}</span>
-          {% if product.compare_at_price > product.price %}<span class="vpp-buy-orig">{{ product.compare_at_price | money }}</span>{% endif %}
-        </div>
-      </div>
-      <div class="vpp-buy-opt" onclick="vppSelectBuy(this, 2)">
-        <div class="vpp-buy-badge">MOST POPULAR</div>
-        <div class="vpp-buy-radio"><div class="vpp-buy-radio-dot"></div></div>
-        <div class="vpp-buy-info">
-          <span class="vpp-buy-label">BUY 2</span>
-          <span class="vpp-buy-desc">You save 10%</span>
-        </div>
-        <div class="vpp-buy-price">
-          <span class="vpp-buy-current">{{ product.price | times: 2 | times: 0.9 | money }}</span>
-          <span class="vpp-buy-orig">{{ product.price | times: 2 | money }}</span>
         </div>
       </div>
     </div>
