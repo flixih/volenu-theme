@@ -6425,3 +6425,8 @@ body {
 .alignment-start{
   margin-inline-start: auto;
 }
+/* Hide hamburger lines - replaced by icon elsewhere */
+/* Hide currency text, keep only flag */
+.vr-currency-wrap span[class*="text"],
+.vr-currency-wrap [class*="currency-name"],
+.vr-currency-wrap [class*="currency-text"] { display: none !important; }
