@@ -272,20 +272,10 @@ body { overflow-x: hidden; }
   text-decoration: none; font-weight: 500;
 }
 .vr-menu-currency-slot { display: flex; align-items: center; }
-/* Style BUCKS widget inside menu to match Parijan */
-.vr-menu-currency-slot [class*="bucks"],
-.vr-menu-currency-slot [id*="bucks"],
-.vr-menu-currency-slot [class*="currency"] {
-  display: flex !important;
-  align-items: center !important;
+/* Let BUCKS widget render naturally inside menu - no overrides */
+#vr-menu-currency-slot * {
   position: static !important;
-  background: none !important;
-  border: 1px solid #ddd !important;
-  border-radius: 4px !important;
-  padding: 6px 10px !important;
-  font-size: 13px !important;
-  color: #111 !important;
-  cursor: pointer !important;
+  box-shadow: none !important;
 }
 
 /* ─── HERO PANELS ─── */
