@@ -352,9 +352,106 @@
   .vp-page-btn:hover { background: #111; color: #fff; border-color: #111; }
   .vp-page-info { font-size: 11px; letter-spacing: 0.08em; color: #666; }
 
+  /* ── Mobile hamburger + drawer ── */
+  .vp-hamburger {
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    gap: 5px;
+    width: 36px; height: 36px;
+    cursor: pointer;
+    background: none;
+    border: none;
+    padding: 4px;
+    z-index: 10001;
+  }
+  .vp-hamburger span {
+    display: block;
+    width: 22px; height: 1.5px;
+    background: #111;
+    transition: all 0.25s ease;
+    transform-origin: center;
+  }
+  .vp-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+  .vp-hamburger.open span:nth-child(2) { opacity: 0; }
+  .vp-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+  /* Slide-out drawer */
+  .vp-mobile-drawer {
+    position: fixed;
+    top: 0; left: 0;
+    width: 75vw; max-width: 300px;
+    height: 100vh;
+    background: #fff;
+    z-index: 10000;
+    transform: translateX(-100%);
+    transition: transform 0.35s cubic-bezier(0.16,1,0.3,1);
+    padding: 80px 28px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    box-shadow: 4px 0 24px rgba(0,0,0,0.08);
+    overflow-y: auto;
+  }
+  .vp-mobile-drawer.open { transform: translateX(0); }
+  .vp-mobile-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 9999;
+    opacity: 0; pointer-events: none;
+    transition: opacity 0.3s;
+  }
+  .vp-mobile-overlay.open { opacity: 1; pointer-events: all; }
+
+  .vp-mobile-drawer a,
+  .vp-mobile-drawer button.vp-mob-link {
+    display: block;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    font-weight: 500;
+    color: #111;
+    text-decoration: none;
+    padding: 14px 0;
+    border-bottom: 1px solid #f0f0f0;
+    background: none;
+    border-left: none;
+    border-right: none;
+    border-top: none;
+    text-align: left;
+    cursor: pointer;
+    width: 100%;
+  }
+  .vp-mobile-drawer a.sale { color: #cc0000; }
+  .vp-mob-sub {
+    padding-left: 16px;
+    display: none;
+  }
+  .vp-mob-sub.open { display: block; }
+  .vp-mob-sub a {
+    font-size: 12px;
+    color: #555;
+    padding: 10px 0;
+    letter-spacing: 0.08em;
+  }
+  .vp-mob-toggle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .vp-mob-toggle svg {
+    width: 14px; height: 14px;
+    stroke: #888; fill: none;
+    stroke-width: 2;
+    transition: transform 0.2s;
+  }
+  .vp-mob-toggle.open svg { transform: rotate(180deg); }
+
   /* ── Mobile ── */
   @media (max-width: 768px) {
+    .vp-hamburger { display: flex; }
     .vp-nav-left { display: none; }
+    .vp-nav-right a[href="/account"] { display: none; }
     .vp-logo { position: static; transform: none; font-size: 18px; }
     .vp-grid { grid-template-columns: repeat(2, 1fr); }
     .vp-card:nth-child(4n) { border-right: 1px solid #e8e8e8; }
@@ -399,7 +496,47 @@
   </div>
 
   <!-- Nav -->
+  <!-- Mobile overlay -->
+  <div class="vp-mobile-overlay" id="vp-mob-overlay" onclick="vpCloseMobileNav()"></div>
+
+  <!-- Mobile slide-out drawer -->
+  <div class="vp-mobile-drawer" id="vp-mob-drawer">
+    <a href="/collections/all">SHOP ALL</a>
+    <div>
+      <button class="vp-mob-link vp-mob-toggle" onclick="vpMobToggle(this)">
+        SHOP ▾
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="vp-mob-sub">
+        <a href="/collections/new-arrivals">NEW ARRIVALS</a>
+        <a href="/collections/knitwear">KNITWEAR</a>
+        <a href="/collections/polos">POLOS</a>
+        <a href="/collections/pants">PANTS</a>
+        <a href="/collections/shoes">SHOES</a>
+        <a href="/collections/best-sellers">BEST SELLERS</a>
+      </div>
+    </div>
+    <a href="/collections/sale" class="sale">SALE</a>
+    <a href="/pages/about">ABOUT US</a>
+    <div>
+      <button class="vp-mob-link vp-mob-toggle" onclick="vpMobToggle(this)">
+        SUPPORT ▾
+        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+      </button>
+      <div class="vp-mob-sub">
+        <a href="/pages/track-order">TRACK YOUR ORDER</a>
+        <a href="/pages/contact">CONTACT US</a>
+      </div>
+    </div>
+    <a href="/account">MY ACCOUNT</a>
+  </div>
+
   <nav class="vp-nav">
+    <!-- Hamburger (mobile only) -->
+    <button class="vp-hamburger" id="vp-hamburger" onclick="vpOpenMobileNav()" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+
     <div class="vp-nav-left">
       <div class="vp-dropdown">
         <button>SHOP ▾</button>
@@ -694,6 +831,25 @@
     msgIdx = (msgIdx - 1 + msgs.length) % msgs.length;
     announceTxt.textContent = msgs[msgIdx];
   });
+
+  // ── Mobile Nav ──
+  function vpOpenMobileNav() {
+    document.getElementById('vp-mob-drawer').classList.add('open');
+    document.getElementById('vp-mob-overlay').classList.add('open');
+    document.getElementById('vp-hamburger').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function vpCloseMobileNav() {
+    document.getElementById('vp-mob-drawer').classList.remove('open');
+    document.getElementById('vp-mob-overlay').classList.remove('open');
+    document.getElementById('vp-hamburger').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  function vpMobToggle(btn) {
+    var sub = btn.nextElementSibling;
+    sub.classList.toggle('open');
+    btn.classList.toggle('open');
+  }
 </script>
 
 {% schema %}
