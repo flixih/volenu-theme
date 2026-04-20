@@ -372,17 +372,17 @@ html {
 .vr-promo-small {
   font-size: clamp(9px, 1.1vw, 12px);
   letter-spacing: 0.28em; font-weight: 500; margin-bottom: 6px;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,0.4);
 }
 .vr-promo-big {
   font-size: clamp(52px, 10vw, 112px);
   font-weight: 800; letter-spacing: -0.02em; line-height: 0.9;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.25); margin-bottom: 10px;
+  color: #fff; text-shadow: 0 2px 16px rgba(0,0,0,0.25); margin-bottom: 10px;
 }
 .vr-promo-sub {
   font-size: clamp(14px, 2vw, 24px);
   font-style: italic; letter-spacing: 0.06em;
-  text-shadow: 0 1px 8px rgba(0,0,0,0.4);
+  color: #fff; text-shadow: 0 1px 8px rgba(0,0,0,0.4);
 }
 
 /* Hero nav dots */
@@ -1106,7 +1106,7 @@ document.addEventListener('DOMContentLoaded', function() {
   <div class="vr-hero-promo">
     <p class="vr-promo-small">DRESS WITH CLASS THIS SUMMER</p>
     <p class="vr-promo-big">60% OFF</p>
-    <p class="vr-promo-sub">Sale ends this summer</p>
+    <p class="vr-promo-sub">Sale ends today —&nbsp;<span id="vr-hero-timer">00:00:00</span></p>
   </div>
 
   <div id="vr-scroll-hint">
@@ -1705,6 +1705,25 @@ document.addEventListener('DOMContentLoaded', function() {
       window.location.href = '/cart';
     });
   };
+
+  // ── Hero countdown timer ──
+  (function() {
+    function vrUpdateHeroTimer() {
+      var now = new Date();
+      var midnight = new Date();
+      midnight.setHours(23, 59, 59, 0);
+      var diff = midnight - now;
+      if (diff < 0) diff = 0;
+      var h = Math.floor(diff / 3600000);
+      var m = Math.floor((diff % 3600000) / 60000);
+      var s = Math.floor((diff % 60000) / 1000);
+      var pad = function(n) { return n < 10 ? "0" + n : "" + n; };
+      var el = document.getElementById("vr-hero-timer");
+      if (el) el.textContent = pad(h) + ":" + pad(m) + ":" + pad(s);
+    }
+    vrUpdateHeroTimer();
+    setInterval(vrUpdateHeroTimer, 1000);
+  })();
 
   // ── Announcement bar — auto-rotate + arrows ──
   (function() {
