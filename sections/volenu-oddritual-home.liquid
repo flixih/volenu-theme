@@ -745,9 +745,13 @@ html {
   padding: 72px 40px 32px;
 }
 .vr-footer-top {
-  display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  display: grid; grid-template-columns: 1.6fr 1fr;
   gap: 48px; margin-bottom: 56px;
 }
+.vr-footer-col--links ul { list-style: none !important; padding: 0; margin: 0; }
+.vr-footer-col--links li { margin-bottom: 16px; }
+.vr-footer-col--links li a { font-size: 13px; color: #999; text-decoration: none; letter-spacing: 0.03em; transition: color 0.2s; }
+.vr-footer-col--links li a:hover { color: #fff; }
 .vr-footer-col--brand { padding-right: 16px; }
 .vr-footer-brand {
   font-size: 18px; letter-spacing: 0.28em; font-weight: 700;
@@ -1420,32 +1424,13 @@ document.addEventListener('DOMContentLoaded', function() {
         </a>
       </div>
     </div>
-    <div class="vr-footer-col">
-      <h4>SHOP</h4>
+    <div class="vr-footer-col vr-footer-col--links">
       <ul>
-        <li><a href="/collections/all">All Products</a></li>
-        <li><a href="/collections/new-arrivals">New Arrivals</a></li>
-        <li><a href="/collections/shirts">Shirts</a></li>
-        <li><a href="/collections/pants">Pants</a></li>
-        <li><a href="/collections/polos">Polos</a></li>
-        <li><a href="/collections/best-sellers" style="color:#ff5555;">Sale</a></li>
-      </ul>
-    </div>
-    <div class="vr-footer-col">
-      <h4>SUPPORT</h4>
-      <ul>
-        <li><a href="/pages/about">About Us</a></li>
-        <li><a href="/pages/contact">Contact Us</a></li>
         <li><a href="/pages/track-order">Track Your Order</a></li>
-        <li><a href="/pages/faq">FAQ</a></li>
-      </ul>
-    </div>
-    <div class="vr-footer-col">
-      <h4>POLICIES</h4>
-      <ul>
+        <li><a href="/pages/contact">Contact Us</a></li>
         <li><a href="/policies/shipping-policy">Shipping Policy</a></li>
-        <li><a href="/policies/refund-policy">Refund Policy</a></li>
         <li><a href="/policies/privacy-policy">Privacy Policy</a></li>
+        <li><a href="/policies/refund-policy">Refund Policy</a></li>
         <li><a href="/policies/terms-of-service">Terms &amp; Conditions</a></li>
       </ul>
     </div>
