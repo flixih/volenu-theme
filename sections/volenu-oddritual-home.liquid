@@ -53,24 +53,26 @@ body { overflow-x: hidden; }
 }
 .vr-hs-btn {
   background: none; border: none; color: #fff;
-  font-size: 14px; cursor: pointer; padding: 0 16px;
+  font-size: 14px; cursor: pointer; padding: 0 10px;
   height: 100%; display: flex; align-items: center;
   opacity: 0.6; transition: opacity 0.2s; flex-shrink: 0;
   z-index: 2;
 }
 .vr-hs-btn:hover { opacity: 1; }
 .vr-hs-messages {
-  flex: 1; overflow: hidden; position: relative; height: 100%;
+  flex: 1; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  gap: 0;
 }
 .vr-hs-msg {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
+  display: none;
+  align-items: center;
   font-size: 10px; letter-spacing: 0.2em; font-weight: 500;
   white-space: nowrap;
-  opacity: 0; transition: opacity 0.5s ease;
+  transition: opacity 0.5s ease;
   pointer-events: none;
 }
-.vr-hs-msg.active { opacity: 1; pointer-events: auto; }
+.vr-hs-msg.active { display: flex; pointer-events: auto; }
 
 /* ─── NAV ─── */
 /* ═══════════════════════════════
@@ -939,8 +941,8 @@ html {
 
 <!-- Draggable Header Strip -->
 <div id="vr-header-strip">
-  <button class="vr-hs-btn" id="vr-hs-prev">&#8249;</button>
   <div class="vr-hs-messages" id="vr-hs-messages">
+    <button class="vr-hs-btn" id="vr-hs-prev">&#8249;</button>
     <div class="vr-hs-msg active">FREE WORLDWIDE SHIPPING OVER $100</div>
     <div class="vr-hs-msg">30-DAY FREE RETURNS</div>
     <div class="vr-hs-msg">SITEWIDE SALE — UP TO 60% OFF</div>
@@ -948,8 +950,8 @@ html {
     <div class="vr-hs-msg">2 YEAR WARRANTY</div>
     <div class="vr-hs-msg">PREMIUM QUALITY MENSWEAR</div>
     <div class="vr-hs-msg">50,000+ HAPPY CUSTOMERS</div>
+    <button class="vr-hs-btn" id="vr-hs-next">&#8250;</button>
   </div>
-  <button class="vr-hs-btn" id="vr-hs-next">&#8250;</button>
 </div>
 
 <!-- Nav -->
