@@ -585,15 +585,29 @@
 document.addEventListener("DOMContentLoaded", function() {
   var slot = document.getElementById("vpp-currency-wrap");
   if (!slot) return;
-  var selectors = ["[class*='bucks-currency']","[id*='currency-switcher']","[id*='bucks']",".boost-currency-switcher","[data-currency-selector]","[class*='currency-selector']","[class*='currency-switcher']"];
-  function move() {
+  var selectors = [
+    "[class*='bucks-currency']",
+    "[id*='currency-switcher']",
+    "[id*='bucks']",
+    ".boost-currency-switcher",
+    "[data-currency-selector]",
+    "[class*='currency-selector']",
+    "[class*='currency-switcher']"
+  ];
+  function clone() {
     for (var i = 0; i < selectors.length; i++) {
       var w = document.querySelector(selectors[i]);
-      if (w && !slot.contains(w)) { slot.appendChild(w); return true; }
+      if (w && slot.children.length === 0) {
+        var c = w.cloneNode(true);
+        c.style.cssText = "";
+        c.removeAttribute("id");
+        slot.appendChild(c);
+        return true;
+      }
     }
     return false;
   }
-  move(); setTimeout(move, 500); setTimeout(move, 1500);
+  clone(); setTimeout(clone, 800); setTimeout(clone, 2000);
 });
 </script>
 
