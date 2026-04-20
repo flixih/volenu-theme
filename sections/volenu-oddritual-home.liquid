@@ -791,8 +791,9 @@ html {
   font-size: 9px; letter-spacing: 0.24em; color: #555;
   margin-bottom: 20px; font-weight: 600; text-transform: uppercase;
 }
-.vr-footer ul { list-style: none; padding: 0; margin: 0; }
-.vr-footer li { margin-bottom: 12px; }
+.vr-footer ul { list-style: none !important; padding: 0; margin: 0; }
+.vr-footer li { margin-bottom: 12px; list-style: none !important; }
+.vr-footer li::before { display: none !important; content: none !important; }
 .vr-footer li a {
   font-size: 13px; color: #999; text-decoration: none;
   letter-spacing: 0.03em; transition: color 0.2s;
