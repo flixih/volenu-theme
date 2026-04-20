@@ -272,10 +272,17 @@ body { overflow-x: hidden; }
   text-decoration: none; font-weight: 500;
 }
 .vr-menu-currency-slot { display: flex; align-items: center; }
-/* Let BUCKS widget render naturally inside menu - no overrides */
+/* Contain BUCKS dropdown inside menu slot */
+#vr-menu-currency-slot {
+  position: relative;
+}
 #vr-menu-currency-slot * {
-  position: static !important;
+  position: relative !important;
   box-shadow: none !important;
+}
+/* Keep desktop nav currency dropdown from breaking layout */
+#vr-currency-wrap {
+  position: relative;
 }
 
 /* ─── HERO PANELS ─── */
