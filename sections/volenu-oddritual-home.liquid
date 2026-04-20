@@ -272,6 +272,21 @@ body { overflow-x: hidden; }
   text-decoration: none; font-weight: 500;
 }
 .vr-menu-currency-slot { display: flex; align-items: center; }
+/* Style BUCKS widget inside menu to match Parijan */
+.vr-menu-currency-slot [class*="bucks"],
+.vr-menu-currency-slot [id*="bucks"],
+.vr-menu-currency-slot [class*="currency"] {
+  display: flex !important;
+  align-items: center !important;
+  position: static !important;
+  background: none !important;
+  border: 1px solid #ddd !important;
+  border-radius: 4px !important;
+  padding: 6px 10px !important;
+  font-size: 13px !important;
+  color: #111 !important;
+  cursor: pointer !important;
+}
 
 /* ─── HERO PANELS ─── */
 #vr-hero {
@@ -1494,14 +1509,32 @@ document.addEventListener('DOMContentLoaded', function() {
   if (menuBtnMobile) {
     menuBtnMobile.addEventListener('click', function() {
       document.getElementById('vr-menu').classList.add('open');
-      // Clone currency widget into menu footer
+      // Move BUCKS widget into menu footer on mobile
       setTimeout(function() {
         var slot = document.getElementById('vr-menu-currency-slot');
-        var navCurrency = document.getElementById('vr-currency-wrap');
-        if (slot && navCurrency && slot.children.length === 0) {
-          slot.innerHTML = navCurrency.innerHTML;
+        if (!slot || slot.children.length > 0) return;
+        var selectors = [
+          '[class*="bucks-currency"]',
+          '[id*="currency-switcher"]',
+          '[id*="bucks"]',
+          '.boost-currency-switcher',
+          '[data-currency-selector]',
+          '[class*="currency-selector"]',
+          '[class*="currency-switcher"]'
+        ];
+        for (var i = 0; i < selectors.length; i++) {
+          var widget = document.querySelector(selectors[i]);
+          if (widget) {
+            var clone = widget.cloneNode(true);
+            clone.style.cssText = '';
+            slot.appendChild(clone);
+            return;
+          }
         }
-      }, 100);
+        // fallback: show nav currency content
+        var navCurrency = document.getElementById('vr-currency-wrap');
+        if (navCurrency) slot.innerHTML = navCurrency.innerHTML;
+      }, 800);
     });
   }
   // legacy desktop btn (hidden but keep for safety)
