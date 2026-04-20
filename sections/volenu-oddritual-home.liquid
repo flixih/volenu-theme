@@ -883,11 +883,17 @@ html {
 </nav>
 
 <style>
-/* Hide the floating BUCKS currency widget */
+/* Hide the floating BUCKS currency widget - aggressive */
 [class*="bucks-currency"], [id*="bucks-currency"],
 [class*="currency-selector"]:not(.vr-currency-wrap),
+[class*="currency-switcher"]:not(.vr-currency-wrap),
+[id*="currency-switcher"],
 .boost-currency-switcher,
-iframe[src*="currency"] { display: none !important; }
+.currency-converter,
+[data-currency-selector],
+iframe[src*="currency"],
+div[style*="position: fixed"][style*="bottom"],
+div[style*="position:fixed"][style*="bottom"] { display: none !important; }
 
 /* Style our nav currency wrap */
 .vr-currency-wrap {
@@ -917,18 +923,35 @@ document.addEventListener('DOMContentLoaded', function() {
   if (!wrap) return;
   
   function moveCurrency() {
-    // Try to find the BUCKS widget
-    var widget = document.querySelector('[class*="bucks-currency"], [id*="currency-switcher"], .boost-currency-switcher, [data-currency-selector]');
-    if (widget && !wrap.contains(widget)) {
-      wrap.appendChild(widget);
-      widget.style.display = 'block';
+    // Try multiple selectors to find the BUCKS widget
+    var selectors = [
+      '[class*="bucks-currency"]',
+      '[id*="currency-switcher"]', 
+      '[id*="bucks"]',
+      '.boost-currency-switcher',
+      '[data-currency-selector]',
+      '[class*="currency-selector"]',
+      '[class*="currency-switcher"]'
+    ];
+    for (var i = 0; i < selectors.length; i++) {
+      var widget = document.querySelector(selectors[i]);
+      if (widget && !wrap.contains(widget)) {
+        widget.style.display = 'block';
+        widget.style.position = 'static';
+        widget.style.background = 'none';
+        widget.style.border = 'none';
+        widget.style.boxShadow = 'none';
+        wrap.appendChild(widget);
+        return true;
+      }
     }
+    return false;
   }
   
-  // Try immediately and after a delay
   moveCurrency();
-  setTimeout(moveCurrency, 1000);
-  setTimeout(moveCurrency, 2500);
+  setTimeout(moveCurrency, 500);
+  setTimeout(moveCurrency, 1500);
+  setTimeout(moveCurrency, 3000);
 });
 </script>
 

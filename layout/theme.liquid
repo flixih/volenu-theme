@@ -327,6 +327,13 @@
   function raf(time){ lenis.raf(time); requestAnimationFrame(raf); }
   requestAnimationFrame(raf);
 </script>
+  <style>
+    /* Hide floating BUCKS currency widget globally */
+    [class*="bucks-currency"], [id*="bucks-currency"],
+    [class*="currency-switcher"], [id*="currency-switcher"],
+    .boost-currency-switcher, .currency-converter,
+    [data-currency-selector] { display: none !important; }
+  </style>
 </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
