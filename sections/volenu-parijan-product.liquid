@@ -6,6 +6,24 @@
 [id*="shopify-section-header"], [id*="announcement"],
 .volenu-ticker-wrap { display: none !important; }
 
+/* Sale timer bar */
+#vpp-timer-bar {
+  background: #111; color: #fff;
+  height: 36px; display: flex; align-items: center; justify-content: center;
+  gap: 10px; font-size: 10px; letter-spacing: 0.18em; font-weight: 500;
+}
+#vpp-timer-bar .vpp-timer-label { opacity: 0.7; }
+#vpp-timer-bar .vpp-timer-count {
+  display: flex; align-items: center; gap: 6px;
+}
+.vpp-timer-seg {
+  background: #fff; color: #111;
+  padding: 2px 7px; font-weight: 700;
+  font-size: 11px; letter-spacing: 0.05em;
+  min-width: 28px; text-align: center;
+}
+.vpp-timer-colon { opacity: 0.5; }
+
   .vpp-root *, .vpp-root *::before, .vpp-root *::after { box-sizing: border-box; margin: 0; padding: 0; }
   .vpp-root { font-family: 'Outfit', sans-serif; color: #111; background: #fff; }
 
@@ -568,6 +586,17 @@
 .vpp-nav-right svg { width: 18px; height: 18px; stroke: #111; fill: none; stroke-width: 1.4; display: block; }
 </style>
 
+<div id="vpp-timer-bar">
+  <span class="vpp-timer-label">🔥 SALE ENDS TODAY AT MIDNIGHT —</span>
+  <div class="vpp-timer-count">
+    <span class="vpp-timer-seg" id="vpp-th">00</span>
+    <span class="vpp-timer-colon">:</span>
+    <span class="vpp-timer-seg" id="vpp-tm">00</span>
+    <span class="vpp-timer-colon">:</span>
+    <span class="vpp-timer-seg" id="vpp-ts">00</span>
+  </div>
+</div>
+
 <nav class="vpp-nav">
   <a href="javascript:history.back()" class="vpp-nav-back">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M5 12l7-7M5 12l7 7"/></svg>
@@ -920,6 +949,30 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 </div><!-- /vpp-root -->
+
+<script>
+(function() {
+  function vppUpdateTimer() {
+    var now = new Date();
+    var midnight = new Date();
+    midnight.setHours(23, 59, 59, 0);
+    var diff = midnight - now;
+    if (diff < 0) diff = 0;
+    var h = Math.floor(diff / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+    var th = document.getElementById('vpp-th');
+    var tm = document.getElementById('vpp-tm');
+    var ts = document.getElementById('vpp-ts');
+    if (th) th.textContent = pad(h);
+    if (tm) tm.textContent = pad(m);
+    if (ts) ts.textContent = pad(s);
+  }
+  vppUpdateTimer();
+  setInterval(vppUpdateTimer, 1000);
+})();
+</script>
 
 <!-- Added to cart toast -->
 <div id="vr-atc-toast">✓ Added to cart</div>
