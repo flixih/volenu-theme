@@ -227,6 +227,41 @@
   }
 
   /* ATC button */
+  /* Buy quantity selector */
+  .vpp-buy-opts { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+  .vpp-buy-opt {
+    border: 1.5px solid #ddd; border-radius: 4px;
+    padding: 14px 16px; cursor: pointer;
+    display: flex; align-items: center; gap: 12px;
+    position: relative; transition: border-color 0.2s;
+    background: #fff;
+  }
+  .vpp-buy-opt.active { border-color: #111; }
+  .vpp-buy-radio {
+    width: 18px; height: 18px; border-radius: 50%;
+    border: 2px solid #ccc; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s;
+  }
+  .vpp-buy-opt.active .vpp-buy-radio { border-color: #111; }
+  .vpp-buy-radio-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #111; opacity: 0; transition: opacity 0.2s;
+  }
+  .vpp-buy-opt.active .vpp-buy-radio-dot { opacity: 1; }
+  .vpp-buy-info { flex: 1; }
+  .vpp-buy-label { display: block; font-size: 12px; font-weight: 600; letter-spacing: 0.1em; color: #111; }
+  .vpp-buy-desc { display: block; font-size: 11px; color: #888; margin-top: 2px; }
+  .vpp-buy-price { text-align: right; }
+  .vpp-buy-current { display: block; font-size: 14px; font-weight: 700; color: #111; }
+  .vpp-buy-orig { display: block; font-size: 11px; color: #aaa; text-decoration: line-through; }
+  .vpp-buy-badge {
+    position: absolute; top: -1px; right: 12px;
+    background: #111; color: #fff;
+    font-size: 8px; letter-spacing: 0.15em; font-weight: 700;
+    padding: 3px 8px;
+  }
+
   .vpp-atc {
     width: 100%; padding: 16px;
     background: #111; color: #fff;
@@ -677,6 +712,33 @@
         <div class="vpp-buy-opt-price">
           <div class="main">{{ buy2_price | money }}</div>
           <div class="orig">{{ buy2_orig | money }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Buy quantity selector -->
+    <div class="vpp-buy-opts">
+      <div class="vpp-buy-opt active" onclick="vppSelectBuy(this, 1)">
+        <div class="vpp-buy-radio"><div class="vpp-buy-radio-dot"></div></div>
+        <div class="vpp-buy-info">
+          <span class="vpp-buy-label">BUY 1</span>
+          <span class="vpp-buy-desc">Standard price</span>
+        </div>
+        <div class="vpp-buy-price">
+          <span class="vpp-buy-current">{{ product.price | money }}</span>
+          {% if product.compare_at_price > product.price %}<span class="vpp-buy-orig">{{ product.compare_at_price | money }}</span>{% endif %}
+        </div>
+      </div>
+      <div class="vpp-buy-opt" onclick="vppSelectBuy(this, 2)">
+        <div class="vpp-buy-badge">MOST POPULAR</div>
+        <div class="vpp-buy-radio"><div class="vpp-buy-radio-dot"></div></div>
+        <div class="vpp-buy-info">
+          <span class="vpp-buy-label">BUY 2</span>
+          <span class="vpp-buy-desc">You save 10%</span>
+        </div>
+        <div class="vpp-buy-price">
+          <span class="vpp-buy-current">{{ product.price | times: 2 | times: 0.9 | money }}</span>
+          <span class="vpp-buy-orig">{{ product.price | times: 2 | money }}</span>
         </div>
       </div>
     </div>
