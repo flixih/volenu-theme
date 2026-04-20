@@ -208,36 +208,70 @@ body { overflow-x: hidden; }
 /* ─── MOBILE MENU ─── */
 #vr-menu {
   position: fixed; inset: 0; z-index: 800;
-  background: #111;
+  background: #fff;
   display: flex; flex-direction: column;
-  justify-content: center; padding: 48px 40px;
-  transform: translateY(-100%);
-  transition: transform 0.6s cubic-bezier(.87,0,.13,1);
+  padding: 0;
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(.87,0,.13,1);
+  overflow-y: auto;
 }
-#vr-menu.open { transform: translateY(0); }
+#vr-menu.open { transform: translateX(0); }
 #vr-menu-close {
-  position: absolute; top: 20px; right: 28px;
-  background: none; border: none; color: #fff;
-  font-size: 28px; cursor: pointer; line-height: 1;
+  position: absolute; top: 16px; right: 20px;
+  background: none; border: none; color: #111;
+  font-size: 22px; cursor: pointer; line-height: 1;
+  width: 32px; height: 32px;
+  display: flex; align-items: center; justify-content: center;
+  border: 1.5px solid #111; border-radius: 50%;
+}
+/* Menu nav links */
+.vr-menu-links {
+  flex: 1;
+  padding: 60px 0 20px 0;
+  border-bottom: 1px solid #e8e8e8;
 }
 .vr-menu-links a {
-  display: block; font-size: clamp(32px, 6vw, 56px);
-  color: #fff; text-decoration: none;
-  font-weight: 600; letter-spacing: -0.01em;
-  line-height: 1.1; margin-bottom: 12px;
-  opacity: 0; transform: translateY(20px);
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 28px;
+  font-size: 18px; font-weight: 500; letter-spacing: 0.02em;
+  color: #111; text-decoration: none;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background 0.15s;
 }
-#vr-menu.open .vr-menu-links a { opacity: 1; transform: translateY(0); }
-#vr-menu.open .vr-menu-links a:nth-child(1) { transition-delay: 0.15s; }
-#vr-menu.open .vr-menu-links a:nth-child(2) { transition-delay: 0.2s; }
-#vr-menu.open .vr-menu-links a:nth-child(3) { transition-delay: 0.25s; }
-#vr-menu.open .vr-menu-links a:nth-child(4) { transition-delay: 0.3s; }
-#vr-menu.open .vr-menu-links a:nth-child(5) { transition-delay: 0.35s; }
+.vr-menu-links a:last-child { border-bottom: none; }
+.vr-menu-links a:hover { background: #f9f9f9; }
+.vr-menu-links a.sale { color: #c0392b; }
+.vr-menu-link-arrow {
+  width: 7px; height: 7px;
+  border-right: 1.5px solid #111;
+  border-top: 1.5px solid #111;
+  transform: rotate(45deg);
+  flex-shrink: 0;
+}
+.vr-menu-links a.sale .vr-menu-link-arrow { border-color: #c0392b; }
+/* Menu footer */
 .vr-menu-foot {
-  position: absolute; bottom: 40px; left: 40px;
-  font-size: 10px; color: #666; letter-spacing: 0.12em;
+  padding: 24px 28px;
+  display: flex; flex-direction: column; gap: 20px;
 }
+.vr-menu-socials {
+  display: flex; gap: 18px;
+}
+.vr-menu-socials a {
+  color: #111; text-decoration: none;
+}
+.vr-menu-socials svg {
+  width: 22px; height: 22px; stroke: currentColor; fill: none; stroke-width: 1.5;
+}
+.vr-menu-bottom-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-top: 16px; border-top: 1px solid #e8e8e8;
+}
+.vr-menu-account {
+  font-size: 13px; letter-spacing: 0.1em; color: #111;
+  text-decoration: none; font-weight: 500;
+}
+.vr-menu-currency-slot { display: flex; align-items: center; }
 
 /* ─── HERO PANELS ─── */
 #vr-hero {
@@ -790,13 +824,26 @@ html {
 <div id="vr-menu">
   <button id="vr-menu-close">×</button>
   <div class="vr-menu-links">
-    <a href="/collections/all">Shop All</a>
-    <a href="/collections/best-sellers" style="color:#ff4444;">Sale</a>
-    <a href="/pages/about">About Us</a>
-    <a href="/pages/contact">Contact</a>
-    <a href="/pages/track-order">Track Order</a>
+    <a href="/collections/all">SHOP <span class="vr-menu-link-arrow"></span></a>
+    <a href="/collections/best-sellers" class="sale">SALE <span class="vr-menu-link-arrow"></span></a>
+    <a href="/pages/about">ABOUT US <span class="vr-menu-link-arrow"></span></a>
+    <a href="/pages/contact">CONTACT <span class="vr-menu-link-arrow"></span></a>
+    <a href="/pages/track-order">TRACK ORDER <span class="vr-menu-link-arrow"></span></a>
   </div>
-  <div class="vr-menu-foot">VOLENU © 2025</div>
+  <div class="vr-menu-foot">
+    <div class="vr-menu-socials">
+      <a href="https://instagram.com/volenu" aria-label="Instagram">
+        <svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="https://tiktok.com/@volenu" aria-label="TikTok">
+        <svg viewBox="0 0 24 24"><path d="M9 12a4 4 0 1 0 4 4V4a5 5 0 0 0 5 5"/></svg>
+      </a>
+    </div>
+    <div class="vr-menu-bottom-row">
+      <div class="vr-menu-currency-slot" id="vr-menu-currency-slot"></div>
+      <a href="/account" class="vr-menu-account">Account</a>
+    </div>
+  </div>
 </div>
 
 <!-- Draggable Header Strip -->
@@ -1447,6 +1494,14 @@ document.addEventListener('DOMContentLoaded', function() {
   if (menuBtnMobile) {
     menuBtnMobile.addEventListener('click', function() {
       document.getElementById('vr-menu').classList.add('open');
+      // Clone currency widget into menu footer
+      setTimeout(function() {
+        var slot = document.getElementById('vr-menu-currency-slot');
+        var navCurrency = document.getElementById('vr-currency-wrap');
+        if (slot && navCurrency && slot.children.length === 0) {
+          slot.innerHTML = navCurrency.innerHTML;
+        }
+      }, 100);
     });
   }
   // legacy desktop btn (hidden but keep for safety)
