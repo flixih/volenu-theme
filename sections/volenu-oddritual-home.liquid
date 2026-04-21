@@ -1307,7 +1307,7 @@ document.addEventListener('DOMContentLoaded', function() {
 </div>
 
 <!-- Sale popup -->
-<div id="vr-sale-popup" style="display:none;">
+<div id="vr-sale-popup">
   <div id="vr-sale-popup-overlay"></div>
   <div id="vr-sale-popup-box">
     <button id="vr-sale-popup-close" aria-label="Close">×</button>
@@ -1989,7 +1989,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function closePopup() {
       popup.classList.remove('open');
-      setTimeout(function() { popup.style.display = 'none'; }, 400);
       sessionStorage.setItem('vr-popup-shown', '1');
     }
 
@@ -2012,8 +2011,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     setTimeout(function() {
-      popup.style.display = "block";
-      setTimeout(function() { popup.classList.add("open"); }, 20);
+      popup.classList.add("open");
       updatePopupTimer();
       setInterval(updatePopupTimer, 1000);
     }, 2500);
