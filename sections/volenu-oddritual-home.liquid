@@ -883,20 +883,10 @@ html {
 
 /* ─── SALE POPUP ─── */
 #vr-sale-popup {
-  position: fixed; bottom: 28px; left: 28px;
-  z-index: 9999;
-  background: #fff;
-  border: 1px solid #e8e8e8;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
-  padding: 20px 24px;
-  width: 300px;
-  transform: translateY(20px);
-  opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
-  pointer-events: none;
+  display: none;
 }
-#vr-sale-popup.visible {
-  opacity: 1; transform: translateY(0); pointer-events: auto;
+#vr-sale-popup.open {
+  display: block;
 }
 #vr-sale-popup-close {
   position: absolute; top: 12px; right: 14px;
