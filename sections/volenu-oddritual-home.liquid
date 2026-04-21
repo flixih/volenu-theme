@@ -937,7 +937,27 @@ html {
 }
 .vr-sp-btn:hover { opacity: 0.8; }
 @media (max-width: 480px) {
-  #vr-sale-popup { left: 16px; right: 16px; width: auto; bottom: 16px; }
+  /* Mobile: centered modal with overlay */
+  #vr-sale-popup {
+    position: fixed !important; inset: 0 !important;
+    display: none; align-items: center; justify-content: center;
+    background: rgba(0,0,0,0.55) !important;
+    bottom: auto !important; right: auto !important; left: auto !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+  }
+  #vr-sale-popup.open { display: flex !important; }
+  #vr-sale-popup-box {
+    position: relative !important;
+    bottom: auto !important; right: auto !important;
+    width: 88% !important; max-width: 360px !important;
+    transform: scale(0.95) !important;
+    opacity: 0 !important;
+  }
+  #vr-sale-popup.open #vr-sale-popup-box {
+    transform: scale(1) !important;
+    opacity: 1 !important;
+  }
 }
 
 /* ─── SALE POPUP ─── */
@@ -1008,6 +1028,32 @@ html {
 #vr-popup-note {
   font-size: 10px; color: #aaa; letter-spacing: 0.08em;
 }
+#vr-popup-email-wrap { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+#vr-popup-email {
+  width: 100%; padding: 12px 14px; border: 1.5px solid #ddd;
+  font-size: 13px; outline: none; transition: border-color 0.2s;
+  font-family: inherit;
+}
+#vr-popup-email:focus { border-color: #111; }
+#vr-popup-submit {
+  width: 100%; padding: 14px; background: #111; color: #fff;
+  border: none; font-size: 11px; letter-spacing: 0.2em; font-weight: 600;
+  cursor: pointer; transition: background 0.2s;
+}
+#vr-popup-submit:hover { background: #333; }
+#vr-popup-nothanks {
+  background: none; border: none; color: #aaa; font-size: 11px;
+  cursor: pointer; text-decoration: underline; padding: 4px 0;
+  display: block; width: 100%; text-align: center;
+  font-family: inherit; letter-spacing: 0.05em;
+}
+#vr-popup-nothanks:hover { color: #666; }
+#vr-popup-title2 {
+  font-size: clamp(36px, 8vw, 52px); font-weight: 800;
+  letter-spacing: -0.02em; color: #111; margin-bottom: 10px;
+  line-height: 1; text-transform: uppercase;
+}
+#vr-popup-sub2 { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 24px; }
 
 /* ─── MOBILE ─── */
 @media (max-width: 768px) {
@@ -1258,18 +1304,34 @@ document.addEventListener('DOMContentLoaded', function() {
   <div id="vr-sale-popup-overlay"></div>
   <div id="vr-sale-popup-box">
     <button id="vr-sale-popup-close" aria-label="Close">×</button>
-    <p id="vr-popup-eyebrow">LIMITED TIME OFFER</p>
-    <h2 id="vr-popup-title">60% OFF SITEWIDE</h2>
-    <p id="vr-popup-sub">This sale ends tonight at midnight. Don't miss out.</p>
-    <div id="vr-popup-timer">
-      <div class="vr-pt-seg"><span id="vr-pt-h">00</span><span class="vr-pt-label">HRS</span></div>
-      <span class="vr-pt-colon">:</span>
-      <div class="vr-pt-seg"><span id="vr-pt-m">00</span><span class="vr-pt-label">MIN</span></div>
-      <span class="vr-pt-colon">:</span>
-      <div class="vr-pt-seg"><span id="vr-pt-s">00</span><span class="vr-pt-label">SEC</span></div>
+
+    <!-- Step 1: Email capture -->
+    <div id="vr-popup-step1">
+      <p id="vr-popup-eyebrow">LIMITED TIME OFFER</p>
+      <h2 id="vr-popup-title">60% OFF SITEWIDE</h2>
+      <p id="vr-popup-sub">Enter your email to unlock the deal before it expires tonight.</p>
+      <div id="vr-popup-timer">
+        <div class="vr-pt-seg"><span id="vr-pt-h">00</span><span class="vr-pt-label">HRS</span></div>
+        <span class="vr-pt-colon">:</span>
+        <div class="vr-pt-seg"><span id="vr-pt-m">00</span><span class="vr-pt-label">MIN</span></div>
+        <span class="vr-pt-colon">:</span>
+        <div class="vr-pt-seg"><span id="vr-pt-s">00</span><span class="vr-pt-label">SEC</span></div>
+      </div>
+      <div id="vr-popup-email-wrap">
+        <input type="email" id="vr-popup-email" placeholder="Your email address">
+        <button id="vr-popup-submit">UNLOCK 60% OFF</button>
+      </div>
+      <button id="vr-popup-nothanks">No thanks, I'll pay full price</button>
     </div>
-    <a href="/collections/all" id="vr-popup-cta">SHOP THE SALE</a>
-    <p id="vr-popup-note">Free shipping on orders over $100</p>
+
+    <!-- Step 2: Discount revealed -->
+    <div id="vr-popup-step2" style="display:none;">
+      <p id="vr-popup-eyebrow">YOUR DISCOUNT IS UNLOCKED 🎉</p>
+      <h2 id="vr-popup-title2">60% OFF</h2>
+      <p id="vr-popup-sub2">Discount is automatically applied at checkout.<br>No code needed.</p>
+      <a href="/collections/all" id="vr-popup-cta">SHOP THE SALE</a>
+      <p id="vr-popup-note">Free shipping on orders over $100</p>
+    </div>
   </div>
 </div>
 
@@ -1951,6 +2013,33 @@ document.addEventListener('DOMContentLoaded', function() {
 
     if (closeBtn) closeBtn.addEventListener("click", closePopup);
     if (overlay) overlay.addEventListener("click", closePopup);
+
+    function revealDiscount() {
+      var step1 = document.getElementById("vr-popup-step1");
+      var step2 = document.getElementById("vr-popup-step2");
+      if (step1) step1.style.display = "none";
+      if (step2) step2.style.display = "block";
+    }
+
+    var submitBtn = document.getElementById("vr-popup-submit");
+    if (submitBtn) {
+      submitBtn.addEventListener("click", function() {
+        var email = document.getElementById("vr-popup-email");
+        var val = email ? email.value.trim() : "";
+        if (val && val.includes("@")) {
+          // Subscribe to Shopify email list
+          fetch("/contact", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: "form_type=customer&email=" + encodeURIComponent(val) + "&contact[tags]=newsletter"
+          }).catch(function() {});
+        }
+        revealDiscount();
+      });
+    }
+
+    var noThanks = document.getElementById("vr-popup-nothanks");
+    if (noThanks) noThanks.addEventListener("click", revealDiscount);
   })();
 
   // ── Announcement bar — auto-rotate + arrows ──
