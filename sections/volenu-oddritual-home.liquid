@@ -943,26 +943,11 @@ html {
 }
 .vr-sp-btn:hover { opacity: 0.8; }
 @media (max-width: 480px) {
-  /* Mobile: centered modal with overlay */
-  #vr-sale-popup {
-    position: fixed !important; inset: 0 !important;
-    display: none; align-items: center; justify-content: center;
-    background: rgba(0,0,0,0.55) !important;
-    bottom: auto !important; right: auto !important; left: auto !important;
-    width: 100% !important;
-    z-index: 9999 !important;
-  }
-  #vr-sale-popup.open { display: flex !important; }
+  /* Mobile: fully centered modal */
   #vr-sale-popup-box {
-    position: relative !important;
-    bottom: auto !important; right: auto !important;
-    width: 88% !important; max-width: 360px !important;
-    transform: scale(0.95) !important;
-    opacity: 0 !important;
-  }
-  #vr-sale-popup.open #vr-sale-popup-box {
-    transform: scale(1) !important;
-    opacity: 1 !important;
+    width: 88% !important;
+    max-width: 360px !important;
+    margin: auto !important;
   }
 }
 
