@@ -884,9 +884,15 @@ html {
 /* ─── SALE POPUP ─── */
 #vr-sale-popup {
   display: none;
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(0,0,0,0.55) !important;
+  align-items: center !important;
+  justify-content: center !important;
+  z-index: 9998 !important;
 }
 #vr-sale-popup.open {
-  display: block;
+  display: flex !important;
 }
 #vr-sale-popup-close {
   position: absolute; top: 12px; right: 14px;
@@ -965,18 +971,19 @@ html {
   display: none;
 }
 #vr-sale-popup-box {
-  position: fixed !important; bottom: 80px !important; right: 24px !important; left: auto !important;
-  transform: translateY(20px);
+  position: relative !important;
+  bottom: auto !important; right: auto !important; left: auto !important;
+  transform: scale(0.95);
   z-index: 9999;
   background: #fff; color: #111;
   padding: 36px 32px 28px;
-  width: 90%; max-width: 320px;
+  width: 90%; max-width: 380px;
   text-align: center;
   opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
 }
 #vr-sale-popup.open #vr-sale-popup-box {
-  opacity: 1; transform: translateY(0);
+  opacity: 1; transform: scale(1);
 }
 #vr-sale-popup-close {
   position: absolute; top: 14px; right: 18px;
