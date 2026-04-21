@@ -881,6 +881,75 @@ html {
   .vr-sb-percent { font-size: 52px; }
 }
 
+/* ─── SALE POPUP ─── */
+#vr-sale-popup {
+  position: fixed; bottom: 28px; left: 28px;
+  z-index: 9999;
+  background: #fff;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
+  padding: 20px 24px;
+  width: 300px;
+  transform: translateY(20px);
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  pointer-events: none;
+}
+#vr-sale-popup.visible {
+  opacity: 1; transform: translateY(0); pointer-events: auto;
+}
+#vr-sale-popup-close {
+  position: absolute; top: 12px; right: 14px;
+  background: none; border: none; cursor: pointer;
+  font-size: 16px; color: #999; line-height: 1;
+  padding: 0;
+}
+#vr-sale-popup-close:hover { color: #111; }
+.vr-sp-tag {
+  display: inline-block;
+  background: #111; color: #fff;
+  font-size: 8px; letter-spacing: 0.2em; font-weight: 600;
+  padding: 3px 8px; margin-bottom: 10px;
+}
+.vr-sp-title {
+  font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
+  color: #111; margin-bottom: 4px;
+}
+.vr-sp-sub {
+  font-size: 11px; color: #888; letter-spacing: 0.04em;
+  margin-bottom: 14px;
+}
+.vr-sp-timer-row {
+  display: flex; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+}
+.vr-sp-timer-label {
+  font-size: 10px; letter-spacing: 0.12em; color: #888;
+  flex-shrink: 0;
+}
+.vr-sp-timer {
+  display: flex; align-items: center; gap: 4px;
+}
+.vr-sp-seg {
+  background: #111; color: #fff;
+  font-size: 12px; font-weight: 700;
+  padding: 3px 7px; min-width: 28px; text-align: center;
+  letter-spacing: 0.05em;
+}
+.vr-sp-colon { color: #111; font-weight: 700; font-size: 12px; }
+.vr-sp-btn {
+  display: block; width: 100%;
+  background: #111; color: #fff;
+  text-align: center; text-decoration: none;
+  font-size: 10px; letter-spacing: 0.2em; font-weight: 600;
+  padding: 12px; border: none; cursor: pointer;
+  transition: opacity 0.2s;
+}
+.vr-sp-btn:hover { opacity: 0.8; }
+@media (max-width: 480px) {
+  #vr-sale-popup { left: 16px; right: 16px; width: auto; bottom: 16px; }
+}
+
 /* ─── MOBILE ─── */
 @media (max-width: 768px) {
   #vr-nav { padding: 0 20px; }
@@ -1102,12 +1171,7 @@ document.addEventListener('DOMContentLoaded', function() {
     </div>
   </div>
 
-  <!-- Sale promo overlay — centered on hero -->
-  <div class="vr-hero-promo">
-    <p class="vr-promo-small">DRESS WITH CLASS THIS SUMMER</p>
-    <p class="vr-promo-big">60% OFF</p>
-    <p class="vr-promo-sub">Sale ends today —&nbsp;<span id="vr-hero-timer">00:00:00</span></p>
-  </div>
+
 
   <div id="vr-scroll-hint">
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
@@ -1501,6 +1565,25 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </footer>
 
+<!-- Sale popup -->
+<div id="vr-sale-popup">
+  <button id="vr-sale-popup-close" aria-label="Close">×</button>
+  <div class="vr-sp-tag">LIMITED TIME OFFER</div>
+  <p class="vr-sp-title">Sitewide Sale — Up to 60% Off</p>
+  <p class="vr-sp-sub">This offer expires at midnight tonight.</p>
+  <div class="vr-sp-timer-row">
+    <span class="vr-sp-timer-label">ENDS IN</span>
+    <div class="vr-sp-timer">
+      <span class="vr-sp-seg" id="vr-sp-h">00</span>
+      <span class="vr-sp-colon">:</span>
+      <span class="vr-sp-seg" id="vr-sp-m">00</span>
+      <span class="vr-sp-colon">:</span>
+      <span class="vr-sp-seg" id="vr-sp-s">00</span>
+    </div>
+  </div>
+  <a href="/collections/all" class="vr-sp-btn">SHOP THE SALE</a>
+</div>
+
 </div><!-- /vr-root -->
 
 <script>
@@ -1706,9 +1789,28 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   };
 
-  // ── Hero countdown timer ──
+  // ── Sale popup ──
   (function() {
-    function vrUpdateHeroTimer() {
+    // Only show once per session
+    if (sessionStorage.getItem('vr-popup-seen')) return;
+
+    var popup = document.getElementById('vr-sale-popup');
+    var closeBtn = document.getElementById('vr-sale-popup-close');
+    if (!popup) return;
+
+    // Show after 3 seconds
+    setTimeout(function() {
+      popup.classList.add('visible');
+    }, 3000);
+
+    // Close button
+    closeBtn.addEventListener('click', function() {
+      popup.classList.remove('visible');
+      sessionStorage.setItem('vr-popup-seen', '1');
+    });
+
+    // Countdown timer
+    function updatePopupTimer() {
       var now = new Date();
       var midnight = new Date();
       midnight.setHours(23, 59, 59, 0);
@@ -1717,12 +1819,16 @@ document.addEventListener('DOMContentLoaded', function() {
       var h = Math.floor(diff / 3600000);
       var m = Math.floor((diff % 3600000) / 60000);
       var s = Math.floor((diff % 60000) / 1000);
-      var pad = function(n) { return n < 10 ? "0" + n : "" + n; };
-      var el = document.getElementById("vr-hero-timer");
-      if (el) el.textContent = pad(h) + ":" + pad(m) + ":" + pad(s);
+      var pad = function(n) { return n < 10 ? '0' + n : '' + n; };
+      var eh = document.getElementById('vr-sp-h');
+      var em = document.getElementById('vr-sp-m');
+      var es = document.getElementById('vr-sp-s');
+      if (eh) eh.textContent = pad(h);
+      if (em) em.textContent = pad(m);
+      if (es) es.textContent = pad(s);
     }
-    vrUpdateHeroTimer();
-    setInterval(vrUpdateHeroTimer, 1000);
+    updatePopupTimer();
+    setInterval(updatePopupTimer, 1000);
   })();
 
   // ── Announcement bar — auto-rotate + arrows ──
