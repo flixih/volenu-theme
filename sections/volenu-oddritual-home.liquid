@@ -952,21 +952,21 @@ html {
 
 /* ─── SALE POPUP ─── */
 #vr-sale-popup-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.45);
-  z-index: 9998; backdrop-filter: blur(2px);
+  display: none;
 }
 #vr-sale-popup-box {
-  position: fixed; top: 50%; left: 50%;
-  transform: translate(-50%, -50%) scale(0.95);
+  position: fixed; bottom: 80px; left: 24px;
+  transform: translateY(20px);
   z-index: 9999;
   background: #fff; color: #111;
-  padding: 48px 40px 36px;
-  width: 90%; max-width: 420px;
+  padding: 36px 32px 28px;
+  width: 90%; max-width: 320px;
   text-align: center;
   opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.12);
 }
 #vr-sale-popup.open #vr-sale-popup-box {
-  opacity: 1; transform: translate(-50%, -50%) scale(1);
+  opacity: 1; transform: translateY(0);
 }
 #vr-sale-popup-close {
   position: absolute; top: 14px; right: 18px;
