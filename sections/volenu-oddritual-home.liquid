@@ -989,6 +989,7 @@ html {
 }
 .vr-pt-seg span:first-child {
   font-size: 24px; font-weight: 700; line-height: 1; letter-spacing: -0.02em;
+  color: #e01414;
 }
 .vr-pt-label {
   font-size: 8px; letter-spacing: 0.15em; margin-top: 4px; opacity: 0.6;
@@ -997,12 +998,13 @@ html {
   font-size: 20px; font-weight: 700; color: #111; margin-bottom: 12px;
 }
 #vr-popup-cta {
-  display: block; background: #111; color: #fff;
+  display: block; background: #fff; color: #111;
   text-decoration: none; padding: 14px 24px;
   font-size: 11px; letter-spacing: 0.2em; font-weight: 600;
-  transition: background 0.2s; margin-bottom: 14px;
+  border: 2px solid #111;
+  transition: background 0.2s, color 0.2s; margin-bottom: 14px;
 }
-#vr-popup-cta:hover { background: #333; }
+#vr-popup-cta:hover { background: #111; color: #fff; }
 #vr-popup-note {
   font-size: 10px; color: #aaa; letter-spacing: 0.08em;
 }
