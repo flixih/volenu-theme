@@ -1936,18 +1936,11 @@ document.addEventListener('DOMContentLoaded', function() {
       if (ps) ps.textContent = pad(s);
     }
 
-    var popupTriggered = false;
-    function triggerPopup() {
-      if (popupTriggered) return;
-      popupTriggered = true;
-      setTimeout(function() {
-        popup.classList.add("open");
-        updatePopupTimer();
-        setInterval(updatePopupTimer, 1000);
-      }, 2000);
-      document.removeEventListener("click", triggerPopup);
-    }
-    document.addEventListener("click", triggerPopup);
+    setTimeout(function() {
+      popup.classList.add("open");
+      updatePopupTimer();
+      setInterval(updatePopupTimer, 1000);
+    }, 15000);
 
     if (closeBtn) closeBtn.addEventListener("click", closePopup);
     if (overlay) overlay.addEventListener("click", closePopup);
