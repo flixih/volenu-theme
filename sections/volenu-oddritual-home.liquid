@@ -882,170 +882,113 @@ html {
 }
 
 /* ─── SALE POPUP ─── */
+/* ─── POPUP: PARIJAN MYSTERY DISCOUNT STYLE ─── */
 #vr-sale-popup {
   display: none;
   position: fixed !important;
   inset: 0 !important;
-  background: rgba(0,0,0,0.55) !important;
+  background: rgba(0,0,0,0.4) !important;
   align-items: center !important;
   justify-content: center !important;
   z-index: 9998 !important;
 }
-#vr-sale-popup.open {
-  display: flex !important;
-}
-#vr-sale-popup-close {
-  position: absolute; top: 12px; right: 14px;
-  background: none; border: none; cursor: pointer;
-  font-size: 16px; color: #999; line-height: 1;
-  padding: 0;
-}
-#vr-sale-popup-close:hover { color: #111; }
-.vr-sp-tag {
-  display: inline-block;
-  background: #111; color: #fff;
-  font-size: 8px; letter-spacing: 0.2em; font-weight: 600;
-  padding: 3px 8px; margin-bottom: 10px;
-}
-.vr-sp-title {
-  font-size: 15px; font-weight: 600; letter-spacing: 0.04em;
-  color: #111; margin-bottom: 4px;
-}
-.vr-sp-sub {
-  font-size: 11px; color: #888; letter-spacing: 0.04em;
-  margin-bottom: 14px;
-}
-.vr-sp-timer-row {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 16px;
-}
-.vr-sp-timer-label {
-  font-size: 10px; letter-spacing: 0.12em; color: #888;
-  flex-shrink: 0;
-}
-.vr-sp-timer {
-  display: flex; align-items: center; gap: 4px;
-}
-.vr-sp-seg {
-  background: #111; color: #fff;
-  font-size: 12px; font-weight: 700;
-  padding: 3px 7px; min-width: 28px; text-align: center;
-  letter-spacing: 0.05em;
-}
-.vr-sp-colon { color: #111; font-weight: 700; font-size: 12px; }
-.vr-sp-btn {
-  display: block; width: 100%;
-  background: #111; color: #fff;
-  text-align: center; text-decoration: none;
-  font-size: 10px; letter-spacing: 0.2em; font-weight: 600;
-  padding: 12px; border: none; cursor: pointer;
-  transition: opacity 0.2s;
-}
-.vr-sp-btn:hover { opacity: 0.8; }
-@media (max-width: 480px) {
-  /* Mobile: fully centered modal */
-  #vr-sale-popup-box {
-    width: 88% !important;
-    max-width: 360px !important;
-    margin: auto !important;
-  }
+#vr-sale-popup.open { display: flex !important; }
+
+#vr-popup-inner {
+  display: flex; align-items: stretch;
+  width: 95%; max-width: 900px;
+  max-height: 90vh;
+  background: #f5f0e8;
+  position: relative;
+  overflow: hidden;
 }
 
-/* ─── SALE POPUP ─── */
-#vr-sale-popup-overlay {
-  display: none;
+/* Side model images — desktop only */
+.vr-popup-side {
+  width: 240px; flex-shrink: 0;
+  overflow: hidden;
 }
+.vr-popup-side img {
+  width: 100%; height: 100%;
+  object-fit: cover; object-position: top;
+  filter: grayscale(20%);
+}
+@media (max-width: 700px) {
+  .vr-popup-side { display: none; }
+  #vr-popup-inner { max-width: 420px; }
+}
+
+/* Center box */
 #vr-sale-popup-box {
-  position: relative !important;
-  bottom: auto !important; right: auto !important; left: auto !important;
-  transform: scale(0.95);
-  z-index: 9999;
-  background: #fff; color: #111;
-  padding: 36px 32px 28px;
-  width: 90%; max-width: 380px;
+  flex: 1; position: relative;
+  padding: 52px 40px 40px;
   text-align: center;
-  opacity: 0; transition: opacity 0.4s ease, transform 0.4s ease;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.2);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  background: #f5f0e8;
+  opacity: 1 !important; transform: none !important;
 }
-#vr-sale-popup.open #vr-sale-popup-box {
-  opacity: 1; transform: scale(1);
-}
+
 #vr-sale-popup-close {
-  position: absolute; top: 14px; right: 18px;
+  position: absolute; top: 16px; right: 20px;
   background: none; border: none; font-size: 22px;
-  cursor: pointer; color: #999; line-height: 1;
-  transition: color 0.2s;
+  cursor: pointer; color: #666; line-height: 1;
 }
 #vr-sale-popup-close:hover { color: #111; }
-#vr-popup-eyebrow {
-  font-size: 9px; letter-spacing: 0.3em; font-weight: 600;
-  color: #999; margin-bottom: 12px; text-transform: uppercase;
+
+#vr-popup-brand {
+  font-size: 11px; letter-spacing: 0.3em; color: #888;
+  margin-bottom: 12px; font-weight: 500;
+}
+#vr-popup-unlock {
+  font-size: 18px; color: #333; margin-bottom: 4px;
+  font-style: normal; font-weight: 400;
 }
 #vr-popup-title {
-  font-size: clamp(28px, 6vw, 38px); font-weight: 800;
-  letter-spacing: -0.02em; color: #111; margin-bottom: 10px;
+  font-size: clamp(36px, 7vw, 54px); font-weight: 800;
+  letter-spacing: -0.02em; color: #222; margin-bottom: 28px;
   line-height: 1; text-transform: uppercase;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
-#vr-popup-sub {
-  font-size: 13px; color: #666; line-height: 1.6;
-  margin-bottom: 24px; font-weight: 400;
-}
-#vr-popup-timer {
-  display: flex; align-items: center; justify-content: center;
-  gap: 8px; margin-bottom: 28px;
-}
-.vr-pt-seg {
-  display: flex; flex-direction: column; align-items: center;
-  background: none; color: #111;
-  padding: 4px 8px; min-width: 48px;
-}
-.vr-pt-seg span:first-child {
-  font-size: 24px; font-weight: 700; line-height: 1; letter-spacing: -0.02em;
-  color: #e01414;
-}
-.vr-pt-label {
-  font-size: 8px; letter-spacing: 0.15em; margin-top: 4px; opacity: 0.6;
-}
-.vr-pt-colon {
-  font-size: 20px; font-weight: 700; color: #111; margin-bottom: 12px;
-}
-#vr-popup-cta {
-  display: block; background: #fff; color: #111;
-  text-decoration: none; padding: 14px 24px;
-  font-size: 11px; letter-spacing: 0.2em; font-weight: 600;
-  border: 2px solid #111;
-  transition: background 0.2s, color 0.2s; margin-bottom: 14px;
-}
-#vr-popup-cta:hover { background: #111; color: #fff; }
-#vr-popup-note {
-  font-size: 10px; color: #aaa; letter-spacing: 0.08em;
-}
-#vr-popup-email-wrap { display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+
+/* Email */
+#vr-popup-email-wrap { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
 #vr-popup-email {
-  width: 100%; padding: 12px 14px; border: 1.5px solid #ddd;
-  font-size: 13px; outline: none; transition: border-color 0.2s;
-  font-family: inherit;
+  width: 100%; padding: 14px 16px;
+  border: 1.5px solid #ccc; background: #fff;
+  font-size: 14px; outline: none; transition: border-color 0.2s;
+  font-family: inherit; border-radius: 0;
 }
 #vr-popup-email:focus { border-color: #111; }
+#vr-popup-email-error { font-size: 11px; color: #c0392b; margin: -4px 0 0; text-align: left; }
 #vr-popup-submit {
-  width: 100%; padding: 14px; background: #111; color: #fff;
-  border: none; font-size: 11px; letter-spacing: 0.2em; font-weight: 600;
-  cursor: pointer; transition: background 0.2s;
+  width: 100%; padding: 16px;
+  background: #3a5a40; color: #fff;
+  border: none; font-size: 12px; letter-spacing: 0.2em; font-weight: 700;
+  cursor: pointer; transition: background 0.2s; text-transform: uppercase;
 }
-#vr-popup-submit:hover { background: #333; }
+#vr-popup-submit:hover { background: #2d4732; }
 #vr-popup-nothanks {
-  background: none; border: none; color: #aaa; font-size: 11px;
-  cursor: pointer; text-decoration: underline; padding: 4px 0;
+  background: #fff; border: 1.5px solid #ccc; color: #666;
+  font-size: 11px; cursor: pointer; padding: 12px 24px;
   display: block; width: 100%; text-align: center;
-  font-family: inherit; letter-spacing: 0.05em;
+  font-family: inherit; letter-spacing: 0.1em; text-transform: uppercase;
+  transition: border-color 0.2s;
 }
-#vr-popup-nothanks:hover { color: #666; }
-#vr-popup-title2 {
-  font-size: clamp(36px, 8vw, 52px); font-weight: 800;
-  letter-spacing: -0.02em; color: #111; margin-bottom: 10px;
-  line-height: 1; text-transform: uppercase;
+#vr-popup-nothanks:hover { border-color: #111; color: #111; }
+
+/* Step 2 */
+#vr-popup-youre-in {
+  font-size: 36px; font-weight: 700; color: #222;
+  margin-bottom: 12px; letter-spacing: -0.01em;
 }
-#vr-popup-sub2 { font-size: 13px; color: #666; line-height: 1.6; margin-bottom: 24px; }
+#vr-popup-sub2 { font-size: 15px; color: #555; line-height: 1.6; margin-bottom: 28px; }
+#vr-popup-cta {
+  display: block; background: #3a5a40; color: #fff;
+  text-decoration: none; padding: 16px 32px;
+  font-size: 12px; letter-spacing: 0.2em; font-weight: 700;
+  transition: background 0.2s; text-transform: uppercase; width: 100%;
+}
+#vr-popup-cta:hover { background: #2d4732; }
 
 /* ─── MOBILE ─── */
 @media (max-width: 768px) {
@@ -1285,37 +1228,44 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <!-- Sale popup -->
 <div id="vr-sale-popup">
-  <div id="vr-sale-popup-overlay"></div>
-  <div id="vr-sale-popup-box">
-    <button id="vr-sale-popup-close" aria-label="Close">×</button>
+  <div id="vr-popup-inner">
 
-    <!-- Step 1: Email capture -->
-    <div id="vr-popup-step1">
-      <p id="vr-popup-eyebrow">LIMITED TIME OFFER</p>
-      <h2 id="vr-popup-title">40% OFF SITEWIDE</h2>
-      <p id="vr-popup-sub">Enter your email to unlock the deal before it expires tonight.</p>
-      <div id="vr-popup-timer">
-        <div class="vr-pt-seg"><span id="vr-pt-h">00</span><span class="vr-pt-label">HRS</span></div>
-        <span class="vr-pt-colon">:</span>
-        <div class="vr-pt-seg"><span id="vr-pt-m">00</span><span class="vr-pt-label">MIN</span></div>
-        <span class="vr-pt-colon">:</span>
-        <div class="vr-pt-seg"><span id="vr-pt-s">00</span><span class="vr-pt-label">SEC</span></div>
-      </div>
-      <div id="vr-popup-email-wrap">
-        <input type="email" id="vr-popup-email" placeholder="Your email address">
-        <button id="vr-popup-submit">UNLOCK 40% OFF</button>
-      </div>
-      <button id="vr-popup-nothanks">No thanks, I'll pay full price</button>
+    <!-- Desktop side models (hidden on mobile) -->
+    <div class="vr-popup-side vr-popup-side--left">
+      <img src="{{ 'hero-banner.png' | asset_url }}" alt="">
     </div>
 
-    <!-- Step 2: Discount revealed -->
-    <div id="vr-popup-step2" style="display:none;">
-      <p id="vr-popup-eyebrow">YOUR DISCOUNT IS UNLOCKED 🎉</p>
-      <h2 id="vr-popup-title2">40% OFF</h2>
-      <p id="vr-popup-sub2">Discount is automatically applied at checkout.<br>No code needed.</p>
-      <a href="/collections/all" id="vr-popup-cta">SHOP THE SALE</a>
-      <p id="vr-popup-note">Free shipping on orders over $100</p>
+    <!-- Center content -->
+    <div id="vr-sale-popup-box">
+      <button id="vr-sale-popup-close" aria-label="Close">×</button>
+
+      <!-- Step 1: Email capture -->
+      <div id="vr-popup-step1">
+        <p id="vr-popup-brand">VOLENU</p>
+        <p id="vr-popup-unlock">unlock your</p>
+        <h2 id="vr-popup-title">MYSTERY<br>DISCOUNT</h2>
+        <div id="vr-popup-email-wrap">
+          <input type="email" id="vr-popup-email" placeholder="Enter your email address" required>
+          <p id="vr-popup-email-error" style="display:none;">Please enter a valid email address.</p>
+          <button id="vr-popup-submit">REVEAL DISCOUNT</button>
+        </div>
+        <button id="vr-popup-nothanks">NO THANKS, I'LL PAY FULL PRICE</button>
+      </div>
+
+      <!-- Step 2: You're in -->
+      <div id="vr-popup-step2" style="display:none;">
+        <p id="vr-popup-brand">VOLENU</p>
+        <h2 id="vr-popup-youre-in">You're in!</h2>
+        <p id="vr-popup-sub2">Check your email for your<br>mystery discount</p>
+        <a href="/collections/all" id="vr-popup-cta">CONTINUE SHOPPING</a>
+      </div>
     </div>
+
+    <!-- Desktop side models (hidden on mobile) -->
+    <div class="vr-popup-side vr-popup-side--right">
+      <img src="{{ 'hero-banner.png' | asset_url }}" alt="">
+    </div>
+
   </div>
 </div>
 
@@ -2006,16 +1956,22 @@ document.addEventListener('DOMContentLoaded', function() {
     var submitBtn = document.getElementById("vr-popup-submit");
     if (submitBtn) {
       submitBtn.addEventListener("click", function() {
-        var email = document.getElementById("vr-popup-email");
-        var val = email ? email.value.trim() : "";
-        if (val && val.includes("@")) {
-          // Subscribe to Shopify email list
-          fetch("/contact", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: "form_type=customer&email=" + encodeURIComponent(val) + "&contact[tags]=newsletter"
-          }).catch(function() {});
+        var emailEl = document.getElementById("vr-popup-email");
+        var errEl = document.getElementById("vr-popup-email-error");
+        var val = emailEl ? emailEl.value.trim() : "";
+        // Validate email
+        if (!val || !val.includes("@") || !val.includes(".")) {
+          if (errEl) errEl.style.display = "block";
+          if (emailEl) emailEl.style.borderColor = "#c0392b";
+          return;
         }
+        if (errEl) errEl.style.display = "none";
+        // Subscribe to Shopify email list
+        fetch("/contact", {
+          method: "POST",
+          headers: { "Content-Type": "application/x-www-form-urlencoded" },
+          body: "form_type=customer&email=" + encodeURIComponent(val) + "&contact[tags]=newsletter"
+        }).catch(function() {});
         revealDiscount();
       });
     }
