@@ -971,6 +971,15 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   vppUpdateTimer();
   setInterval(vppUpdateTimer, 1000);
+  function vppBannerTimer() {
+    var now = new Date(), midnight = new Date();
+    midnight.setHours(23,59,59,0);
+    var diff = midnight - now; if (diff < 0) diff = 0;
+    var pad = function(n){return n<10?'0'+n:''+n;};
+    var el = document.getElementById('vpp-banner-timer');
+    if (el) el.textContent = pad(Math.floor(diff/3600000))+':'+pad(Math.floor((diff%3600000)/60000))+':'+pad(Math.floor((diff%60000)/1000));
+  }
+  vppBannerTimer(); setInterval(vppBannerTimer, 1000);
 
   // Banner timer
   function vppBannerTimer() {
