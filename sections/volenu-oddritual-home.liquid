@@ -913,10 +913,9 @@ html {
   object-fit: cover; object-position: top;
   filter: grayscale(20%);
 }
-@media (max-width: 700px) {
-  .vr-popup-side { display: none; }
-  #vr-popup-inner { max-width: 420px; }
-}
+/* Side images hidden always */
+.vr-popup-side { display: none !important; }
+#vr-popup-inner { max-width: 420px; }
 
 /* Center box */
 #vr-sale-popup-box {
