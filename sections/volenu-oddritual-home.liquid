@@ -361,7 +361,7 @@ html {
 }
 .vr-panel-cta:hover { border-color: #fff; }
 
-/* Hero overlay text (60% off) */
+/* Hero overlay text (40% off) */
 .vr-hero-promo {
   position: absolute; inset: 0;
   display: flex; flex-direction: column;
@@ -1111,7 +1111,7 @@ html {
     <button class="vr-hs-btn" id="vr-hs-prev">&#8249;</button>
     <div class="vr-hs-msg active">FREE WORLDWIDE SHIPPING OVER $100</div>
     <div class="vr-hs-msg">30-DAY FREE RETURNS</div>
-    <div class="vr-hs-msg">SITEWIDE SALE — UP TO 60% OFF</div>
+    <div class="vr-hs-msg">SITEWIDE SALE — UP TO 40% OFF</div>
     <div class="vr-hs-msg">NEW ARRIVALS IN STORE</div>
     <div class="vr-hs-msg">2 YEAR WARRANTY</div>
     <div class="vr-hs-msg">PREMIUM QUALITY MENSWEAR</div>
@@ -1281,7 +1281,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <!-- Marquee -->
 <div class="vr-marquee">
   <div class="vr-marquee-track">
-    {% assign marquee_items = "FREE SHIPPING OVER $100 · 30-DAY RETURNS · SITEWIDE 60% OFF · NEW ARRIVALS · PREMIUM QUALITY · WORLDWIDE DELIVERY · FREE SHIPPING OVER $100 · 30-DAY RETURNS · SITEWIDE 60% OFF · NEW ARRIVALS · PREMIUM QUALITY · WORLDWIDE DELIVERY ·" | split: "·" %}
+    {% assign marquee_items = "FREE SHIPPING OVER $100 · 30-DAY RETURNS · SITEWIDE 40% OFF · NEW ARRIVALS · PREMIUM QUALITY · WORLDWIDE DELIVERY · FREE SHIPPING OVER $100 · 30-DAY RETURNS · SITEWIDE 40% OFF · NEW ARRIVALS · PREMIUM QUALITY · WORLDWIDE DELIVERY ·" | split: "·" %}
     {% for item in marquee_items %}
       <span>{{ item | strip }} ·</span>
     {% endfor %}
@@ -1300,7 +1300,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Step 1: Email capture -->
     <div id="vr-popup-step1">
       <p id="vr-popup-eyebrow">LIMITED TIME OFFER</p>
-      <h2 id="vr-popup-title">60% OFF SITEWIDE</h2>
+      <h2 id="vr-popup-title">40% OFF SITEWIDE</h2>
       <p id="vr-popup-sub">Enter your email to unlock the deal before it expires tonight.</p>
       <div id="vr-popup-timer">
         <div class="vr-pt-seg"><span id="vr-pt-h">00</span><span class="vr-pt-label">HRS</span></div>
@@ -1311,7 +1311,7 @@ document.addEventListener('DOMContentLoaded', function() {
       </div>
       <div id="vr-popup-email-wrap">
         <input type="email" id="vr-popup-email" placeholder="Your email address">
-        <button id="vr-popup-submit">UNLOCK 60% OFF</button>
+        <button id="vr-popup-submit">UNLOCK 40% OFF</button>
       </div>
       <button id="vr-popup-nothanks">No thanks, I'll pay full price</button>
     </div>
@@ -1319,7 +1319,7 @@ document.addEventListener('DOMContentLoaded', function() {
     <!-- Step 2: Discount revealed -->
     <div id="vr-popup-step2" style="display:none;">
       <p id="vr-popup-eyebrow">YOUR DISCOUNT IS UNLOCKED 🎉</p>
-      <h2 id="vr-popup-title2">60% OFF</h2>
+      <h2 id="vr-popup-title2">40% OFF</h2>
       <p id="vr-popup-sub2">Discount is automatically applied at checkout.<br>No code needed.</p>
       <a href="/collections/all" id="vr-popup-cta">SHOP THE SALE</a>
       <p id="vr-popup-note">Free shipping on orders over $100</p>
@@ -1702,7 +1702,7 @@ document.addEventListener('DOMContentLoaded', function() {
 <div id="vr-sale-popup">
   <button id="vr-sale-popup-close" aria-label="Close">×</button>
   <div class="vr-sp-tag">LIMITED TIME OFFER</div>
-  <p class="vr-sp-title">Sitewide Sale — Up to 60% Off</p>
+  <p class="vr-sp-title">Sitewide Sale — Up to 40% Off</p>
   <p class="vr-sp-sub">This offer expires at midnight tonight.</p>
   <div class="vr-sp-timer-row">
     <span class="vr-sp-timer-label">ENDS IN</span>
