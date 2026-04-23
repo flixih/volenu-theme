@@ -92,15 +92,20 @@ body { overflow-x: hidden; background: #fff; }
 .vc-hero-content {
   position: relative; z-index: 2;
   padding: 0 40px 36px;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: flex-end;
+  text-align: center; width: 100%;
 }
 .vc-hero-eyebrow {
   font-size: 9px; letter-spacing: 0.28em; color: rgba(255,255,255,0.6);
   margin-bottom: 6px;
 }
 .vc-hero-title {
-  font-size: clamp(32px, 5vw, 60px);
-  font-weight: 800; color: #fff;
-  letter-spacing: -0.02em; line-height: 1;
+  font-size: clamp(20px, 3vw, 36px);
+  font-weight: 300; color: #fff;
+  letter-spacing: 0.3em; line-height: 1;
+  text-transform: uppercase;
+  font-family: inherit;
 }
 
 /* ── SORT / FILTER BAR ── */
@@ -282,7 +287,7 @@ body { overflow-x: hidden; background: #fff; }
   {% endif %}
   <div class="vc-hero-overlay"></div>
   <div class="vc-hero-content">
-    <div class="vc-hero-eyebrow">VOLENU</div>
+  
     <div class="vc-hero-title">
       {%- if collection.handle == 'all' -%}
         SHOP ALL
