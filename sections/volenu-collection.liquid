@@ -279,7 +279,9 @@ body { overflow-x: hidden; background: #fff; }
 
 <!-- Collection hero -->
 <div class="vc-hero">
-  {% if collection.image %}
+  {% if collection.handle == 'knitwear' %}
+    <img src="{{ 'knitwear-banner.png' | asset_url }}" alt="{{ collection.title }}">
+  {% elsif collection.image %}
     <img src="{{ collection.image | img_url: '1600x' }}" alt="{{ collection.title }}">
   {% else %}
     <img src="{{ 'hero-banner.png' | asset_url }}" alt="{{ collection.title }}">
