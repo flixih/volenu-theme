@@ -1108,15 +1108,7 @@ html {
 <!-- Draggable Header Strip -->
 <div id="vr-header-strip">
   <div class="vr-hs-messages" id="vr-hs-messages">
-    <button class="vr-hs-btn" id="vr-hs-prev">&#8249;</button>
-    <div class="vr-hs-msg active">FREE WORLDWIDE SHIPPING OVER $100</div>
-    <div class="vr-hs-msg">30-DAY FREE RETURNS</div>
-    <div class="vr-hs-msg">SITEWIDE SALE — UP TO 40% OFF</div>
-    <div class="vr-hs-msg">NEW ARRIVALS IN STORE</div>
-    <div class="vr-hs-msg">2 YEAR WARRANTY</div>
-    <div class="vr-hs-msg">PREMIUM QUALITY MENSWEAR</div>
-    <div class="vr-hs-msg">50,000+ HAPPY CUSTOMERS</div>
-    <button class="vr-hs-btn" id="vr-hs-next">&#8250;</button>
+    <div class="vr-hs-msg active">SITEWIDE SALE — UP TO 40% OFF &nbsp;·&nbsp; ENDS IN <span id="vr-strip-timer">00:00:00</span></div>
   </div>
 </div>
 
@@ -2030,6 +2022,19 @@ document.addEventListener('DOMContentLoaded', function() {
 
     var noThanks = document.getElementById("vr-popup-nothanks");
     if (noThanks) noThanks.addEventListener("click", closePopup);
+  })();
+
+  // ── Strip timer ──
+  (function() {
+    function vrStripTimer() {
+      var now = new Date(), midnight = new Date();
+      midnight.setHours(23,59,59,0);
+      var diff = midnight - now; if (diff < 0) diff = 0;
+      var pad = function(n){return n<10?"0"+n:""+n;};
+      var el = document.getElementById("vr-strip-timer");
+      if (el) el.textContent = pad(Math.floor(diff/3600000))+":"+pad(Math.floor((diff%3600000)/60000))+":"+pad(Math.floor((diff%60000)/1000));
+    }
+    vrStripTimer(); setInterval(vrStripTimer, 1000);
   })();
 
   // ── Announcement bar — auto-rotate + arrows ──
