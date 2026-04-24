@@ -285,6 +285,10 @@ body { overflow-x: hidden; background: #fff; }
     <img src="{{ 'shoes-banner.png' | asset_url }}" alt="{{ collection.title }}">
   {% elsif collection.handle == 'polos' %}
     <img src="{{ 'polos-banner.png' | asset_url }}" alt="{{ collection.title }}">
+  {% elsif collection.handle == 'outfits' or collection.handle == 'shop-the-look' %}
+    <img src="{{ 'shop-the-look-banner.png' | asset_url }}" alt="{{ collection.title }}">
+  {% elsif collection.handle == 'spring-summer' or collection.handle == 'spring-summer-25' or collection.handle == 'new-arrivals' %}
+    <img src="{{ 'spring-summer-banner.png' | asset_url }}" alt="{{ collection.title }}">
   {% elsif collection.image %}
     <img src="{{ collection.image | img_url: '1600x' }}" alt="{{ collection.title }}">
   {% else %}
