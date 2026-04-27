@@ -1594,6 +1594,82 @@ document.addEventListener('DOMContentLoaded', function() {
   </div>
 </section>
 
+<!-- Editorial 3-panel -->
+<section class="vr-editorial">
+  <a href="/collections/all" class="vr-editorial-panel">
+    <img src="{{ 'editorial-products.png' | asset_url }}" alt="Our Products">
+    <div class="vr-editorial-overlay">
+      <span class="vr-editorial-eyebrow">COLLECTION 2025</span>
+      <span class="vr-editorial-title">Our Products</span>
+      <span class="vr-editorial-link">Shop now →</span>
+    </div>
+  </a>
+  <a href="/pages/about" class="vr-editorial-panel">
+    <img src="{{ 'editorial-story.png' | asset_url }}" alt="Our Story">
+    <div class="vr-editorial-overlay">
+      <span class="vr-editorial-eyebrow">ABOUT US</span>
+      <span class="vr-editorial-title">Our Story</span>
+      <span class="vr-editorial-link">Read more →</span>
+    </div>
+  </a>
+  <a href="https://www.instagram.com/volenuofficial" target="_blank" class="vr-editorial-panel">
+    <img src="{{ 'editorial-community.png' | asset_url }}" alt="Our Community">
+    <div class="vr-editorial-overlay">
+      <span class="vr-editorial-eyebrow">SOCIAL</span>
+      <span class="vr-editorial-title">Our Community</span>
+      <span class="vr-editorial-link">Instagram →</span>
+    </div>
+  </a>
+</section>
+
+<style>
+  .vr-editorial {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    width: 100%;
+  }
+  .vr-editorial-panel {
+    position: relative;
+    overflow: hidden;
+    display: block;
+    aspect-ratio: 4/5;
+    text-decoration: none;
+  }
+  .vr-editorial-panel img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .vr-editorial-panel:hover img { transform: scale(1.04); }
+  .vr-editorial-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    padding: 24px 20px;
+    background: linear-gradient(to top, rgba(0,0,0,0.55) 0%, transparent 100%);
+    display: flex; flex-direction: column; gap: 4px;
+    color: #fff;
+  }
+  .vr-editorial-eyebrow {
+    font-size: 10px; letter-spacing: 0.2em;
+    text-transform: uppercase; opacity: 0.8;
+  }
+  .vr-editorial-title {
+    font-size: 22px; font-weight: 500;
+    font-family: 'Cormorant Garamond', Georgia, serif;
+  }
+  .vr-editorial-link {
+    font-size: 12px; letter-spacing: 0.1em;
+    text-transform: uppercase; opacity: 0.9;
+    margin-top: 4px;
+  }
+  @media (max-width: 768px) {
+    .vr-editorial { grid-template-columns: 1fr; }
+    .vr-editorial-panel { aspect-ratio: 16/9; }
+  }
+</style>
+
 <!-- Footer -->
 <footer id="vr-footer">
   <div class="vr-footer-top">
