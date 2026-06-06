@@ -184,27 +184,8 @@
             {{ section.settings.success_text }}
           </div>
         {%- endunless -%}
-        <div class="popup-modal__discount-code">
-          <div class="field">
-            <input
-              id="DiscountCode--{{ section.id }}"
-              type="text"
-              class="field__input"
-              value="{{ section.settings.discount_code }}"
-              autocorrect="off"
-              autocapitalize="off"
-              placeholder="{{ section.settings.discount_code_label }}"
-              readonly
-            >
-            <label class="field__label" for="DiscountCode--{{ section.id }}">
-              {{- section.settings.discount_code_label -}}
-            </label>
-            <button class="popup-modal__copy-btn button">
-              {{ section.settings.copy_button_label }}
-              {% render 'icon-clipboard' %}
-            </button>
-          </div>
-          <p class="popup-modal__success-msg">{{ section.settings.copy_message }}</p>
+        <div class="popup-modal__discount-code" style="background:#f5f5f5;border-radius:6px;padding:14px 18px;text-align:center;margin:12px 0;">
+          <p style="margin:0;font-size:13px;letter-spacing:0.08em;color:#111;">✓ &nbsp;Discount already applied — no code needed</p>
         </div>
 
         {% unless section.settings.success_dismiss_btn_label == blank %}

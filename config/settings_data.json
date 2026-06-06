@@ -193,7 +193,7 @@
           "success_heading": "40% OFF!",
           "success_heading_size": "h1",
           "success_heading_suffix": "heading suffix",
-          "success_text": "<p>Use the code below to get 40% off your whole order!</p>",
+          "success_text": "<p>Your 40% off discount has been applied to your order automatically. Start shopping!</p>",
           "discount_code_label": "Your code:",
           "copy_button_label": "Copy",
           "copy_message": "Code copied successfully!!!",
