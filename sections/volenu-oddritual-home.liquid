@@ -1978,11 +1978,11 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
         }
         if (errEl) errEl.style.display = "none";
-        // Subscribe to Shopify email list
-        fetch("/contact", {
+        // Subscribe to Shopify email list with marketing consent
+        fetch("/contact#newsletter", {
           method: "POST",
           headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: "form_type=customer&email=" + encodeURIComponent(val) + "&contact[tags]=newsletter"
+          body: "form_type=customer&utf8=%E2%9C%93&contact[email]=" + encodeURIComponent(val) + "&contact[tags]=newsletter,popup-signup&contact[accepts_marketing]=1"
         }).catch(function() {});
         revealDiscount();
       });
