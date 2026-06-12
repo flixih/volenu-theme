@@ -1264,7 +1264,7 @@ document.addEventListener('DOMContentLoaded', function() {
       <div id="vr-popup-step2" style="display:none;">
         <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU" id="vr-popup-brand">
         <h2 id="vr-popup-youre-in">You're in!</h2>
-        <p id="vr-popup-sub2">Check your email for your<br>mystery discount</p>
+        <p id="vr-popup-sub2">Your <strong>40% OFF</strong> discount is already<br>applied — just start shopping!</p>
         <a href="/collections/all" id="vr-popup-cta">CONTINUE SHOPPING</a>
       </div>
     </div>
@@ -1979,12 +1979,45 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
         }
         if (errEl) errEl.style.display = "none";
-        // Subscribe to Shopify email list with marketing consent
-        fetch("/contact#newsletter", {
-          method: "POST",
-          headers: { "Content-Type": "application/x-www-form-urlencoded" },
-          body: "form_type=customer&utf8=%E2%9C%93&contact[email]=" + encodeURIComponent(val) + "&contact[tags]=newsletter,popup-signup&contact[accepts_marketing]=1"
-        }).catch(function() {});
+
+        // Submit a REAL Shopify customer form into a hidden iframe so the
+        // signup is processed server-side (creates customer + email marketing
+        // consent) without navigating away from the page.
+        try {
+          var iframeName = "vr-signup-frame";
+          var iframe = document.getElementById(iframeName);
+          if (!iframe) {
+            iframe = document.createElement("iframe");
+            iframe.name = iframeName;
+            iframe.id = iframeName;
+            iframe.style.display = "none";
+            document.body.appendChild(iframe);
+          }
+          var form = document.createElement("form");
+          form.action = "/contact#contact_form";
+          form.method = "post";
+          form.target = iframeName;
+          form.style.display = "none";
+
+          var fields = {
+            "form_type": "customer",
+            "utf8": "\u2713",
+            "contact[email]": val,
+            "contact[accepts_marketing]": "true",
+            "contact[tags]": "newsletter,popup-signup"
+          };
+          for (var key in fields) {
+            var input = document.createElement("input");
+            input.type = "hidden";
+            input.name = key;
+            input.value = fields[key];
+            form.appendChild(input);
+          }
+          document.body.appendChild(form);
+          form.submit();
+          setTimeout(function(){ if(form.parentNode) form.parentNode.removeChild(form); }, 1500);
+        } catch (e) {}
+
         revealDiscount();
       });
     }
