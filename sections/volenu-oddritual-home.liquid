@@ -957,6 +957,7 @@ html {
 
 /* Email */
 #vr-popup-email-wrap { width: 100%; display: flex; flex-direction: column; gap: 8px; margin-bottom: 12px; }
+#vr-popup-email-wrap .vr-popup-customer-form { display: flex; flex-direction: column; gap: 8px; margin: 0; width: 100%; }
 #vr-popup-email {
   width: 100%; padding: 14px 16px;
   border: 1.5px solid #ccc; background: #fff;
@@ -1253,9 +1254,13 @@ document.addEventListener('DOMContentLoaded', function() {
         <p id="vr-popup-unlock">unlock your</p>
         <h2 id="vr-popup-title">MYSTERY<br>DISCOUNT</h2>
         <div id="vr-popup-email-wrap">
-          <input type="email" id="vr-popup-email" placeholder="Enter your email address" required>
-          <p id="vr-popup-email-error" style="display:none;">Please enter a valid email address.</p>
-          <button id="vr-popup-submit">REVEAL DISCOUNT</button>
+          {%- form 'customer', id: 'vr-popup-customer-form', class: 'vr-popup-customer-form' -%}
+            <input type="hidden" name="contact[tags]" value="newsletter,popup-signup">
+            <input type="hidden" name="contact[accepts_marketing]" value="true">
+            <input type="email" id="vr-popup-email" name="contact[email]" placeholder="Enter your email address" required>
+            <p id="vr-popup-email-error" style="display:none;">Please enter a valid email address.</p>
+            <button type="submit" id="vr-popup-submit">REVEAL DISCOUNT</button>
+          {%- endform -%}
         </div>
         <button id="vr-popup-nothanks">NO THANKS, I'LL PAY FULL PRICE</button>
       </div>
@@ -1966,59 +1971,36 @@ document.addEventListener('DOMContentLoaded', function() {
       if (step2) step2.style.display = "block";
     }
 
-    var submitBtn = document.getElementById("vr-popup-submit");
-    if (submitBtn) {
-      submitBtn.addEventListener("click", function() {
+    var custForm = document.getElementById("vr-popup-customer-form");
+    if (custForm) {
+      // Route the real Shopify form submission into a hidden iframe so the
+      // signup processes server-side (with Shopify's security token) without
+      // navigating the customer away from the page.
+      var iframeName = "vr-signup-frame";
+      var iframe = document.getElementById(iframeName);
+      if (!iframe) {
+        iframe = document.createElement("iframe");
+        iframe.name = iframeName;
+        iframe.id = iframeName;
+        iframe.style.display = "none";
+        document.body.appendChild(iframe);
+      }
+      custForm.setAttribute("target", iframeName);
+      custForm.setAttribute("action", "/contact#contact_form");
+
+      custForm.addEventListener("submit", function(e) {
         var emailEl = document.getElementById("vr-popup-email");
         var errEl = document.getElementById("vr-popup-email-error");
         var val = emailEl ? emailEl.value.trim() : "";
-        // Validate email
         if (!val || !val.includes("@") || !val.includes(".")) {
+          e.preventDefault();
           if (errEl) errEl.style.display = "block";
           if (emailEl) emailEl.style.borderColor = "#c0392b";
-          return;
+          return false;
         }
         if (errEl) errEl.style.display = "none";
-
-        // Submit a REAL Shopify customer form into a hidden iframe so the
-        // signup is processed server-side (creates customer + email marketing
-        // consent) without navigating away from the page.
-        try {
-          var iframeName = "vr-signup-frame";
-          var iframe = document.getElementById(iframeName);
-          if (!iframe) {
-            iframe = document.createElement("iframe");
-            iframe.name = iframeName;
-            iframe.id = iframeName;
-            iframe.style.display = "none";
-            document.body.appendChild(iframe);
-          }
-          var form = document.createElement("form");
-          form.action = "/contact#contact_form";
-          form.method = "post";
-          form.target = iframeName;
-          form.style.display = "none";
-
-          var fields = {
-            "form_type": "customer",
-            "utf8": "\u2713",
-            "contact[email]": val,
-            "contact[accepts_marketing]": "true",
-            "contact[tags]": "newsletter,popup-signup"
-          };
-          for (var key in fields) {
-            var input = document.createElement("input");
-            input.type = "hidden";
-            input.name = key;
-            input.value = fields[key];
-            form.appendChild(input);
-          }
-          document.body.appendChild(form);
-          form.submit();
-          setTimeout(function(){ if(form.parentNode) form.parentNode.removeChild(form); }, 1500);
-        } catch (e) {}
-
-        revealDiscount();
+        // Let the real form submit to the iframe, then show success step.
+        setTimeout(revealDiscount, 150);
       });
     }
 
