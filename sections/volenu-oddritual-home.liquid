@@ -938,9 +938,10 @@ html {
 #vr-sale-popup-close:hover { color: #111; }
 
 #vr-popup-brand {
-  font-size: 11px; letter-spacing: 0.3em; color: #888;
-  margin-bottom: 12px; font-weight: 600;
-  font-family: 'Outfit', sans-serif;
+  height: 16px; width: auto;
+  margin-bottom: 12px;
+  opacity: 0.55;
+  filter: brightness(0) saturate(100%);
 }
 #vr-popup-unlock {
   font-size: 18px; color: #333; margin-bottom: 4px;
@@ -1248,7 +1249,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <!-- Step 1: Email capture -->
       <div id="vr-popup-step1">
-        <p id="vr-popup-brand">VOLENU</p>
+        <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU" id="vr-popup-brand">
         <p id="vr-popup-unlock">unlock your</p>
         <h2 id="vr-popup-title">MYSTERY<br>DISCOUNT</h2>
         <div id="vr-popup-email-wrap">
@@ -1261,7 +1262,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
       <!-- Step 2: You're in -->
       <div id="vr-popup-step2" style="display:none;">
-        <p id="vr-popup-brand">VOLENU</p>
+        <img src="{{ 'volenu-wordmark.png' | asset_url }}" alt="VOLENU" id="vr-popup-brand">
         <h2 id="vr-popup-youre-in">You're in!</h2>
         <p id="vr-popup-sub2">Check your email for your<br>mystery discount</p>
         <a href="/collections/all" id="vr-popup-cta">CONTINUE SHOPPING</a>
