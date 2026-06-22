@@ -6,6 +6,10 @@
 [id*="shopify-section-header"], [id*="announcement"],
 .volenu-ticker-wrap { display: none !important; }
 
+/* Hide Shopify default footer (we use custom vc-footer) */
+[id*="shopify-section-footer"], .footer, footer.footer { display: none !important; }
+.vc-footer { display: block !important; }
+
 body { overflow-x: hidden; background: #fff; }
 
 #vc-root {
@@ -215,8 +219,9 @@ body { overflow-x: hidden; background: #fff; }
   gap: 40px; margin-bottom: 48px;
 }
 .vc-footer-brand { font-size: 13px; letter-spacing: 0.28em; font-weight: 700; margin-bottom: 10px; }
-.vc-footer-tag { font-size: 11px; color: #555; line-height: 1.6; }
-.vc-footer h4 { font-size: 9px; letter-spacing: 0.22em; color: #555; margin-bottom: 14px; font-weight: 600; }
+.vc-footer-logo { height: 20px; width: auto; margin-bottom: 14px; display: block; }
+.vc-footer-tag { font-size: 11px; color: #888; line-height: 1.6; max-width: 280px; }
+.vc-footer h4 { font-size: 9px; letter-spacing: 0.22em; color: #777; margin-bottom: 14px; font-weight: 600; }
 .vc-footer ul { list-style: none; }
 .vc-footer li { margin-bottom: 7px; }
 .vc-footer li a { font-size: 11px; color: #888; text-decoration: none; }
@@ -384,7 +389,7 @@ body { overflow-x: hidden; background: #fff; }
 <footer class="vc-footer">
   <div class="vc-footer-grid">
     <div>
-      <div class="vc-footer-brand">VOLENU</div>
+      <img src="{{ 'volenu-wordmark-white.png' | asset_url }}" alt="VOLENU" class="vc-footer-logo">
       <div class="vc-footer-tag">Elevated essentials for the modern man. Timeless menswear, crafted to last.</div>
     </div>
     <div>
