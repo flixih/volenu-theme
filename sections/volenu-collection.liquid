@@ -127,20 +127,20 @@ body { overflow-x: hidden; background: #fff; }
   appearance: none; padding-right: 12px;
 }
 
-/* ── PRODUCT GRID (Odd Ritual — full bleed 3 col) ── */
+/* ── PRODUCT GRID (Parijan style — contained with gaps) ── */
 .vc-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 0;
-  border-top: 1px solid #e8e8e8;
-  border-left: 1px solid #e8e8e8;
+  gap: 28px 20px;
+  border: none;
+  padding: 32px 40px 60px;
+  max-width: 1500px; margin: 0 auto;
 }
 .vc-card {
   position: relative; cursor: pointer;
-  border-right: 1px solid #e8e8e8;
-  border-bottom: 1px solid #e8e8e8;
+  border: none;
 }
-.vc-card:nth-child(4n) { border-right: 1px solid #e8e8e8; }
+.vc-card:nth-child(4n) { border-right: none; }
 .vc-card-img {
   position: relative;
   aspect-ratio: 3/4;
@@ -181,8 +181,8 @@ body { overflow-x: hidden; background: #fff; }
 .vc-card-info {
   display: flex; align-items: flex-start;
   justify-content: space-between;
-  padding: 14px 16px 18px;
-  border-top: 1px solid #e8e8e8;
+  padding: 14px 2px 4px;
+  border-top: none;
 }
 .vc-card-name {
   font-size: 10px; letter-spacing: 0.1em; font-weight: 600;
@@ -238,9 +238,7 @@ body { overflow-x: hidden; background: #fff; }
   #vc-nav { padding: 0 20px; }
   .vc-hero-content { padding: 0 24px 28px; }
   .vc-bar { padding: 14px 20px; }
-  .vc-grid { grid-template-columns: repeat(2, 1fr); }
-  .vc-card:nth-child(3n) { border-right: 1px solid #e8e8e8; }
-  .vc-card:nth-child(2n) { border-right: none; }
+  .vc-grid { grid-template-columns: repeat(2, 1fr); gap: 20px 14px; padding: 24px 16px 40px; }
   .vc-footer-grid { grid-template-columns: 1fr 1fr; gap: 28px; }
   .vc-footer { padding: 40px 24px 24px; }
 }
