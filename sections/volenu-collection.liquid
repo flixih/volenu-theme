@@ -215,14 +215,15 @@ body { overflow-x: hidden; background: #fff; }
   padding: 56px 40px 28px;
 }
 .vc-footer-grid {
-  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+  display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr;
   gap: 40px; margin-bottom: 48px;
 }
+.vc-footer-grid > div { min-width: 0; }
+.vc-footer ul { list-style: none; padding: 0; margin: 0; }
 .vc-footer-brand { font-size: 13px; letter-spacing: 0.28em; font-weight: 700; margin-bottom: 10px; }
 .vc-footer-logo { height: 20px; width: auto; margin-bottom: 14px; display: block; }
 .vc-footer-tag { font-size: 11px; color: #888; line-height: 1.6; max-width: 280px; }
 .vc-footer h4 { font-size: 9px; letter-spacing: 0.22em; color: #777; margin-bottom: 14px; font-weight: 600; }
-.vc-footer ul { list-style: none; }
 .vc-footer li { margin-bottom: 7px; }
 .vc-footer li a { font-size: 11px; color: #888; text-decoration: none; }
 .vc-footer li a:hover { color: #fff; }
